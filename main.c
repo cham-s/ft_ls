@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/04 14:54:05 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/04 18:57:10 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/05 15:50:21 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,30 @@
 #include "includes/libft.h" 
 #include <stdlib.h>
 #include <sys/stat.h>
+
+static void	perm_format(struct stat *file)
+{
+	char res;
+	ft_putchar(S_ISDIR(file->st_mode) ? 'd' : '-');
+	ft_putchar((file->st_mode & S_IRUSR) ? 'r' : '-');
+	ft_putchar((file->st_mode & S_IWUSR) ? 'w' : '-');
+	ft_putchar((file->st_mode & S_IXUSR) ? 'x' : '-');
+	ft_putchar((file->st_mode & S_IRGRP) ? 'r' : '-');
+	ft_putchar((file->st_mode & S_IWGRP) ? 'w' : '-');
+	ft_putchar((file->st_mode & S_IXGRP) ? 'x' : '-');
+	ft_putchar((file->st_mode & S_IWOTH) ? 'r' : '-');
+	ft_putchar((file->st_mode & S_IXOTH) ? 'w' : '-');
+	ft_putchar((file->st_mode & S_IXOTH) ? 'x' : '-');
+}
+
+static void	print_l_format(char *filename)
+{
+	struct stat file; 
+
+	if (stat(filename, &file) < 0)
+		return ;
+
+}
 
 int main()
 {
