@@ -10,3 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/includes/libft.h"
+
+int		get_filename(t_list **list, char *dirname);
+void	print_l_format(char *filename);

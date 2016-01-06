@@ -1,4 +1,4 @@
-#**************************************************************************** #
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -37,7 +37,7 @@ SRC = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c \
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -g -c -Wall -Wextra -Werror -I.
+CFLAGS = -g -c -Wall -Wextra -Werror -I includes
 
 RM = rm -rf
 

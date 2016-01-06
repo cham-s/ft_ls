@@ -21,7 +21,7 @@ void	ft_lstprint(t_list *alst)
 		return ;
 	while (current)
 	{
-		ft_putstr((char *)current->content);
+		ft_putendl((char *)current->content);
 		current = current->next;
 	}
 }

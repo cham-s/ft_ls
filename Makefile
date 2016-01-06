@@ -11,9 +11,9 @@
 # **************************************************************************** #
 
 NAME = ft_ls
-SRCS = main.c
+SRCS = main.c display.c
 LIBS = libft/libft.a
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra -I includes
 
 all: $(NAME)
 
