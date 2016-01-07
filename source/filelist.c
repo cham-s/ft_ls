@@ -1,0 +1,24 @@
+
+t_file	*ft_lstfilenew(const char *content)
+{
+	t_file	*fresh;
+	size_t	len;
+
+	fresh = (t_file *)malloc(sizeof(t_file));
+	if (!fresh)
+		return (NULL);
+	if (!content)
+		fresh->content = NULL;
+	else
+	{
+		len = ft_strlen(content);
+		fresh->content = (void *)ft_memalloc(sizeof(len));
+		ft_memcpy(fresh->content, content, len);
+	}
+	fresh->content_size = 0;
+	fresh->next = NULL;
+	fresh->list = NULL;
+	return (fresh);
+}
+
+

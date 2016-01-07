@@ -14,6 +14,13 @@ t_list	*get_filename(char *dirname)
 	t_list	*list;
 	struct dirent *entry;
 	DIR *dfd;
+	struct stat file;
+
+	if (stat(filename, &file) < 0)
+	{
+		perror("Coould not read file");
+	}
+	if ((S_ISDIR(file.st_mode)))
 
 	list = NULL;
 	if ((dfd = opendir(dirname)) == NULL)
