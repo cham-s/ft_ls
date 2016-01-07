@@ -9,9 +9,8 @@
 #include <grp.h>
 #include <stdio.h>
 
-t_list	*get_filename(char *dirname)
+void	get_filename(char *dirname, t_file *filelist)
 {
-	t_list	*list;
 	struct dirent *entry;
 	DIR *dfd;
 	struct stat file;
@@ -29,8 +28,13 @@ t_list	*get_filename(char *dirname)
 		return (NULL);
 	}
 	while ((entry = readdir(dfd)) != NULL)
+	{
 		ft_lstappend(&list, ft_lstnew(entry->d_name, sizeof(ft_strlen(entry->d_name))));
-	return (list);
+		if ((S_ISDIR(file.st_mode)))
+		{
+			get_filename(entry->d_name, *filelist)
+		}
+	}
 }
 
 static void	perm_format(struct stat *file)

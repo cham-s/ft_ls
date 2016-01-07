@@ -22,3 +22,17 @@ t_file	*ft_lstfilenew(const char *content)
 }
 
 
+void	ft_lstfileappend(t_file **alst, t_file *new)
+{
+	t_file *current;
+
+	current = *alst;
+	if (!current)
+		*alst = new;
+	else
+	{
+		while (current->next)
+			current = current->next;
+		current->next = new;
+	}
+}
