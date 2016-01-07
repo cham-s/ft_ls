@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "libls.h"
-#include "libft/includes/libft.h"
+#include "../libft/includes/libft.h"
 
 int main(int ac, char **av)
 {
@@ -19,11 +19,12 @@ int main(int ac, char **av)
 	char	*dirname;
 
 	dirname = NULL;
-	list = NULL;
 	if (ac == 1)
 		dirname = ".";
 	else
 		dirname = av[1];
-	get_filename(&list, dirname);
-	ft_lstprint(list);
+	list = get_filename(dirname);
+	if (!list)
+		ft_putendl("(null)");
+	ft_lstprint_dir(list);
 }

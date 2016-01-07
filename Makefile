@@ -11,13 +11,14 @@
 # **************************************************************************** #
 
 NAME = ft_ls
-SRCS = main.c display.c
+SRCS = source/main.c source/display.c
 LIBS = libft/libft.a
 FLAG = -Wall -Werror -Wextra -I includes
 
 all: $(NAME)
 
 $(NAME):
+	make fclean -C libft && make -C libft
 	clang -g $(FLAG) -o $(NAME) $(SRCS) $(LIBS)
 
 clean:

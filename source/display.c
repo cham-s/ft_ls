@@ -1,5 +1,5 @@
 #include "libls.h"
-#include "libft/includes/libft.h"
+#include "../libft/includes/libft.h"
 #include <dirent.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -9,21 +9,21 @@
 #include <grp.h>
 #include <stdio.h>
 
-int	get_filename(t_list **list, char *dirname)
+t_list	*get_filename(char *dirname)
 {
-	t_list	*tmp;
+	t_list	*list;
 	struct dirent *entry;
 	DIR *dfd;
 
-	tmp = *list;
+	list = NULL;
 	if ((dfd = opendir(dirname)) == NULL)
 	{
 		perror("ft_ls: no such file or directory");
-		return (-1);
+		return (NULL);
 	}
 	while ((entry = readdir(dfd)) != NULL)
-		ft_lstappend(tmp, ft_lstnew(entry->d_name, sizeof(ft_strlen(entry->d_name))));
-	return (1);
+		ft_lstappend(&list, ft_lstnew(entry->d_name, sizeof(ft_strlen(entry->d_name))));
+	return (list);
 }
 
 static void	perm_format(struct stat *file)
@@ -38,6 +38,34 @@ static void	perm_format(struct stat *file)
 	ft_putchar((file->st_mode & S_IROTH) ? 'r' : '-');
 	ft_putchar((file->st_mode & S_IWOTH) ? 'w' : '-');
 	ft_putchar((file->st_mode & S_IXOTH) ? 'x' : '-');
+}
+
+void	ft_lstprint_dir(t_list *alst)
+{
+	t_list *current;
+
+	current = alst;
+	if (!current)
+		return ;
+	while (current)
+	{
+		print_dirname((char *)current->content);
+		current = current->next;
+	}
+}
+
+void	print_dirname(char *filename)
+{
+	struct stat file;
+
+	if (stat(filename, &file) < 0)
+		return ;
+	if ((S_ISDIR(file.st_mode)))
+	{
+		ft_putstr("./");
+		ft_putstr(filename);
+		ft_putendl(":");
+	}
 }
 
 void	print_l_format(char *filename)

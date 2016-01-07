@@ -12,5 +12,7 @@
 
 #include "../libft/includes/libft.h"
 
-int		get_filename(t_list **list, char *dirname);
+t_list	*get_filename(char *dirname);
 void	print_l_format(char *filename);
+void	print_dirname(char *filename);
+void	ft_lstprint_dir(t_list *alst);
