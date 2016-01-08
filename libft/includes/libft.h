@@ -37,7 +37,7 @@ int					ft_isalpha(int c);
 int					ft_isascii(int c);
 int					ft_isdigit(int c);
 int					ft_isprint(int c);
-t_bool				ft_isspace(int c)
+t_bool				ft_isspace(int c);
 void				*ft_memccpy(void *dest, const void *src, int c, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t len);
 void				*ft_memmove(void *dest, const void *src, size_t n);
@@ -103,7 +103,8 @@ size_t				ft_arraylen(char **array);
 size_t				ft_arraytlen(char **array);
 char				*ft_arraytostr(char **str, char c);
 void				ft_swap(void *a, void *b);
-short				ft_stronlyhas(const char *s, char c);
+t_bool				ft_stronlyhas(const char *s, char c);
 size_t				size_to_allocate(const char *s, char c);
+char				**ft_splitspaces(char const *s);
 
 #endif

@@ -10,15 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-short	ft_stronlyhas(const char *s, char c)
+#include "libft.h"
+
+t_bool	ft_stronlyhas(const char *s, char c)
 {
 	if (!s)
-		return (0);
+		return (false);
 	while (*s)
 	{
 		if (*s != c)
-			return (0);
+			return (false);
 		s++;
 	}
-	return (1);
+	return (true);
 }

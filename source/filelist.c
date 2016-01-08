@@ -21,7 +21,6 @@ t_file	*ft_lstfilenew(const char *content)
 	return (fresh);
 }
 
-
 void	ft_lstfileappend(t_file **alst, t_file *new)
 {
 	t_file *current;

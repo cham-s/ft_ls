@@ -33,7 +33,8 @@ SRC = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c \
 	ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
 	ft_lstmap.c ft_lstnewref.c ft_strsplitspc.c ft_strndup.c ft_memdup.c \
 	ft_strlenchr.c ft_lstappend.c ft_lstprint.c  ft_lstlen.c ft_lstinsertafter.c \
- 	ft_lstremove.c ft_swap.c ft_stronlyhas.c
+ 	ft_lstremove.c ft_swap.c ft_stronlyhas.c ft_size_to_allocate.c ft_splitspaces.c \
+	ft_isspace.c
 
 OBJ = $(SRC:.c=.o)
 

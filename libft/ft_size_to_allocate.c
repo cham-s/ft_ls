@@ -1,3 +1,5 @@
+#include "libft.h"
+
 size_t	size_to_allocate(const char *s, char c)
 {
 	size_t	size;
