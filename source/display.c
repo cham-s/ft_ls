@@ -21,13 +21,7 @@ t_file	*get_filename(char *dirname)
 		return (NULL);
 	}
 	while ((entry = readdir(dfd)) != NULL)
-	{
 		ft_lstfileappend(&list, ft_lstfilenew(entry->d_name));
-		/*if ((S_ISDIR(file.st_mode)))
-		{
-			get_filename(entry->d_name, *filelist)
-		}*/
-	}
 	return (list);
 }
 
@@ -67,15 +61,29 @@ void	print_dirname(char *filename)
 		return ;
 	if ((S_ISDIR(file.st_mode)))
 	{
+		ft_putendl(filename);
+	}
+}
+
+void	print_files(char *dirname)
+{
+	struct stat file;
+	struct dirent *entry;
+	DIR *dfd;
+
+	if ((dfd = opendir(dirname)) == NULL)
+		return ;
+	while ((entry = readdir(dfd)) != NULL)
+		(&list, ft_lstfilenew(entry->d_name));
+
+	if (stat(filename, &file) < 0)
+		return ;
+	if ((S_ISDIR(file.st_mode)))
+	{
 		ft_putstr("./");
 		ft_putstr(filename);
 		ft_putendl(":");
 	}
-}
-
-void	print_files(char *filename)
-{
-
 }
 
 void	print_l_format(char *filename)
