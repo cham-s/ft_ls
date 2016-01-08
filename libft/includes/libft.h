@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/30 15:57:54 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/04 10:08:25 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/08 15:50:02 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstnewref(void const *content, size_t content_size);
 void				ft_lstappend(t_list **alst, t_list *new);
-void				ft_lstprint(t_list *alst);
+void				ft_lstprint(t_list **alst);
 size_t				ft_lstlen(t_list *lst);
 void				ft_lstinsertafter(t_list *alst, t_list *new, size_t index);
 void				ft_lstremove(t_list *alst, size_t index);

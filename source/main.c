@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/04 14:54:05 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/06 15:33:05 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/08 19:12:46 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 int main(int ac, char **av)
 {
-	t_list	*list;
+	t_file	*list;
 	char	*dirname;
 
+	list = NULL;
 	dirname = NULL;
 	if (ac == 1)
 		dirname = ".";
@@ -26,5 +27,5 @@ int main(int ac, char **av)
 	list = get_filename(dirname);
 	if (!list)
 		ft_putendl("(null)");
-	ft_lstprint_dir(list);
+	ft_lstprint_dir(&list);
 }

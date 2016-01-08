@@ -6,17 +6,17 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/04 09:38:09 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/04 09:38:26 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/08 15:35:21 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstprint(t_list *alst)
+void	ft_lstprint(t_list **alst)
 {
 	t_list *current;
 
-	current = alst;
+	current = *alst;
 	if (!current)
 		return ;
 	while (current)

@@ -9,32 +9,26 @@
 #include <grp.h>
 #include <stdio.h>
 
-void	get_filename(char *dirname, t_file *filelist)
+t_file	*get_filename(char *dirname)
 {
+	t_file	*list;
+	list = NULL;
 	struct dirent *entry;
 	DIR *dfd;
-	struct stat file;
 
-	if (stat(filename, &file) < 0)
-	{
-		perror("Coould not read file");
-	}
-	if ((S_ISDIR(file.st_mode)))
-
-	list = NULL;
 	if ((dfd = opendir(dirname)) == NULL)
 	{
-		perror("ft_ls: no such file or directory");
 		return (NULL);
 	}
 	while ((entry = readdir(dfd)) != NULL)
 	{
-		ft_lstappend(&list, ft_lstnew(entry->d_name, sizeof(ft_strlen(entry->d_name))));
-		if ((S_ISDIR(file.st_mode)))
+		ft_lstfileappend(&list, ft_lstfilenew(entry->d_name));
+		/*if ((S_ISDIR(file.st_mode)))
 		{
 			get_filename(entry->d_name, *filelist)
-		}
+		}*/
 	}
+	return (list);
 }
 
 static void	perm_format(struct stat *file)
@@ -51,16 +45,16 @@ static void	perm_format(struct stat *file)
 	ft_putchar((file->st_mode & S_IXOTH) ? 'x' : '-');
 }
 
-void	ft_lstprint_dir(t_list *alst)
+void	ft_lstprint_dir(t_file **alst)
 {
-	t_list *current;
+	t_file *current;
 
-	current = alst;
+	current = *alst;
 	if (!current)
 		return ;
 	while (current)
 	{
-		print_dirname((char *)current->content);
+		print_dirname((char *)current->filename);
 		current = current->next;
 	}
 }
@@ -79,6 +73,11 @@ void	print_dirname(char *filename)
 	}
 }
 
+void	print_files(char *filename)
+{
+
+}
+
 void	print_l_format(char *filename)
 {
 	struct stat file;
@@ -86,9 +85,9 @@ void	print_l_format(char *filename)
 	struct group *grp = NULL;
 
 	if (stat(filename, &file) < 0)
-		return ; // TODO: handle error withou perror
+		return ; // TODO: handle error without perror
 	if ((pwd = getpwuid(file.st_uid)) && (grp = getgrgid(file.st_gid)) == NULL)
-		return ; // TODO: handle error withou perror
+		return ; // TODO: handle error without perror
 	perm_format(&file);
 	ft_putstr("  ");
 	ft_putnbr(file.st_nlink);
