@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/04 14:54:05 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/08 21:28:32 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/09 22:30:51 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ int main(int ac, char **av)
 	list = get_filename(dirname);
 	if (!list)
 		ft_putendl("(null)");
-	ft_lstprint_dir(&list);
+	ft_lstfileprint_l_format(&list);
 }

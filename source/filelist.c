@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 15:36:42 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/08 21:28:30 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/09 22:30:53 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,20 @@ void	ft_lstfileprint(t_file **alst)
 	while (current)
 	{
 		ft_putendl(current->filename);
+		current = current->next;
+	}
+}
+
+void	ft_lstfileprint_l_format(t_file **alst)
+{
+	t_file *current;
+
+	current = *alst;
+	if (!current)
+		return ;
+	while (current)
+	{
+		print_l_format(current->filename);
 		current = current->next;
 	}
 }

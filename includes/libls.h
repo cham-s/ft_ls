@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/05 09:45:59 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/08 18:46:03 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/09 22:30:55 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ t_file	*ft_lstfilenew(const char *content);
 void	ft_lstprint_dir(t_file **alst);
 void	ft_lstfileappend(t_file **alst, t_file *new);
 void	ft_lstfileprint(t_file **alst);
+void	ft_lstfileprint_l_format(t_file **alst);
 
 #endif

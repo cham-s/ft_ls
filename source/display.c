@@ -8,6 +8,7 @@
 #include <uuid/uuid.h>
 #include <grp.h>
 #include <stdio.h>
+#include <time.h>
 
 t_file	*get_filename(char *dirname)
 {
@@ -48,7 +49,7 @@ void	ft_lstprint_dir(t_file **alst)
 		return ;
 	while (current)
 	{
-		print_dirname((char *)current->filename);
+		print_dirname(current->filename);
 		current = current->next;
 	}
 }
@@ -60,12 +61,10 @@ void	print_dirname(char *filename)
 	if (stat(filename, &file) < 0)
 		return ;
 	if ((S_ISDIR(file.st_mode)))
-	{
 		ft_putendl(filename);
-	}
 }
 
-void	print_files(char *dirname)
+/*void	print_files(char *dirname)
 {
 	struct stat file;
 	struct dirent *entry;
@@ -84,6 +83,11 @@ void	print_files(char *dirname)
 		ft_putstr(filename);
 		ft_putendl(":");
 	}
+}*/
+
+void	print_date(struct stat *file)
+{
+	ft_putstr(ctime(&file->st_atime));
 }
 
 void	print_l_format(char *filename)
@@ -106,7 +110,6 @@ void	print_l_format(char *filename)
 	ft_putstr("  ");
 	ft_putnbr(file.st_size);
 	ft_putstr("  ");
-	ft_putendl("");
-	ft_memdel((void *)pwd);
-	ft_memdel((void *)grp);
+	print_date(&file);
+	ft_putstr(filename);
 }
