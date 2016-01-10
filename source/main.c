@@ -12,11 +12,13 @@
 
 #include "libls.h"
 #include "../libft/includes/libft.h"
+#include <sys/stat.h>
 
 int main(int ac, char **av)
 {
 	t_file	*list;
 	char	*dirname;
+	struct stat file;
 
 	list = NULL;
 	dirname = NULL;
@@ -27,5 +29,7 @@ int main(int ac, char **av)
 	list = get_filename(dirname);
 	if (!list)
 		ft_putendl("(null)");
-	ft_lstfileprint_l_format(&list);
+	if (stat(dirname, &file) < 0)
+		return (EXIT_FAILURE);
+	ft_lstfileprint(&list);
 }

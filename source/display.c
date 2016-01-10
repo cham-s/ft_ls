@@ -13,16 +13,23 @@
 t_file	*get_filename(char *dirname)
 {
 	t_file	*list;
-	list = NULL;
+	t_file	*under;
+	struct stat file;
 	struct dirent *entry;
 	DIR *dfd;
 
+	list = NULL;
+	under = NULL;
 	if ((dfd = opendir(dirname)) == NULL)
-	{
 		return (NULL);
-	}
 	while ((entry = readdir(dfd)) != NULL)
-		ft_lstfileappend(&list, ft_lstfilenew(entry->d_name));
+	{
+		under = ft_lstfileappend(&list, ft_lstfilenew(entry->d_name));
+		if (stat(under->filename, &file) < 0)
+			return (NULL);
+		if (S_ISDIR(file.st_mode))
+			under->dirlist = get_filename(under->filename);
+	}
 	return (list);
 }
 
@@ -64,30 +71,11 @@ void	print_dirname(char *filename)
 		ft_putendl(filename);
 }
 
-/*void	print_files(char *dirname)
+void	print_ctime(char *time)
 {
-	struct stat file;
-	struct dirent *entry;
-	DIR *dfd;
-
-	if ((dfd = opendir(dirname)) == NULL)
-		return ;
-	while ((entry = readdir(dfd)) != NULL)
-		(&list, ft_lstfilenew(entry->d_name));
-
-	if (stat(filename, &file) < 0)
-		return ;
-	if ((S_ISDIR(file.st_mode)))
-	{
-		ft_putstr("./");
-		ft_putstr(filename);
-		ft_putendl(":");
-	}
-}*/
-
-void	print_date(struct stat *file)
-{
-	ft_putstr(ctime(&file->st_atime));
+	int len;
+	len = ft_strlenchr(time, '\n');
+	write(1, time, len);
 }
 
 void	print_l_format(char *filename)
@@ -97,9 +85,15 @@ void	print_l_format(char *filename)
 	struct group *grp = NULL;
 
 	if (stat(filename, &file) < 0)
-		return ; // TODO: handle error without perror
+	{	
+		perror("error from stat");
+		//return ; // TODO: handle error without perror
+	}
 	if ((pwd = getpwuid(file.st_uid)) && (grp = getgrgid(file.st_gid)) == NULL)
-		return ; // TODO: handle error without perror
+	{
+		perror("error from pwd grp");
+		//return ; // TODO: handle error without perror
+	}
 	perm_format(&file);
 	ft_putstr("  ");
 	ft_putnbr(file.st_nlink);
@@ -110,6 +104,8 @@ void	print_l_format(char *filename)
 	ft_putstr("  ");
 	ft_putnbr(file.st_size);
 	ft_putstr("  ");
-	print_date(&file);
+	print_ctime(ctime(&file.st_atime));
+	ft_putstr("  ");
 	ft_putstr(filename);
+	ft_putendl("");
 }

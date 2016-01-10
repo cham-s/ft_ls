@@ -26,7 +26,7 @@ void	print_l_format(char *filename);
 void	print_dirname(char *filename);
 t_file	*ft_lstfilenew(const char *content);
 void	ft_lstprint_dir(t_file **alst);
-void	ft_lstfileappend(t_file **alst, t_file *new);
+t_file	*ft_lstfileappend(t_file **alst, t_file *new);
 void	ft_lstfileprint(t_file **alst);
 void	ft_lstfileprint_l_format(t_file **alst);
 

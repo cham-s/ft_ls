@@ -23,6 +23,8 @@ $(NAME):
 
 clean:
 	rm -f $(NAME)
+	rm -rf $(NAME).dSYM
+	make fclean -C libft/
 
 fclean: clean
 

@@ -12,6 +12,7 @@
 
 #include "../libft/includes/libft.h"
 #include "../includes/libls.h"
+#include <sys/stat.h>
 
 t_file	*ft_lstfilenew(const char *content)
 {
@@ -34,24 +35,30 @@ t_file	*ft_lstfilenew(const char *content)
 	return (fresh);
 }
 
-void	ft_lstfileappend(t_file **alst, t_file *new)
+t_file	*ft_lstfileappend(t_file **alst, t_file *new)
 {
 	t_file *current;
 
 	current = *alst;
 	if (!current)
+	{
 		*alst = new;
+		return(*alst);
+	}
 	else
 	{
 		while (current->next)
 			current = current->next;
 		current->next = new;
+		current = current->next;
+		return (current);
 	}
 }
 
 void	ft_lstfileprint(t_file **alst)
 {
 	t_file *current;
+	struct stat file;
 
 	current = *alst;
 	if (!current)
@@ -59,6 +66,10 @@ void	ft_lstfileprint(t_file **alst)
 	while (current)
 	{
 		ft_putendl(current->filename);
+		if (stat(current->filename, &file) < 0)
+			return ;
+		if (S_ISDIR(file.st_mode))
+			ft_lstfileprint(&(current->dirlist));
 		current = current->next;
 	}
 }
