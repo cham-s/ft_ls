@@ -85,15 +85,9 @@ void	print_l_format(char *filename)
 	struct group *grp = NULL;
 
 	if (stat(filename, &file) < 0)
-	{	
 		perror("error from stat");
-		//return ; // TODO: handle error without perror
-	}
 	if ((pwd = getpwuid(file.st_uid)) && (grp = getgrgid(file.st_gid)) == NULL)
-	{
 		perror("error from pwd grp");
-		//return ; // TODO: handle error without perror
-	}
 	perm_format(&file);
 	ft_putstr("  ");
 	ft_putnbr(file.st_nlink);
@@ -108,4 +102,76 @@ void	print_l_format(char *filename)
 	ft_putstr("  ");
 	ft_putstr(filename);
 	ft_putendl("");
+}
+
+char    *catfilenames(char *folder, char *file)
+{
+    size_t  len1;
+    size_t  len2;
+    char    *name;
+
+    len1 = ft_strlen(folder);
+    len2 = ft_strlen(file);
+    
+    if ((name = ft_strnew((len1 + len2) + 1)) == NULL)
+        return (NULL);
+    ft_memcpy(name, folder, len1);
+    name[len1] = '/';
+    ft_memcpy((name + len1) + 1, file, len2);
+    return (name);
+}
+
+void	enterdir(char *dirname, void (*f)(char *filename))
+{
+    struct dirent *dptr;
+    DIR *dfd;
+    char *name;
+
+    if ((dfd = opendir(dirname)) == NULL)
+    {
+        perror("couldn't open directory ");
+        ft_putendl(dirname);
+    }
+    while ((dptr = readdir(dfd)) != NULL)
+    {
+        if (dptr->d_name[0] == '.')
+               continue ;
+        else
+        {
+            name = catfilenames(dirname, dptr->d_name);
+            f(name);
+            ft_strdel(&name);
+        }
+    }
+    closedir(dfd);
+}
+
+void    ft_perror(char *name)
+{
+    char *merror;
+
+    merror = ft_strjoin("ft_ls: ", name);
+    perror(merror);
+    ft_strdel(&merror);
+}
+
+void ft_ls(char *name)
+{
+    static int i = 0;
+    struct stat stbuf;
+    if (stat(name, &stbuf) < 0)
+    {
+        ft_perror(name);
+        return ;
+    }
+	if ((S_ISDIR(stbuf.st_mode)))
+    {
+        if (i++ != 0)
+            ft_putendl("");
+        ft_putstr(name);
+        ft_putendl(":");
+        enterdir(name, ft_ls);
+    }
+    else
+        ft_putendl(ft_strrchr(name, '/') + 1);
 }

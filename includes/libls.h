@@ -21,6 +21,10 @@ typedef struct		s_file
 	struct s_file	*dirlist;
 }					t_file;
 
+void    ft_perror(char *name);
+void    ft_ls(char *name);
+char    *catfilenames(char *folder, char *file);
+void	enterdir(char *dirname, void (*f)(char *filename));
 t_file	*get_filename(char *dirname);
 void	print_l_format(char *filename);
 void	print_dirname(char *filename);
