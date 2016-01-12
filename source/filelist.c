@@ -14,7 +14,7 @@
 #include "../includes/libls.h"
 #include <sys/stat.h>
 
-t_file	*ft_lstfilenew(const char *content)
+t_file	*ft_lstfilenew(const char *content, t_bool is_dir)
 {
 	t_file	*fresh;
 	size_t	len;
@@ -31,7 +31,7 @@ t_file	*ft_lstfilenew(const char *content)
 		ft_memcpy(fresh->filename, content, len);
 	}
 	fresh->next = NULL;
-	fresh->dirlist = NULL;
+	fresh->is_dir = is_dir;
 	return (fresh);
 }
 
@@ -58,18 +58,13 @@ t_file	*ft_lstfileappend(t_file **alst, t_file *new)
 void	ft_lstfileprint(t_file **alst)
 {
 	t_file *current;
-	struct stat file;
 
 	current = *alst;
 	if (!current)
 		return ;
 	while (current)
 	{
-		ft_putendl(current->filename);
-		if (stat(current->filename, &file) < 0)
-			return ;
-		if (S_ISDIR(file.st_mode))
-			ft_lstfileprint(&(current->dirlist));
+        ft_putendl(current->filename);
 		current = current->next;
 	}
 }

@@ -18,17 +18,17 @@ typedef struct		s_file
 {
 	char			*filename;
 	struct s_file	*next;
-	struct s_file	*dirlist;
+    t_bool          is_dir;
 }					t_file;
 
 void    ft_perror(char *name);
-void    ft_ls(char *name);
+void    ft_ls(char *name, t_file **list);
 char    *catfilenames(char *folder, char *file);
-void	enterdir(char *dirname, void (*f)(char *filename));
+void	enterdir(t_file **list, char *dirname, void (*f)(char *name, t_file **list));
 t_file	*get_filename(char *dirname);
 void	print_l_format(char *filename);
 void	print_dirname(char *filename);
-t_file	*ft_lstfilenew(const char *content);
+t_file	*ft_lstfilenew(const char *content, t_bool is_dir);
 void	ft_lstprint_dir(t_file **alst);
 t_file	*ft_lstfileappend(t_file **alst, t_file *new);
 void	ft_lstfileprint(t_file **alst);

@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <time.h>
 
-t_file	*get_filename(char *dirname)
+/*t_file	*get_filename(char *dirname)
 {
 	t_file	*list;
 	t_file	*under;
@@ -31,7 +31,7 @@ t_file	*get_filename(char *dirname)
 			under->dirlist = get_filename(under->filename);
 	}
 	return (list);
-}
+}*/
 
 static void	perm_format(struct stat *file)
 {
@@ -121,7 +121,16 @@ char    *catfilenames(char *folder, char *file)
     return (name);
 }
 
-void	enterdir(char *dirname, void (*f)(char *filename))
+void    ft_perror(char *name)
+{
+    char *merror;
+
+    merror = ft_strjoin("ft_ls: ", name);
+    perror(merror);
+    ft_strdel(&merror);
+}
+
+void	enterdir(t_file **list, char *dirname, void (*f)(char *name, t_file **list))
 {
     struct dirent *dptr;
     DIR *dfd;
@@ -139,25 +148,16 @@ void	enterdir(char *dirname, void (*f)(char *filename))
         else
         {
             name = catfilenames(dirname, dptr->d_name);
-            f(name);
+            f(name, list);
             ft_strdel(&name);
         }
     }
     closedir(dfd);
 }
 
-void    ft_perror(char *name)
+void    ft_ls(char *name, t_file **list)
 {
-    char *merror;
-
-    merror = ft_strjoin("ft_ls: ", name);
-    perror(merror);
-    ft_strdel(&merror);
-}
-
-void ft_ls(char *name)
-{
-    static int i = 0;
+    //static int i = 0;
     struct stat stbuf;
     if (stat(name, &stbuf) < 0)
     {
@@ -166,12 +166,14 @@ void ft_ls(char *name)
     }
 	if ((S_ISDIR(stbuf.st_mode)))
     {
-        if (i++ != 0)
+        /*if (i++ != 0)
             ft_putendl("");
         ft_putstr(name);
-        ft_putendl(":");
-        enterdir(name, ft_ls);
+        ft_putendl(":");*/
+        ft_lstfileappend(list, ft_lstfilenew(name, true));
+        enterdir(list, name, ft_ls);
     }
     else
-        ft_putendl(ft_strrchr(name, '/') + 1);
+        ft_lstfileappend(list, ft_lstfilenew(name, false));
+        //ft_putendl(ft_strrchr(name, '/') + 1);
 }

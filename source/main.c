@@ -33,8 +33,11 @@ int main(int ac, char **av)
 	ft_lstfileprint(&list);
 	*/
 
+	t_file	*list;
+    list = NULL;
 	if (ac == 1)
-        ft_ls("."); 
+        ft_ls(".", &list); 
 	else
-        ft_ls(av[1]);
+        ft_ls(av[1], &list);
+    ft_lstfileprint(&list);
 }
