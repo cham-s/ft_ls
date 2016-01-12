@@ -27,7 +27,7 @@ t_file	*ft_lstfilenew(const char *content, t_bool is_dir)
 	else
 	{
 		len = ft_strlen(content);
-		fresh->filename = (void *)ft_memalloc(sizeof(len));
+		fresh->filename = ft_strnew(len);
 		ft_memcpy(fresh->filename, content, len);
 	}
 	fresh->next = NULL;

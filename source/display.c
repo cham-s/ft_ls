@@ -127,7 +127,7 @@ void    ft_perror(char *name)
 
     merror = ft_strjoin("ft_ls: ", name);
     perror(merror);
-    ft_strdel(&merror);
+    //ft_strdel(&merror);
 }
 
 void	enterdir(t_file **list, char *dirname, void (*f)(char *name, t_file **list))
@@ -149,7 +149,7 @@ void	enterdir(t_file **list, char *dirname, void (*f)(char *name, t_file **list)
         {
             name = catfilenames(dirname, dptr->d_name);
             f(name, list);
-            ft_strdel(&name);
+            //ft_strdel(&name);
         }
     }
     closedir(dfd);
