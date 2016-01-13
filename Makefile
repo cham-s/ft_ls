@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = ft_ls
-SRCS = source/main.c source/display.c source/filelist.c
+SRCS = source/main.c source/display.c
 LIBS = libft/libft.a
 FLAG = -Wall -Werror -Wextra -I includes
 

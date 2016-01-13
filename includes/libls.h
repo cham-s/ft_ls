@@ -14,24 +14,16 @@
 # define LIBLS_H
 #include "../libft/includes/libft.h"
 
-typedef struct		s_file
-{
-	char			*filename;
-	struct s_file	*next;
-    t_bool          is_dir;
-}					t_file;
-
+void    printfile(t_list **alst);
+void    recur_dir(char *filename);
+void    get_filesname(char *dirname, t_list **list);
 void    ft_perror(char *name);
-void    ft_ls(char *name, t_file **list);
+void    ft_ls(char *name);
 char    *catfilenames(char *folder, char *file);
-void	enterdir(t_file **list, char *dirname, void (*f)(char *name, t_file **list));
-t_file	*get_filename(char *dirname);
+void	enterdir(char *dirname, void (*f)(char *name));
+void    get_listname(char *dirname, t_list **list);
 void	print_l_format(char *filename);
 void	print_dirname(char *filename);
-t_file	*ft_lstfilenew(const char *content, t_bool is_dir);
-void	ft_lstprint_dir(t_file **alst);
-t_file	*ft_lstfileappend(t_file **alst, t_file *new);
-void	ft_lstfileprint(t_file **alst);
-void	ft_lstfileprint_l_format(t_file **alst);
+void	ft_lstfileprint_l_format(t_list **alst);
 
 #endif

@@ -15,29 +15,14 @@
 
 int main(int ac, char **av)
 {
-/*	t_file	*list;
 	char	*dirname;
-	struct stat file;
 
-	list = NULL;
 	dirname = NULL;
 	if (ac == 1)
 		dirname = ".";
 	else
 		dirname = av[1];
-	list = get_filename(dirname);
-	if (!list)
-		ft_putendl("(null)");
-	if (stat(dirname, &file) < 0)
-		return (EXIT_FAILURE);
-	ft_lstfileprint(&list);
-	*/
-
-	t_file	*list;
-    list = NULL;
-	if (ac == 1)
-        ft_ls(".", &list); 
-	else
-        ft_ls(av[1], &list);
-    ft_lstfileprint(&list);
+    recur_dir(dirname);
+	//get_filesname(dirname, &list);
+	//printfile(&list);
 }

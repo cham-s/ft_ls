@@ -10,28 +10,46 @@
 #include <stdio.h>
 #include <time.h>
 
-/*t_file	*get_filename(char *dirname)
+void printfile(t_list **alst)
 {
-	t_file	*list;
-	t_file	*under;
-	struct stat file;
-	struct dirent *entry;
-	DIR *dfd;
+	t_list *current;
 
-	list = NULL;
-	under = NULL;
-	if ((dfd = opendir(dirname)) == NULL)
-		return (NULL);
-	while ((entry = readdir(dfd)) != NULL)
+	current = *alst;
+	if (!current)
+		return ;
+	while (current)
 	{
-		under = ft_lstfileappend(&list, ft_lstfilenew(entry->d_name));
-		if (stat(under->filename, &file) < 0)
-			return (NULL);
-		if (S_ISDIR(file.st_mode))
-			under->dirlist = get_filename(under->filename);
+		ft_putendl(ft_strrchr((char *)current->content, '/') + 1);
+		current = current->next;
 	}
-	return (list);
-}*/
+}
+
+void    get_filesname(char *filename, t_list **list)
+{
+	struct dirent *dptr;
+	DIR *dfd;
+    struct stat file;
+    char *name;
+	if ((dfd = opendir(filename)) == NULL)
+    {
+        ft_perror(filename);
+        return ;
+    }
+	while ((dptr= readdir(dfd)) != NULL)
+    {
+        if (ft_strcmp(dptr->d_name, ".") == 0
+            || ft_strcmp(dptr->d_name, "..") == 0)
+            continue ;
+        name = catfilenames(filename, dptr->d_name);
+        if (stat(name, &file) < 0)
+        {
+            ft_perror(name);
+            return ;
+        }
+        ft_lstappend(list, ft_lstnew(name, ft_strlen(name)));
+        ft_strdel(&name);
+	}
+}
 
 static void	perm_format(struct stat *file)
 {
@@ -45,20 +63,6 @@ static void	perm_format(struct stat *file)
 	ft_putchar((file->st_mode & S_IROTH) ? 'r' : '-');
 	ft_putchar((file->st_mode & S_IWOTH) ? 'w' : '-');
 	ft_putchar((file->st_mode & S_IXOTH) ? 'x' : '-');
-}
-
-void	ft_lstprint_dir(t_file **alst)
-{
-	t_file *current;
-
-	current = *alst;
-	if (!current)
-		return ;
-	while (current)
-	{
-		print_dirname(current->filename);
-		current = current->next;
-	}
 }
 
 void	print_dirname(char *filename)
@@ -127,35 +131,41 @@ void    ft_perror(char *name)
 
     merror = ft_strjoin("ft_ls: ", name);
     perror(merror);
-    //ft_strdel(&merror);
+    ft_strdel(&merror);
 }
 
-void	enterdir(t_file **list, char *dirname, void (*f)(char *name, t_file **list))
+void	enterdir(char *dirname, void (*f)(char *name))
 {
-    struct dirent *dptr;
-    DIR *dfd;
     char *name;
+    char *ccontent;
+    t_list  *list;
 
-    if ((dfd = opendir(dirname)) == NULL)
+    list = NULL;
+    get_filesname(dirname, &list);
+
+    if (list == NULL)
     {
         perror("couldn't open directory ");
         ft_putendl(dirname);
+        return ;
     }
-    while ((dptr = readdir(dfd)) != NULL)
+    while (list != NULL)
     {
-        if (dptr->d_name[0] == '.')
+        ccontent  = (char *)list->content;
+        if (ccontent[0] == '.')
                continue ;
         else
         {
-            name = catfilenames(dirname, dptr->d_name);
-            f(name, list);
-            //ft_strdel(&name);
+            name = catfilenames(dirname, (char *)list->content);
+            f(name);
+            ft_strdel(&name);
         }
+        list = list->next;
     }
-    closedir(dfd);
+    //delete list
 }
 
-void    ft_ls(char *name, t_file **list)
+void    ft_ls(char *name)
 {
     //static int i = 0;
     struct stat stbuf;
@@ -170,10 +180,21 @@ void    ft_ls(char *name, t_file **list)
             ft_putendl("");
         ft_putstr(name);
         ft_putendl(":");*/
-        ft_lstfileappend(list, ft_lstfilenew(name, true));
-        enterdir(list, name, ft_ls);
+        enterdir(name, ft_ls);
     }
     else
-        ft_lstfileappend(list, ft_lstfilenew(name, false));
-        //ft_putendl(ft_strrchr(name, '/') + 1);
+        ft_putendl(ft_strrchr(name, '/') + 1);
+}
+
+void    recur_dir(char *filename)
+{
+    t_list  *list;
+
+    list = NULL;
+    get_filesname(filename, &list);
+    while (list != NULL)
+    {
+        ft_ls((char *)list->content);
+        list = list->next;
+    }
 }

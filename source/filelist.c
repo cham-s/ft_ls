@@ -64,7 +64,7 @@ void	ft_lstfileprint(t_file **alst)
 		return ;
 	while (current)
 	{
-        ft_putendl(current->filename);
+        ft_putendl(ft_strrchr(current->filename, '/') + 1);
 		current = current->next;
 	}
 }
