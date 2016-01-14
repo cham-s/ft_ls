@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelmem.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/29 12:25:43 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/14 15:41:03 by cattouma         ###   ########.fr       */
+/*   Created: 2016/01/14 10:38:02 by cattouma          #+#    #+#             */
+/*   Updated: 2016/01/14 10:48:23 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_lstnew(void const *content, size_t content_size)
+void	ft_lstdelmem(t_list **alst, void (*del)(void **))
 {
-	t_list	*fresh;
+	t_list *victim;
 
-	fresh = (t_list *)malloc(sizeof(t_list));
-	if (!fresh)
-		return (NULL);
-	if (!content)
-		fresh->content = NULL;
-	else
+	victim = NULL;
+	while (*alst)
 	{
-		fresh->content = (void *)ft_memalloc(content_size);
-		ft_memcpy(fresh->content, content, content_size);
+		del(&((*alst)->content));
+		victim = *alst;
+		*alst = (*alst)->next;
+		free(victim);
 	}
-	fresh->content_size = 0;
-	fresh->next = NULL;
-	return (fresh);
+	*alst = NULL;
 }

@@ -6,7 +6,7 @@
 #    By: cattouma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 13:59:55 by cattouma          #+#    #+#              #
-#    Updated: 2016/01/04 09:53:55 by cattouma         ###   ########.fr        #
+#    Updated: 2016/01/14 10:50:13 by cattouma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRC = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c \
 	ft_lstmap.c ft_lstnewref.c ft_strsplitspc.c ft_strndup.c ft_memdup.c \
 	ft_strlenchr.c ft_lstappend.c ft_lstprint.c  ft_lstlen.c ft_lstinsertafter.c \
  	ft_lstremove.c ft_swap.c ft_stronlyhas.c ft_size_to_allocate.c ft_splitspaces.c \
-	ft_isspace.c
+	ft_isspace.c ft_lstdelmem.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -24,31 +24,56 @@ void printfile(t_list **alst)
 	}
 }
 
-void    get_filesname(char *filename, t_list **list)
+void    insert_files(char *filename, t_list **list)
 {
 	struct dirent *dptr;
 	DIR *dfd;
-    struct stat file;
-    char *name;
+	char path[1024];
+
 	if ((dfd = opendir(filename)) == NULL)
     {
         ft_perror(filename);
         return ;
     }
-	while ((dptr= readdir(dfd)) != NULL)
+	while ((dptr = readdir(dfd)) != NULL)
     {
-        if (ft_strcmp(dptr->d_name, ".") == 0
-            || ft_strcmp(dptr->d_name, "..") == 0)
-            continue ;
-        name = catfilenames(filename, dptr->d_name);
-        if (stat(name, &file) < 0)
-        {
-            ft_perror(name);
-            return ;
-        }
-        ft_lstappend(list, ft_lstnew(name, ft_strlen(name)));
-        ft_strdel(&name);
+        catpath(filename, dptr->d_name, path);
+        ft_lstappend(list, ft_lstnew(path, ft_strlen(path)));
 	}
+}
+
+void	recurdir(char *fname)
+{
+	t_list	*list;
+	struct stat file;
+	//static int i = 0;
+
+	list = NULL;
+	insert_files(fname, &list);
+	//if (i++ != 0)
+	//	ft_putendl("");
+	//ft_putstr(fname);
+	//ft_putendl(":");
+	//ft_lstprint(&list);
+	while (list != NULL)
+	{
+		if(stat((char *)list->content, &file) < 0)
+		{
+			ft_perror((char *)list->content);
+			return ;
+		}
+		if (S_ISDIR(file.st_mode))
+		{
+        	if (ft_strcmp((char *)list->content, ".") == 0
+            || ft_strcmp((char *)list->content, "..") == 0)
+				continue ;
+			recurdir((char *)list->content);
+		}
+		else
+			ft_putendl(ft_strrchr((char *)list->content, '/') + 1);
+		list = list->next;
+	}
+	ft_lstdelmem(&list, ft_memdel);
 }
 
 static void	perm_format(struct stat *file)
@@ -108,7 +133,7 @@ void	print_l_format(char *filename)
 	ft_putendl("");
 }
 
-char    *catfilenames(char *folder, char *file)
+void	catpath(char *folder, char *file, char *pathbuf)
 {
     size_t  len1;
     size_t  len2;
@@ -118,11 +143,12 @@ char    *catfilenames(char *folder, char *file)
     len2 = ft_strlen(file);
     
     if ((name = ft_strnew((len1 + len2) + 1)) == NULL)
-        return (NULL);
+        return ;
     ft_memcpy(name, folder, len1);
     name[len1] = '/';
     ft_memcpy((name + len1) + 1, file, len2);
-    return (name);
+	ft_strcpy(pathbuf, name);
+	ft_strdel(&name);
 }
 
 void    ft_perror(char *name)
@@ -134,9 +160,8 @@ void    ft_perror(char *name)
     ft_strdel(&merror);
 }
 
-void	enterdir(char *dirname, void (*f)(char *name))
+/*void	enterdir(char *dirname, void (*f)(char *name))
 {
-    char *name;
     char *ccontent;
     t_list  *list;
 
@@ -145,7 +170,7 @@ void	enterdir(char *dirname, void (*f)(char *name))
 
     if (list == NULL)
     {
-        perror("couldn't open directory ");
+        ft_perror("couldn't open directory ");
         ft_putendl(dirname);
         return ;
     }
@@ -155,14 +180,10 @@ void	enterdir(char *dirname, void (*f)(char *name))
         if (ccontent[0] == '.')
                continue ;
         else
-        {
-            name = catfilenames(dirname, (char *)list->content);
-            f(name);
-            ft_strdel(&name);
-        }
+            f((char *)list->content);
         list = list->next;
     }
-    //delete list
+	ft_lstdelmem(&list, ft_memdel);
 }
 
 void    ft_ls(char *name)
@@ -176,10 +197,10 @@ void    ft_ls(char *name)
     }
 	if ((S_ISDIR(stbuf.st_mode)))
     {
-        /*if (i++ != 0)
+        if (i++ != 0)
             ft_putendl("");
         ft_putstr(name);
-        ft_putendl(":");*/
+        ft_putendl(":");
         enterdir(name, ft_ls);
     }
     else
@@ -197,4 +218,5 @@ void    recur_dir(char *filename)
         ft_ls((char *)list->content);
         list = list->next;
     }
-}
+	ft_lstdelmem(&list, ft_memdel);
+}*/

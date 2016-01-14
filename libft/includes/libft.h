@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/30 15:57:54 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/08 21:28:28 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/14 10:43:07 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void				ft_lstprint(t_list **alst);
 size_t				ft_lstlen(t_list *lst);
 void				ft_lstinsertafter(t_list *alst, t_list *new, size_t index);
 void				ft_lstremove(t_list *alst, size_t index);
+void				ft_lstdelmem(t_list **alst, void (*del)(void **));
 char				**ft_strsplitspc(char const *s1);
 char				*ft_strndup(const char *s1, size_t n);
 void				*ft_memdup(const void *s1, size_t len);
