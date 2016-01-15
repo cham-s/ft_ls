@@ -33,42 +33,52 @@ void    insert_files(char *filename, t_list **list)
 	if ((dfd = opendir(filename)) == NULL)
     {
         ft_perror(filename);
-        return ;
+        exit (1);
     }
 	while ((dptr = readdir(dfd)) != NULL)
     {
+        if (ft_strcmp(dptr->d_name, ".") == 0
+            || ft_strcmp(dptr->d_name, "..") == 0)
+                continue ;
         catpath(filename, dptr->d_name, path);
         ft_lstappend(list, ft_lstnew(path, ft_strlen(path)));
 	}
+    ft_lstmergesort(list);
+    closedir(dfd);
+}
+
+void    foldersofar(char *fname, t_list **list)
+{
+	static int i = 0;
+
+	if (i++ != 0)
+		ft_putendl("");
+	ft_putstr(fname);
+	ft_putendl(":");
+    ft_putendl(".");
+    ft_putendl("..");
+	printfile(list);
 }
 
 void	recurdir(char *fname)
 {
 	t_list	*list;
 	struct stat file;
-	//static int i = 0;
 
 	list = NULL;
 	insert_files(fname, &list);
-	//if (i++ != 0)
-	//	ft_putendl("");
-	//ft_putstr(fname);
-	//ft_putendl(":");
-	//ft_lstprint(&list);
 	while (list != NULL)
 	{
 		if(stat((char *)list->content, &file) < 0)
 		{
 			ft_perror((char *)list->content);
-			return ;
+            exit (1);
 		}
 		if (S_ISDIR(file.st_mode))
-		{
-        	if (ft_strcmp((char *)list->content, ".") == 0
-            || ft_strcmp((char *)list->content, "..") == 0)
-				continue ;
-			recurdir((char *)list->content);
-		}
+        {
+                foldersofar(fname, &list);
+			    recurdir((char *)list->content);
+        }
 		else
 			ft_putendl(ft_strrchr((char *)list->content, '/') + 1);
 		list = list->next;

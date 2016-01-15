@@ -27,5 +27,6 @@ void	print_l_format(char *filename);
 void	print_dirname(char *filename);
 void	ft_lstfileprint_l_format(t_list **alst);
 void	recurdir(char *fname);
+void    ft_lstmergesort(t_list **list);
 
 #endif

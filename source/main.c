@@ -47,14 +47,15 @@ void	listdir(char *fname)
 int main(int ac, char **av)
 {
 
-	//t_list *list = NULL;
+    //t_list *list = NULL;
 	if (ac == 1)
 		recurdir(".");
 	else
 		while (ac-- > 1)
-			recurdir(av[ac]);
+            recurdir(av[ac]);
+         
 	//listdir(dirname, 0);
-	//insert_files(dirname, &list);
+	//insert_files(av[1], &list);
 	//printfile(&list);
 	//ft_lstdelmem(&list, ft_memdel);
 }
