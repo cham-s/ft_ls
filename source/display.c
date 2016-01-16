@@ -1,4 +1,4 @@
-#include "libls.h"
+#include "ft_ls.h"
 #include "../libft/includes/libft.h"
 #include <dirent.h>
 #include <stdlib.h>
@@ -10,18 +10,9 @@
 #include <stdio.h>
 #include <time.h>
 
-void printfile(t_list **alst)
+char    *pathtrim(char *longpath)
 {
-	t_list *current;
-
-	current = *alst;
-	if (!current)
-		return ;
-	while (current)
-	{
-		ft_putendl(ft_strrchr((char *)current->content, '/') + 1);
-		current = current->next;
-	}
+    return (ft_strrchr(longpath, '/') + 1);
 }
 
 void    insert_files(char *filename, t_list **list)
@@ -47,7 +38,13 @@ void    insert_files(char *filename, t_list **list)
     closedir(dfd);
 }
 
-void    foldersofar(char *fname, t_list **list)
+static void    print_dots(void)
+{
+    ft_putendl(".");
+    ft_putendl("..");
+}
+
+static void    print_path(char *fname)
 {
 	static int i = 0;
 
@@ -55,9 +52,37 @@ void    foldersofar(char *fname, t_list **list)
 		ft_putendl("");
 	ft_putstr(fname);
 	ft_putendl(":");
-    ft_putendl(".");
-    ft_putendl("..");
-	printfile(list);
+}
+
+void    printlist(t_list **list)
+{
+    t_list *current;
+
+    current = *list;
+    while (current != NULL)
+    {
+        ft_putendl(pathtrim((char *)current->content));
+        current = current->next;
+    }
+}
+
+void     printfiles(char *fname)
+{
+	t_list *list;
+
+    list = NULL;
+    insert_files(fname, &list);
+    print_path(fname);
+    print_dots();
+    printlist(&list);
+	ft_lstdelmem(&list, ft_memdel);
+}
+
+void    foldersofar(char *fname, t_list **list)
+{
+    print_path(fname);
+    print_dots();
+    printlist(list);
 }
 
 void	recurdir(char *fname)
@@ -80,7 +105,7 @@ void	recurdir(char *fname)
 			    recurdir((char *)list->content);
         }
 		else
-			ft_putendl(ft_strrchr((char *)list->content, '/') + 1);
+			ft_putendl(pathtrim((char *)list->content));
 		list = list->next;
 	}
 	ft_lstdelmem(&list, ft_memdel);
@@ -169,64 +194,3 @@ void    ft_perror(char *name)
     perror(merror);
     ft_strdel(&merror);
 }
-
-/*void	enterdir(char *dirname, void (*f)(char *name))
-{
-    char *ccontent;
-    t_list  *list;
-
-    list = NULL;
-    get_filesname(dirname, &list);
-
-    if (list == NULL)
-    {
-        ft_perror("couldn't open directory ");
-        ft_putendl(dirname);
-        return ;
-    }
-    while (list != NULL)
-    {
-        ccontent  = (char *)list->content;
-        if (ccontent[0] == '.')
-               continue ;
-        else
-            f((char *)list->content);
-        list = list->next;
-    }
-	ft_lstdelmem(&list, ft_memdel);
-}
-
-void    ft_ls(char *name)
-{
-    //static int i = 0;
-    struct stat stbuf;
-    if (stat(name, &stbuf) < 0)
-    {
-        ft_perror(name);
-        return ;
-    }
-	if ((S_ISDIR(stbuf.st_mode)))
-    {
-        if (i++ != 0)
-            ft_putendl("");
-        ft_putstr(name);
-        ft_putendl(":");
-        enterdir(name, ft_ls);
-    }
-    else
-        ft_putendl(ft_strrchr(name, '/') + 1);
-}
-
-void    recur_dir(char *filename)
-{
-    t_list  *list;
-
-    list = NULL;
-    get_filesname(filename, &list);
-    while (list != NULL)
-    {
-        ft_ls((char *)list->content);
-        list = list->next;
-    }
-	ft_lstdelmem(&list, ft_memdel);
-}*/

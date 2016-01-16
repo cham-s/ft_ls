@@ -1,7 +1,7 @@
 #include "../libft/includes/libft.h"
-#include "libls.h"
+#include "ft_ls.h"
 
-static void    ft_lstpartition(t_list *head, t_list **front, t_list **back)     
+void    ft_lstpartition (t_list *head, t_list **front, t_list **back)     
 {
     t_list  *fast;
     t_list  *slow;
@@ -30,7 +30,7 @@ static void    ft_lstpartition(t_list *head, t_list **front, t_list **back)
     }
 }
 
-static t_list  *ft_mergelists(t_list *a, t_list *b, int (*cmp)())
+t_list  *ft_mergelists(t_list *a, t_list *b, int (*cmp)())
 {
     t_list  *mergedlist;
 
@@ -39,7 +39,7 @@ static t_list  *ft_mergelists(t_list *a, t_list *b, int (*cmp)())
         return b;
     else if (b == NULL)
         return a;
-    if (cmp(ft_strrchr((char *)a->content, '/') + 1, ft_strrchr((char *)b->content, '/') + 1) <= 0)
+    if (cmp((char *)a->content, (char *)b->content) <= 0)
     {
         mergedlist = a;
         mergedlist->next = ft_mergelists(a->next, b, cmp);
@@ -52,13 +52,13 @@ static t_list  *ft_mergelists(t_list *a, t_list *b, int (*cmp)())
     return mergedlist;
 }
 
-void    ft_lstmergesort(t_list **list)
+void    ft_lstmergesort(t_list **source)
 {
     t_list *head;
     t_list *a;
     t_list *b;
 
-    head = *list;
+    head = *source;
     a = NULL;
     b = NULL;
     if (head == NULL || head->next ==  NULL)
@@ -67,5 +67,5 @@ void    ft_lstmergesort(t_list **list)
     ft_lstpartition(head, &a, &b);
     ft_lstmergesort(&a);
     ft_lstmergesort(&b);
-    *list = ft_mergelists(a, b, ft_strcmp);
+    *source = ft_mergelists(a, b, ft_strcmp);
 }

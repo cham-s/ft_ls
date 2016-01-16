@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libls.h"
+#include "ft_ls.h"
 #include "../libft/includes/libft.h"
 #include <unistd.h>
 #include <sys/types.h>
@@ -46,16 +46,5 @@ void	listdir(char *fname)
 
 int main(int ac, char **av)
 {
-
-    //t_list *list = NULL;
-	if (ac == 1)
-		recurdir(".");
-	else
-		while (ac-- > 1)
-            recurdir(av[ac]);
-         
-	//listdir(dirname, 0);
-	//insert_files(av[1], &list);
-	//printfile(&list);
-	//ft_lstdelmem(&list, ft_memdel);
+    sort_args(ac, av);
 }
