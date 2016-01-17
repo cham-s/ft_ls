@@ -24,7 +24,7 @@ void    insert_files(char *filename, t_list **list)
 	if ((dfd = opendir(filename)) == NULL)
     {
         ft_perror(filename);
-        exit (1);
+        return ;
     }
 	while ((dptr = readdir(dfd)) != NULL)
     {
@@ -97,7 +97,7 @@ void	recurdir(char *fname)
 		if(stat((char *)list->content, &file) < 0)
 		{
 			ft_perror((char *)list->content);
-            exit (1);
+            return ;
 		}
 		if (S_ISDIR(file.st_mode))
         {
