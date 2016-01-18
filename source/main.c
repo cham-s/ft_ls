@@ -23,11 +23,10 @@ static	void	cleangarbage(t_list **list, char **options)
 
 int main(int ac, char **av)
 {
-	t_list *list;
+	t_list *filelist;
 	list = NULL;
-	char *options = ft_getopt(ac, av, "Ralr", &list);
-	ft_putendl(options);
-	apply_opt(&list);
+	char *options = ft_getopt(ac, av, "Ralrt", &filelist);
+	apply_opt(&filelist, options, ac);
 	cleangarbage(&list, &options);
 	return (0);
 }
