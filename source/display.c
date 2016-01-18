@@ -92,20 +92,19 @@ void	recurdir(char *fname)
 
 	list = NULL;
 	insert_files(fname, &list);
+	foldersofar(fname, &list);
 	while (list != NULL)
 	{
 		if(stat((char *)list->content, &file) < 0)
 		{
 			ft_perror((char *)list->content);
+			exit (3);
             return ;
 		}
 		if (S_ISDIR(file.st_mode))
         {
-                foldersofar(fname, &list);
 			    recurdir((char *)list->content);
         }
-		else
-			ft_putendl(pathtrim((char *)list->content));
 		list = list->next;
 	}
 	ft_lstdelmem(&list, ft_memdel);

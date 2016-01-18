@@ -6,16 +6,19 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/05 09:45:59 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/14 16:32:39 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/18 14:00:36 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	FT_LS_H
 # define FT_LS_H
-#include "../libft/includes/libft.h"
+# include "../libft/includes/libft.h"
+# define OPT_MAX 4
 
+void	recurdir(char *fname);
+void    apply_opt(t_list **list);
+char	*ft_getopt(int ac, char **av, char* optlist, t_list **list);
 void    printfiles(char *fname);
-void    recur_dir(char *filename);
 void	insert_files(char *dirname, t_list **list);
 void    ft_perror(char *name);
 void    ft_ls(char *name);
