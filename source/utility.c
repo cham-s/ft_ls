@@ -2,7 +2,7 @@
 #include "../libft/includes/libft.h"
 #include <stdio.h>
 
-void	catpath(char *folder, char *file, char *pathbuf)
+char    *catpath(char *folder, char *file)
 {
     size_t  len1;
     size_t  len2;
@@ -12,12 +12,11 @@ void	catpath(char *folder, char *file, char *pathbuf)
     len2 = ft_strlen(file);
     
     if ((name = ft_strnew((len1 + len2) + 1)) == NULL)
-        return ;
+        return (NULL);
     ft_memcpy(name, folder, len1);
     name[len1] = '/';
     ft_memcpy((name + len1) + 1, file, len2);
-	ft_strcpy(pathbuf, name);
-	ft_strdel(&name);
+    return (name);
 }
 
 void    ft_perror(char *name)

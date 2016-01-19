@@ -10,13 +10,13 @@
 #include <stdio.h>
 #include <time.h>
 
-static void    print_dots(void)
+void    print_dots(void)
 {
     ft_putendl(".");
     ft_putendl("..");
 }
 
-static void    print_path(char *fname)
+void    print_path(char *fname)
 {
 	static int i = 0;
 
@@ -66,7 +66,7 @@ void	print_ctime(char *time)
 	write(1, time, len);
 }
 
-static void	perm_format(struct stat *file)
+void	perm_format(struct stat *file)
 {
 	ft_putchar(S_ISDIR(file->st_mode) ? 'd' : '-');
 	ft_putchar((file->st_mode & S_IRUSR) ? 'r' : '-');

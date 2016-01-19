@@ -12,9 +12,9 @@
 
 void    insert_files(char *filename, t_list **list)
 {
-	struct dirent *dptr;
-	DIR *dfd;
-	char path[1024];
+	struct dirent   *dptr;
+	DIR             *dfd;
+    char            *path;
 
 	if ((dfd = opendir(filename)) == NULL)
     {
@@ -26,8 +26,9 @@ void    insert_files(char *filename, t_list **list)
         if (ft_strcmp(dptr->d_name, ".") == 0
             || ft_strcmp(dptr->d_name, "..") == 0)
                 continue ;
-        catpath(filename, dptr->d_name, path);
-        ft_lstappend(list, ft_lstnew(path, ft_strlen(path)));
+        path = catpath(filename, dptr->d_name);
+        ft_lstappend(list, ft_lstnew((void *)path, ft_strlen(path)));
+        ft_strdel(&path);
 	}
     ft_lstmergesort(list);
     closedir(dfd);
@@ -70,7 +71,6 @@ void	recurdir(char *fname)
 		if(stat((char *)list->content, &file) < 0)
 		{
 			ft_perror((char *)list->content);
-			exit (3);
             return ;
 		}
 		if (S_ISDIR(file.st_mode))

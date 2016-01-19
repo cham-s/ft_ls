@@ -24,9 +24,9 @@ static	void	cleangarbage(t_list **list, char **options)
 int main(int ac, char **av)
 {
 	t_list *filelist;
-	list = NULL;
+	filelist = NULL;
 	char *options = ft_getopt(ac, av, "Ralrt", &filelist);
-	apply_opt(&filelist, options, ac);
-	cleangarbage(&list, &options);
+	apply_opt(&filelist);
+	cleangarbage(&filelist, &options);
 	return (0);
 }

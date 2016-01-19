@@ -13,6 +13,7 @@
 #ifndef	FT_LS_H
 # define FT_LS_H
 # include "../libft/includes/libft.h"
+# include <sys/stat.h>
 # define OPT_MAX 5
 
 void	recurdir(char *fname);
@@ -22,7 +23,7 @@ void    printfiles(char *fname);
 void	insert_files(char *dirname, t_list **list);
 void    ft_perror(char *name);
 void    ft_ls(char *name);
-void	catpath(char *folder, char *file, char *pathbuf);
+char    *catpath(char *folder, char *file);
 char    *catfilenames(char *folder, char *file);
 void    get_listname(char *dirname, t_list **list);
 void	print_l_format(char *filename);
@@ -31,5 +32,10 @@ void	ft_lstfileprint_l_format(t_list **alst);
 void	recurdir(char *fname);
 void    ft_lstmergesort(t_list **list);
 char    *pathtrim(char *longpath);
-
+void    print_dots(void);
+void    print_path(char *fname);
+void    foldersofar(char *fname, t_list **list);
+void    printlist(t_list **list);
+void	print_ctime(char *time);
+void	perm_format(struct stat *file);
 #endif
