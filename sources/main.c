@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/04 14:54:05 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/18 15:52:27 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/01/20 16:47:54 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static	void	cleangarbage(t_list **list, char **options)
 	if (options != NULL)
 		ft_strdel(options);
 	if (list != NULL)
-		ft_lstdelmem(list, ft_memdel);
+		ft_lstdelmem(list, ft_strdel);
 }
 
 int main(int ac, char **av)

@@ -23,11 +23,8 @@ void    insert_files(char *filename, t_list **list)
     }
 	while ((dptr = readdir(dfd)) != NULL)
     {
-        if (ft_strcmp(dptr->d_name, ".") == 0
-            || ft_strcmp(dptr->d_name, "..") == 0)
-                continue ;
         path = catpath(filename, dptr->d_name);
-        ft_lstappend(list, ft_lstnew((void *)path, ft_strlen(path)));
+        ft_lstappend(list, ft_lstnew(path, ft_strlen(path)));
         ft_strdel(&path);
 	}
     ft_lstmergesort(list);
@@ -41,7 +38,7 @@ void    printlist(t_list **list)
     current = *list;
     while (current != NULL)
     {
-        ft_putendl(pathtrim((char *)current->content));
+		ft_putendl(pathtrim(current->content));
         current = current->next;
     }
 }
@@ -55,7 +52,7 @@ void     printfiles(char *fname)
     print_path(fname);
     print_dots();
     printlist(&list);
-	ft_lstdelmem(&list, ft_memdel);
+	ft_lstdelmem(&list, ft_strdel);
 }
 
 void	recurdir(char *fname)
@@ -68,16 +65,20 @@ void	recurdir(char *fname)
 	foldersofar(fname, &list);
 	while (list != NULL)
 	{
-		if(stat((char *)list->content, &file) < 0)
+        if (ft_strcmp(pathtrim(list->content), ".") == 0
+        || ft_strcmp(pathtrim(list->content), "..") == 0)
+			list = list->next;
+		else
 		{
-			ft_perror((char *)list->content);
-            return ;
-		}
-		if (S_ISDIR(file.st_mode))
-        {
-			    recurdir((char *)list->content);
-        }
-		list = list->next;
+			if(stat(list->content, &file) < 0)
+			{
+				ft_perror(list->content);
+				return ;
+			}
+			if (S_ISDIR(file.st_mode))
+				recurdir(list->content);
+			list = list->next;
+			}
 	}
-	ft_lstdelmem(&list, ft_memdel);
+	ft_lstdelmem(&list, ft_strdel);
 }

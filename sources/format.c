@@ -28,9 +28,17 @@ void    print_path(char *fname)
 
 void    foldersofar(char *fname, t_list **list)
 {
-    print_path(fname);
-    print_dots();
-    printlist(list);
+	struct stat file;
+	if (lstat(fname, &file) < 0)
+	{
+		ft_perror(fname);
+		exit(EXIT_FAILURE);
+	}
+	if (!S_ISLNK(file.st_mode))
+	{
+		print_path(fname);
+		printlist(list);
+	}
 }
 
 void	print_l_format(char *filename)
