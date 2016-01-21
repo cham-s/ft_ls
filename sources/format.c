@@ -10,12 +10,6 @@
 #include <stdio.h>
 #include <time.h>
 
-void    print_dots(void)
-{
-    ft_putendl(".");
-    ft_putendl("..");
-}
-
 void    print_path(char *fname)
 {
 	static int i = 0;
@@ -29,6 +23,7 @@ void    print_path(char *fname)
 void    foldersofar(char *fname, t_list **list)
 {
 	struct stat file;
+
 	if (lstat(fname, &file) < 0)
 	{
 		ft_perror(fname);
@@ -63,15 +58,17 @@ void	print_l_format(char *filename)
 	ft_putstr("  ");
 	print_ctime(ctime(&file.st_atime));
 	ft_putstr("  ");
-	ft_putstr(filename);
+	ft_putstr(pathtrim(filename));
 	ft_putendl("");
 }
 
 void	print_ctime(char *time)
 {
-	int len;
-	len = ft_strlenchr(time, '\n');
-	write(1, time, len);
+    char *end;
+
+    time = ft_strchr(time, ' ') + 1;
+    end = ft_strrchr(time, ':');
+	write(1, time, (end - time));
 }
 
 void	perm_format(struct stat *file)

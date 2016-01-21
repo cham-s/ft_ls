@@ -38,7 +38,8 @@ void    printlist(t_list **list)
     current = *list;
     while (current != NULL)
     {
-		ft_putendl(pathtrim(current->content));
+		//ft_putendl(pathtrim(current->content));
+        print_l_format(current->content); 
         current = current->next;
     }
 }
@@ -50,7 +51,6 @@ void     printfiles(char *fname)
     list = NULL;
     insert_files(fname, &list);
     print_path(fname);
-    print_dots();
     printlist(&list);
 	ft_lstdelmem(&list, ft_strdel);
 }

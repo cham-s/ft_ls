@@ -32,7 +32,6 @@ void	ft_lstfileprint_l_format(t_list **alst);
 void	recurdir(char *fname);
 void    ft_lstmergesort(t_list **list);
 char    *pathtrim(char *longpath);
-void    print_dots(void);
 void    print_path(char *fname);
 void    foldersofar(char *fname, t_list **list);
 void    printlist(t_list **list);
