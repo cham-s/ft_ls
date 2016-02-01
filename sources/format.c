@@ -20,7 +20,7 @@ void    print_path(char *fname)
 	ft_putendl(":");
 }
 
-void    foldersofar(char *fname, t_list **list)
+void    foldersofar(char *fname, t_file **list)
 {
 	struct stat file;
 

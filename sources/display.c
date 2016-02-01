@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <time.h>
 
-void    insert_files(char *filename, t_list **list)
+void    insert_files(char *filename, t_file **list)
 {
 	struct dirent   *dptr;
 	DIR             *dfd;
@@ -24,40 +24,39 @@ void    insert_files(char *filename, t_list **list)
 	while ((dptr = readdir(dfd)) != NULL)
     {
         path = catpath(filename, dptr->d_name);
-        ft_lstappend(list, ft_lstnew(path, ft_strlen(path)));
+        ft_lstfileappend(list, ft_lstfilenew(path));
         ft_strdel(&path);
 	}
     ft_lstmergesort(list);
     closedir(dfd);
 }
 
-void    printlist(t_list **list)
+void    printlist(t_file **list)
 {
-    t_list *current;
+    t_file *current;
 
     current = *list;
     while (current != NULL)
     {
-		//ft_putendl(pathtrim(current->content));
-        print_l_format(current->content); 
+		//ft_putendl(pathtrim(current->filename));
+        print_l_format(current->filename); 
         current = current->next;
     }
 }
 
 void     printfiles(char *fname)
 {
-	t_list *list;
+	t_file *list;
 
     list = NULL;
     insert_files(fname, &list);
     print_path(fname);
     printlist(&list);
-	ft_lstdelmem(&list, ft_strdel);
 }
 
 void	recurdir(char *fname)
 {
-	t_list	*list;
+	t_file	*list;
 	struct stat file;
 
 	list = NULL;
@@ -65,20 +64,19 @@ void	recurdir(char *fname)
 	foldersofar(fname, &list);
 	while (list != NULL)
 	{
-        if (ft_strcmp(pathtrim(list->content), ".") == 0
-        || ft_strcmp(pathtrim(list->content), "..") == 0)
+        if (ft_strcmp(pathtrim(list->filename), ".") == 0
+        || ft_strcmp(pathtrim(list->filename), "..") == 0)
 			list = list->next;
 		else
 		{
-			if(stat(list->content, &file) < 0)
+			if(stat(list->filename, &file) < 0)
 			{
-				ft_perror(list->content);
+				ft_perror(list->filename);
 				return ;
 			}
 			if (S_ISDIR(file.st_mode))
-				recurdir(list->content);
+				recurdir(list->filename);
 			list = list->next;
 			}
 	}
-	ft_lstdelmem(&list, ft_strdel);
 }

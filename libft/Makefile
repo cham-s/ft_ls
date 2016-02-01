@@ -6,7 +6,7 @@
 #    By: cattouma <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 13:59:55 by cattouma          #+#    #+#              #
-#    Updated: 2016/01/14 10:50:13 by cattouma         ###   ########.fr        #
+#    Updated: 2016/02/01 15:33:11 by cattouma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,8 +45,8 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME):
-		$(CC) $(CFLAGS) $(SRC)
-		$(AR) $(NAME) $(OBJ)
+	$(CC) $(CFLAGS) $(SRC)
+	$(AR) $@ $(OBJ)
 
 clean:
 		$(RM) $(OBJ)
