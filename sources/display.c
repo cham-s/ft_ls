@@ -31,26 +31,63 @@ void    getfiles(char *filename, t_file **list, char *options)
     closedir(dfd);
 }
 
+void	printtotal(t_file **list)
+{
+	int			result;
+	t_file		*current;
+	struct stat	file;
+
+	current = *list;
+	result = 0;
+	while (current != NULL)
+	{
+		if (stat(current->filename, &file) < 0)
+			ft_perror(current->filename);
+		result += file.st_blocks;
+		current = current->next;
+	}
+	ft_putstr("total ")
+	ft_putnbr(result);
+	ft_putendl("");
+}
+
+void	listallfiles(t_file **list, char *options)
+{
+	t_file *current;
+
+	current = *list;
+	printtotal(list);
+	while (current != NULL)
+	{
+		print_l_format(current->filename);
+		current = current->next;
+	}
+}
+void	listallfilesfree(t_file **list, options)
+{
+	t_file *tmp;
+
+    current = *list;
+    while (*list != NULL)
+    {
+		tmp = *list;
+		ft_putendl(pathtrim((*list)->filename));
+        *list = (*list)->next;
+		free(tmp->filename);
+		free(tmp);
+    }
+}
+
 void	listdir(char *directory, char *options)
 {
 	t_file *list;
 
 	list = NULL;
 	getfiles(directory, &list, options);
-	listallfiles(&list, options);
+	//free the list after this line
+	listallfilesfree(&list, options);
 }
-void    printlist(t_file **list)
-{
-    t_file *current;
 
-    current = *list;
-    while (current != NULL)
-    {
-		//ft_putendl(pathtrim(current->filename));
-        print_l_format(current->filename); 
-        current = current->next;
-    }
-}
 
 void     printfiles(char *fname)
 {

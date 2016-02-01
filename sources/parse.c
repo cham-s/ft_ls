@@ -1,3 +1,12 @@
+	/*while (filelist != NULL)
+	{
+		tmp =  filelist;
+		ft_putendl(filelist->filename);
+		filelist = filelist->next;
+		free(tmp->filename);
+		free(tmp);
+	}
+	free(options);*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */

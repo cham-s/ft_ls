@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/04 14:54:05 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/01 17:55:25 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/01 18:41:56 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int		main(int ac, char **av)
 {
-	t_file *filelist;
-	char *options;
+	t_file	*filelist;
+	char	*options;
 
 	if ((options = (char *)ft_memalloc(OPT_MAX)) == NULL)
 			perror("error from malloc");

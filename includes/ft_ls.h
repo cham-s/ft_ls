@@ -6,14 +6,14 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/05 09:45:59 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/01 17:55:28 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/01 18:41:54 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	FT_LS_H
 # define FT_LS_H
 # include "libft.h"
-#include <sys/stat.h>
+# include <sys/stat.h>
 # define OPT_MAX 5
 
 typedef struct		s_file
@@ -32,6 +32,7 @@ void	recurdir(char *directory, char *options);
 void    getfiles(char *filename, t_file **list, char *options);
 void	apply_ft_list(t_file **list, char *options);
 void	listdir(char *directory, char *options);
+void	listallfiles(t_file **list, char *options);
 void    printfiles(char *fname);
 void	insert_files(char *dirname, t_file **list);
 void    ft_perror(char *name);
