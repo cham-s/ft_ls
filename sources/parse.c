@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 15:59:04 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/01 16:19:39 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/01 17:54:02 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void    usage(char c)
     exit (EXIT_FAILURE);
 }
 
-void			getdirs(t_file **list, int ac, char **av)
+void			getdirs(t_file **list, int ac, char **av, char *options)
 {
 	av++;
     while (ac-- > 1 && (*av)[0] == '-')
@@ -31,7 +31,7 @@ void			getdirs(t_file **list, int ac, char **av)
         ft_lstfileappend(list, ft_lstfilenew(*av));
         av++;
     }
-	ft_lstmergesort(list);
+	ft_lstmergesort(list, options);
 }
 
 void			getoptions(int ac, char **av, char *options, char* optlist)

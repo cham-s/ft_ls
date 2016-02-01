@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/04 14:54:05 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/01 16:19:36 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/01 17:55:25 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,9 @@ int		main(int ac, char **av)
 			perror("error from malloc");
 	filelist = NULL;
 	getoptions(ac, av, options, "Ralrt");
-	getdirs(&filelist, ac, av);
-	//apply_ft_list(filelist, options);
-	ft_putendl(options);
-
+	getdirs(&filelist, ac, av, options);
+	apply_ft_list(&filelist, options);
 	t_file *tmp;
 	tmp = filelist;
-	while (filelist != NULL)
-	{
-		tmp =  filelist;
-		ft_putendl(filelist->filename);
-		filelist = filelist->next;
-		free(tmp->filename);
-		free(tmp);
-	}
-	free(options);
-	while
 	return (0);
 }

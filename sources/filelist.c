@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 16:20:42 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/01 16:19:37 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/01 16:37:07 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ t_file	*ft_lstfilenew(char *filename)
 	t_file *new;
 	struct stat file;
 
-	if (stat(filename, &file) < 0)
-		ft_perror(filename);
+	stat(filename, &file);
 	if ((new = (t_file *)ft_memalloc(sizeof(t_file))) == NULL
 		|| filename == NULL)
 		return (NULL);

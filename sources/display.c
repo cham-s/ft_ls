@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <time.h>
 
-void    insert_files(char *filename, t_file **list)
+void    getfiles(char *filename, t_file **list, char *options)
 {
 	struct dirent   *dptr;
 	DIR             *dfd;
@@ -25,12 +25,20 @@ void    insert_files(char *filename, t_file **list)
     {
         path = catpath(filename, dptr->d_name);
         ft_lstfileappend(list, ft_lstfilenew(path));
-        ft_strdel(&path);
+		free(path);
 	}
-    ft_lstmergesort(list);
+	ft_lstmergesort(list, options);
     closedir(dfd);
 }
 
+void	listdir(char *directory, char *options)
+{
+	t_file *list;
+
+	list = NULL;
+	getfiles(directory, &list, options);
+	listallfiles(&list, options);
+}
 void    printlist(t_file **list)
 {
     t_file *current;
@@ -54,19 +62,23 @@ void     printfiles(char *fname)
     printlist(&list);
 }
 
-void	recurdir(char *fname)
+void	recurdir(char *directory, char *options)
 {
 	t_file	*list;
+	t_file	*tmp;
 	struct stat file;
+	int static i = 0;
 
 	list = NULL;
-	insert_files(fname, &list);
-	foldersofar(fname, &list);
+	getfiles(directory, &list, options);
+	listallfiles(&list, options);
+	if (i++ != 0)
+		ft_putchar('\n');
 	while (list != NULL)
 	{
+		tmp = list;
         if (ft_strcmp(pathtrim(list->filename), ".") == 0
         || ft_strcmp(pathtrim(list->filename), "..") == 0)
-			list = list->next;
 		else
 		{
 			if(stat(list->filename, &file) < 0)
@@ -76,7 +88,9 @@ void	recurdir(char *fname)
 			}
 			if (S_ISDIR(file.st_mode))
 				recurdir(list->filename);
-			list = list->next;
-			}
+		}
+		list = list->next;
+		free(tmp->filename);
+		free(tmp);
 	}
 }

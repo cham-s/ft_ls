@@ -6,23 +6,25 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 14:26:40 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/29 17:52:10 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/01 17:26:22 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "libft.h"
 
-void	ft_list(char *filename, char *options)
+void	ft_list(char *directory, char *options)
 {
-	filename++;
-	options++;
-	return ;
+	if (ft_strchr(options, 'R'))
+		recurdir(directory, options);
+	else
+		listdir(directory, options);
 }
 
 void	apply_ft_list(t_file **list, char *options)
 {
 	t_file *tmp;
+	struct stat file;
 
 	tmp = NULL;
 	if (*list == NULL)
@@ -32,7 +34,10 @@ void	apply_ft_list(t_file **list, char *options)
 		while (*list != NULL)
 		{
 			tmp = *list;
-			ft_list((*list)->filename, options);
+			if (stat((*list)->filename, &file) < 0)
+				ft_perror((*list)->filename);
+			else
+				ft_list((*list)->filename, options);
 			*list = (*list)->next;
 			free(tmp->filename);
 			free(tmp);

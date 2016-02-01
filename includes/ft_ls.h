@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/05 09:45:59 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/01 12:05:07 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/01 17:55:28 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ t_file	*ft_lstfilenew(char *filename);
 void	ft_lstfileappend(t_file **file, t_file *new);
 void	ft_list(char *filename, char *options);
 void	getoptions(int ac, char **av, char *options, char* optlist);
-void	getdirs(t_file **list, int ac, char **av);
-void	recurdir(char *fname);
-void    apply_opt(t_file **list);
-char	*ft_getopt(int ac, char **av, char* optlist, t_file **list);
+void	getdirs(t_file **list, int ac, char **av, char *options);
+void	recurdir(char *directory, char *options);
+void    getfiles(char *filename, t_file **list, char *options);
+void	apply_ft_list(t_file **list, char *options);
+void	listdir(char *directory, char *options);
 void    printfiles(char *fname);
 void	insert_files(char *dirname, t_file **list);
 void    ft_perror(char *name);
@@ -42,7 +43,7 @@ void	print_l_format(char *filename);
 void	print_dirname(char *filename);
 void	ft_lstfileprint_l_format(t_file **alst);
 void	recurdir(char *fname);
-void    ft_lstmergesort(t_file **list);
+void    ft_lstmergesort(t_file **source, char *options);
 char    *pathtrim(char *longpath);
 void    print_path(char *fname);
 void    foldersofar(char *fname, t_file **list);
