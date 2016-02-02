@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 14:26:40 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/02 11:48:40 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/02 13:45:34 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,15 @@ void	apply_ft_list(t_file **list, char *options)
 		{
 			tmp = *list;
 			if (stat((*list)->filename, &file) < 0)
-				ft_perror((*list)->filename);
+			{
+				//ft_perror((*list)->filename);
+				ft_putendl((*list)->filename);
+			}
 			else
-				ft_list((*list)->filename, options);
+			{
+				ft_putendl((*list)->filename);
+				//ft_list((*list)->filename, options);
+			}
 			*list = (*list)->next;
 			free(tmp->filename);
 			free(tmp);

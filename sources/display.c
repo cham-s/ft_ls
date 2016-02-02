@@ -107,9 +107,9 @@ void    printfile(char *fname, char *options)
 
 void	recurdir(char *directory, char *options)
 {
-	t_file	*list;
-	t_file	*tmp;
-	struct stat file;
+	t_file		*list;
+	t_file		*tmp;
+	struct stat	file;
 
 	list = NULL;
 	getfiles(directory, &list, options);

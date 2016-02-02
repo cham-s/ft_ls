@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 15:59:04 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/02 12:34:48 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/02 13:44:16 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,29 @@ static void    usage(char c)
 
 void			getdirs(t_file **list, int ac, char **av)
 {
+	t_file		*errors;
+	t_file		*tmp;
+	struct stat	file;
+
+	errors = NULL;
 	av++;
     while (ac-- > 1 && (*av)[0] == '-')
 		av++;
     while (ac-- >= 1)
     {
-        ft_lstfileappend(list, ft_lstfilenew(*av));
+		if (stat(*av, &file) < 0)
+			ft_lstfileappend(&errors, ft_lstfilenew(*av));
+		else
+			ft_lstfileappend(list, ft_lstfilenew(*av));
         av++;
     }
+	ft_lstmergesort(&errors, "");
 	ft_lstmergesort(list, "");
+	tmp  = errors;
+	while (errors->next != NULL)
+		errors = errors->next;
+	errors->next = *list;
+	*list = tmp;
 }
 
 void			getoptions(int ac, char **av, char *options, char* optlist)
