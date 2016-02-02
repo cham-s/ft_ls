@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 15:59:04 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/02 13:44:16 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/02 13:53:59 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,14 @@ void			getdirs(t_file **list, int ac, char **av)
     }
 	ft_lstmergesort(&errors, "");
 	ft_lstmergesort(list, "");
-	tmp  = errors;
-	while (errors->next != NULL)
-		errors = errors->next;
-	errors->next = *list;
-	*list = tmp;
+	if (errors != NULL)
+	{
+		tmp  = errors;
+		while (errors->next != NULL)
+			errors = errors->next;
+		errors->next = *list;
+		*list = tmp;
+	}
 }
 
 void			getoptions(int ac, char **av, char *options, char* optlist)
