@@ -1,12 +1,3 @@
-	/*while (filelist != NULL)
-	{
-		tmp =  filelist;
-		ft_putendl(filelist->filename);
-		filelist = filelist->next;
-		free(tmp->filename);
-		free(tmp);
-	}
-	free(options);*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -15,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 15:59:04 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/01 17:54:02 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/02 12:34:48 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +21,7 @@ static void    usage(char c)
     exit (EXIT_FAILURE);
 }
 
-void			getdirs(t_file **list, int ac, char **av, char *options)
+void			getdirs(t_file **list, int ac, char **av)
 {
 	av++;
     while (ac-- > 1 && (*av)[0] == '-')
@@ -40,7 +31,7 @@ void			getdirs(t_file **list, int ac, char **av, char *options)
         ft_lstfileappend(list, ft_lstfilenew(*av));
         av++;
     }
-	ft_lstmergesort(list, options);
+	ft_lstmergesort(list, "");
 }
 
 void			getoptions(int ac, char **av, char *options, char* optlist)

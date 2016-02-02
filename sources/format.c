@@ -1,5 +1,5 @@
 #include "ft_ls.h"
-#include "../libft/includes/libft.h"
+#include "libft.h"
 #include <dirent.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -20,7 +20,7 @@ void    print_path(char *fname)
 	ft_putendl(":");
 }
 
-void    foldersofar(char *fname, t_file **list)
+/*void    foldersofar(char *fname, t_file **list)
 {
 	struct stat file;
 
@@ -32,34 +32,37 @@ void    foldersofar(char *fname, t_file **list)
 	if (!S_ISLNK(file.st_mode))
 	{
 		print_path(fname);
-		printlist(list);
+		//printlist(list);
 	}
-}
+}*/
 
-void	print_l_format(char *filename)
+void	print_l_format(char *filename, char *options)
 {
 	struct stat file;
 	struct passwd *pwd;
 	struct group *grp = NULL;
 
-	if (stat(filename, &file) < 0)
-		perror("error from stat");
-	if ((pwd = getpwuid(file.st_uid)) && (grp = getgrgid(file.st_gid)) == NULL)
-		perror("error from pwd grp");
-	perm_format(&file);
-	ft_putstr("  ");
-	ft_putnbr(file.st_nlink);
-	ft_putstr("  ");
-	ft_putstr(pwd->pw_name);
-	ft_putstr("  ");
-	ft_putstr(grp->gr_name);
-	ft_putstr("  ");
-	ft_putnbr(file.st_size);
-	ft_putstr("  ");
-	print_ctime(ctime(&file.st_atime));
-	ft_putstr("  ");
-	ft_putstr(pathtrim(filename));
-	ft_putendl("");
+	if (ft_strchr(options, 'a') == NULL)
+	{
+		if (stat(filename, &file) < 0)
+			perror("error from stat");
+		if ((pwd = getpwuid(file.st_uid)) && (grp = getgrgid(file.st_gid)) == NULL)
+			perror("error from pwd grp");
+		perm_format(&file);
+		ft_putstr("  ");
+		ft_putnbr(file.st_nlink);
+		ft_putstr("  ");
+		ft_putstr(pwd->pw_name);
+		ft_putstr("  ");
+		ft_putstr(grp->gr_name);
+		ft_putstr("  ");
+		ft_putnbr(file.st_size);
+		ft_putstr("  ");
+		print_ctime(ctime(&file.st_atime));
+		ft_putstr("  ");
+		ft_putstr(pathtrim(filename));
+		ft_putendl("");
+	}
 }
 
 void	print_ctime(char *time)

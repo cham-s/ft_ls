@@ -46,32 +46,42 @@ void	printtotal(t_file **list)
 		result += file.st_blocks;
 		current = current->next;
 	}
-	ft_putstr("total ")
+	ft_putstr("total ");
 	ft_putnbr(result);
 	ft_putendl("");
 }
 
-void	listallfiles(t_file **list, char *options)
+void	listallfiles(t_file **list, char *options, char *directory)
 {
-	t_file *current;
+	t_file		*current;
+	static int	i = 0;
 
+	if (i != 0)
+	{
+		ft_putstr(directory);
+		ft_putendl(":");
+	}
 	current = *list;
-	printtotal(list);
+	if (ft_strchr(options, 'l'))
+		printtotal(list);
 	while (current != NULL)
 	{
-		print_l_format(current->filename);
+		if (ft_strchr(options, 'l'))
+			print_l_format(current->filename, options);
+		else
+			ft_putendl(pathtrim(current->filename));
 		current = current->next;
 	}
+	i++;
 }
-void	listallfilesfree(t_file **list, options)
+void	listallfilesfree(t_file **list, char *options)
 {
 	t_file *tmp;
 
-    current = *list;
     while (*list != NULL)
     {
 		tmp = *list;
-		ft_putendl(pathtrim((*list)->filename));
+		printfile(pathtrim((*list)->filename), options);
         *list = (*list)->next;
 		free(tmp->filename);
 		free(tmp);
@@ -89,14 +99,10 @@ void	listdir(char *directory, char *options)
 }
 
 
-void     printfiles(char *fname)
+void    printfile(char *fname, char *options)
 {
-	t_file *list;
-
-    list = NULL;
-    insert_files(fname, &list);
-    print_path(fname);
-    printlist(&list);
+	if (ft_strchr(options, 'l') == NULL)
+		ft_putendl(fname);
 }
 
 void	recurdir(char *directory, char *options)
@@ -104,18 +110,16 @@ void	recurdir(char *directory, char *options)
 	t_file	*list;
 	t_file	*tmp;
 	struct stat file;
-	int static i = 0;
 
 	list = NULL;
 	getfiles(directory, &list, options);
-	listallfiles(&list, options);
-	if (i++ != 0)
-		ft_putchar('\n');
+	listallfiles(&list, options, directory);
 	while (list != NULL)
 	{
 		tmp = list;
         if (ft_strcmp(pathtrim(list->filename), ".") == 0
         || ft_strcmp(pathtrim(list->filename), "..") == 0)
+			list = list->next;
 		else
 		{
 			if(stat(list->filename, &file) < 0)
@@ -124,9 +128,9 @@ void	recurdir(char *directory, char *options)
 				return ;
 			}
 			if (S_ISDIR(file.st_mode))
-				recurdir(list->filename);
+				recurdir(list->filename, options);
+			list = list->next;
 		}
-		list = list->next;
 		free(tmp->filename);
 		free(tmp);
 	}
