@@ -74,10 +74,22 @@ void	listallfiles(t_file **list, char *options, char *directory)
 	}
 	i++;
 }
+
 void	listallfilesfree(t_file **list, char *options)
 {
 	t_file *tmp;
 
+	if (ft_strchr(options, 'a') == NULL)
+	{
+		tmp = *list;
+		while (ft_strcmp(pathtrim((*list)->filename), ".") == 0 ||
+			ft_strcmp(pathtrim((*list)->filename), "..") == 0)
+		{
+			*list = (*list)->next;
+			free(tmp->filename);
+			free(tmp);
+		}
+	}
     while (*list != NULL)
     {
 		tmp = *list;
