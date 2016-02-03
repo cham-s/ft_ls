@@ -25,12 +25,12 @@ typedef struct		s_file
 
 t_file	*ft_lstfilenew(char *filename);
 void	ft_lstfileappend(t_file **file, t_file *new);
-void	ft_list(char *filename, char *options);
+void	ft_list(char *filename, char *options, int ac);
 void	getoptions(int ac, char **av, char *options, char* optlist);
 void	getdirs(t_file **list, int ac, char **av);
 void	recurdir(char *directory, char *options);
 void    getfiles(char *filename, t_file **list, char *options);
-void	apply_ft_list(t_file **list, char *options);
+void	apply_ft_list(t_file **list, char *options, int ac);
 void	listdir(char *directory, char *options);
 void	listallfiles(t_file **list, char *options, char *directory);
 void    printfile(char *fname, char *options);

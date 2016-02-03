@@ -25,6 +25,6 @@ int		main(int ac, char **av)
 	filelist = NULL;
 	getoptions(ac, av, options, "Ralrt");
 	getdirs(&filelist, ac, av);
-	apply_ft_list(&filelist, options);
+	apply_ft_list(&filelist, options, ac);
 	return (0);
 }
