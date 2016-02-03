@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 16:20:42 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/01 16:37:07 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/03 20:48:40 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ void	ft_lstfileappend(t_file **list, t_file *new)
 			current = current->next;
 		current->next = new;
 	}
+}
+
+void	initmax(t_max *maxs)
+{
+	maxs->lnk = 0;
+	maxs->size = 0;
+	maxs->day = 0;
 }

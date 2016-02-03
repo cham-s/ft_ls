@@ -20,7 +20,7 @@ void    print_path(char *fname)
 	ft_putendl(":");
 }
 
-void	print_l_format(char *filename, char *options)
+void	print_l_format(char *filename, char *options, t_max *maxs)
 {
 	struct stat file;
 	struct passwd *pwd;
@@ -35,13 +35,13 @@ void	print_l_format(char *filename, char *options)
 			perror("error from pwd grp");
 		perm_format(&file);
 		ft_putstr("  ");
-		ft_putnbr(file.st_nlink);
+		printwithspace(maxs->lnk, file.st_nlink);
 		ft_putstr("  ");
 		ft_putstr(pwd->pw_name);
 		ft_putstr("  ");
 		ft_putstr(grp->gr_name);
 		ft_putstr("  ");
-		ft_putnbr(file.st_size);
+		printwithspace(maxs->size, file.st_size);
 		ft_putstr("  ");
 		print_ctime(ctime(&file.st_atime));
 		ft_putstr("  ");

@@ -6,9 +6,12 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/03 19:18:15 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/03 20:31:12 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/03 21:32:48 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_ls.h"
+#include "libft.h"
 
 int		nbrspace(int max)
 {
