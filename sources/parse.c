@@ -45,7 +45,7 @@ void			getdirs(t_file **list, int ac, char **av)
     filelist = NULL;
 	errors = NULL;
 	av++;
-    while (ac-- > 1 && (*av)[0] == '-')
+    while (ac-- > 1 && (*av)[0] == '-' && (*av)[1] != '\0')
 		av++;
     while (ac-- >= 1)
     {
@@ -76,7 +76,7 @@ void			getoptions(int ac, char **av, char *options, char* optlist)
 	i = 0;
 	tmp = options;
 	i++;
-    while (ac-- > 1 && av[i][0] == '-')
+    while (ac-- > 1 && av[i][0] == '-' && av[i][1] != '\0')
 	{
 		j = 1;
 		while (av[i][j])
