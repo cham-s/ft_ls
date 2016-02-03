@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 14:26:40 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/02 13:54:49 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/03 17:53:56 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void	ft_list(char *directory, char *options, int ac)
 {
     static int i = 0;
+
 	if (ft_strchr(options, 'R'))
 		recurdir(directory, options);
 	else

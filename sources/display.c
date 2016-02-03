@@ -63,15 +63,15 @@ void	listallfiles(t_file **list, char *options, char *directory)
 		ft_putendl(":");
 	}
 	current = *list;
-	if (ft_strchr(options, 'a') == NULL)
-	{
-		while (pathtrim((*list)->filename)[0] == '.')
-			*list = (*list)->next;
-	}
 	if (ft_strchr(options, 'l'))
 		printtotal(list);
 	while (current != NULL)
 	{
+		if (ft_strchr(options, 'a') == NULL)
+		{
+			while (pathtrim((*list)->filename)[0] == '.')
+				*list = (*list)->next;
+		}
 		if (ft_strchr(options, 'l'))
 			print_l_format(current->filename, options);
 		else
@@ -85,6 +85,10 @@ void	listallfilesfree(t_file **list, char *options)
 {
 	t_file      *tmp;
 
+	if (ft_strchr(options, 'l'))
+		printtotal(list);
+    while (*list != NULL)
+    {
 	if (ft_strchr(options, 'a') == NULL)
 	{
 		while (pathtrim((*list)->filename)[0] == '.')
@@ -95,8 +99,6 @@ void	listallfilesfree(t_file **list, char *options)
 			free(tmp);
 		}
 	}
-    while (*list != NULL)
-    {
 		tmp = *list;
         if (ft_strchr(options, 'l'))
             print_l_format((*list)->filename, options);

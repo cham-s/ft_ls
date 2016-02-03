@@ -20,30 +20,15 @@ void    print_path(char *fname)
 	ft_putendl(":");
 }
 
-/*void    foldersofar(char *fname, t_file **list)
-{
-	struct stat file;
-
-	if (lstat(fname, &file) < 0)
-	{
-		ft_perror(fname);
-		exit(EXIT_FAILURE);
-	}
-	if (!S_ISLNK(file.st_mode))
-	{
-		print_path(fname);
-		//printlist(list);
-	}
-}*/
-
 void	print_l_format(char *filename, char *options)
 {
 	struct stat file;
 	struct passwd *pwd;
 	struct group *grp = NULL;
+	//a virer
+	char *avirer = options;
+	avirer++;
 
-	if (ft_strchr(options, 'a') == NULL)
-	{
 		if (stat(filename, &file) < 0)
 			perror("error from stat");
 		if ((pwd = getpwuid(file.st_uid)) && (grp = getgrgid(file.st_gid)) == NULL)
@@ -62,7 +47,6 @@ void	print_l_format(char *filename, char *options)
 		ft_putstr("  ");
 		ft_putstr(pathtrim(filename));
 		ft_putendl("");
-	}
 }
 
 void	print_ctime(char *time)
