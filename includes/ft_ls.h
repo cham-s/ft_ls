@@ -14,7 +14,7 @@
 # define FT_LS_H
 # include "libft.h"
 # include <sys/stat.h>
-# define OPT_MAX 5
+# define OPT_MAX 6
 
 typedef struct		s_file
 {
@@ -32,12 +32,12 @@ typedef struct		s_max
 
 t_file	*ft_lstfilenew(char *filename);
 void	ft_lstfileappend(t_file **file, t_file *new);
-void	ft_list(char *filename, char *options, int ac);
+void	ft_list(char *filename, char *options, int ac, char **av);
 void	getoptions(int ac, char **av, char *options, char* optlist);
-void	getdirs(t_file **list, int ac, char **av);
+void	getdirs(t_file **list, int ac, char **av, char *options);
 void	recurdir(char *directory, char *options);
 void    getfiles(char *filename, t_file **list, char *options, t_max *maxs);
-void	apply_ft_list(t_file **list, char *options, int ac);
+void	apply_ft_list(t_file **list, char *options, int ac, char **av);
 void	listdir(char *directory, char *options);
 void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs);
 void    printfile(char *fname, char *options);

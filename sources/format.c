@@ -60,7 +60,20 @@ void	print_ctime(char *time)
 
 void	perm_format(struct stat *file)
 {
-	ft_putchar(S_ISDIR(file->st_mode) ? 'd' : '-');
+    if (S_ISDIR(file->st_mode))
+        ft_putchar('d');
+    else if (S_ISBLK(file->st_mode))
+        ft_putchar('b');
+    else if (S_ISCHR(file->st_mode))
+        ft_putchar('c');
+    else if (S_ISLNK(file->st_mode))
+        ft_putchar('l');
+    else if (S_ISSOCK(file->st_mode))
+        ft_putchar('s');
+    else if (S_ISFIFO(file->st_mode))
+        ft_putchar('p');
+    else
+        ft_putchar('-');
 	ft_putchar((file->st_mode & S_IRUSR) ? 'r' : '-');
 	ft_putchar((file->st_mode & S_IWUSR) ? 'w' : '-');
 	ft_putchar((file->st_mode & S_IXUSR) ? 'x' : '-');

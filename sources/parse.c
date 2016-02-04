@@ -36,7 +36,7 @@ void            attachlist(t_file **a, t_file **b)
 	}
 }
 
-void			getdirs(t_file **list, int ac, char **av)
+void			getdirs(t_file **list, int ac, char **av, char *options)
 {
 	t_file		*errors;
     t_file      *filelist;
@@ -62,7 +62,7 @@ void			getdirs(t_file **list, int ac, char **av)
     }
 	ft_lstmergesort(&errors, "");
 	ft_lstmergesort(&filelist, "");
-	ft_lstmergesort(list, "");
+	ft_lstmergesort(list, options);
     attachlist(&errors, &filelist);
     attachlist(&filelist, list);
 }
@@ -81,6 +81,8 @@ void			getoptions(int ac, char **av, char *options, char* optlist)
 		j = 1;
 		while (av[i][j])
 		{
+            if (ft_strcmp(av[i], "--") == 0)
+                break ;
 			if (ft_strchr(optlist, av[i][j]) == NULL)
 				usage(av[i][j]);
 			else

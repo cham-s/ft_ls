@@ -23,8 +23,8 @@ int		main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	filelist = NULL;
-	getoptions(ac, av, options, "Ralrt");
-	getdirs(&filelist, ac, av);
-	apply_ft_list(&filelist, options, ac);
+	getoptions(ac, av, options, "Ralrt1");
+	getdirs(&filelist, ac, av, options);
+	apply_ft_list(&filelist, options, ac, av);
 	return (0);
 }
