@@ -19,7 +19,7 @@
 typedef struct		s_file
 {
 	char			*filename;
-	int				date;
+	time_t			date;
 	struct s_file	*next;
 }					t_file;
 
@@ -27,7 +27,7 @@ typedef struct		s_max
 {
 	int				lnk;
 	int				size;
-	int				day;
+	int             day;
 }					t_max;
 
 t_file	*ft_lstfilenew(char *filename);
@@ -47,7 +47,7 @@ void    ft_ls(char *name);
 char    *catpath(char *folder, char *file);
 char    *catfilenames(char *folder, char *file);
 void    get_filename(char *dirname, t_file **list);
-void	print_l_format(char *filename, char *options, t_max *max);
+void	print_l_format(char *filename, t_max *max);
 void	print_dirname(char *filename);
 void	ft_lstfileprint_l_format(t_file **alst);
 void    ft_lstmergesort(t_file **source, char *options);

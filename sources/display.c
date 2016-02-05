@@ -83,7 +83,7 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
             continue ;
         }
 		if (ft_strchr(options, 'l'))
-			print_l_format(current->filename, options, maxs);
+			print_l_format(current->filename, maxs);
 		else
 			printfile(pathtrim(current->filename), options);
 		current = current->next;
@@ -115,7 +115,7 @@ void	listallfilesfree(t_file **list, char *options,char *directory, t_max *maxs)
             continue ;
         }
         if (ft_strchr(options, 'l'))
-            print_l_format((*list)->filename, options, maxs);
+            print_l_format((*list)->filename, maxs);
         else
             printfile(pathtrim((*list)->filename), options);
         *list = (*list)->next;

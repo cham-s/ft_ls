@@ -20,33 +20,44 @@ void    print_path(char *fname)
 	ft_putendl(":");
 }
 
-void	print_l_format(char *filename, char *options, t_max *maxs)
+void    printstat(struct stat *file, char *filename, t_max *maxs)
+{
+	struct passwd *pwd;
+	struct group *grp;
+
+    grp = NULL;
+    if ((pwd = getpwuid(file->st_uid)) && (grp = getgrgid(file->st_gid)) == NULL)
+        perror("error from pwd grp");
+    perm_format(file);
+    ft_putstr("  ");
+    printwithspace(maxs->lnk, file->st_nlink);
+    ft_putstr("  ");
+    ft_putstr(pwd->pw_name);
+    ft_putstr("  ");
+    ft_putstr(grp->gr_name);
+    ft_putstr("  ");
+    printwithspace(maxs->size, file->st_size);
+    ft_putstr("  ");
+    print_ctime(ctime(&file->st_mtime));
+    ft_putstr("  ");
+    ft_putstr(pathtrim(filename));
+    ft_putendl("");
+}
+
+void	print_l_format(char *filename, t_max *maxs)
 {
 	struct stat file;
-	struct passwd *pwd;
-	struct group *grp = NULL;
-	//a virer
-	char *avirer = options;
-	avirer++;
 
-		if (stat(filename, &file) < 0)
+		if (lstat(filename, &file) < 0)
 			perror("error from stat");
-		if ((pwd = getpwuid(file.st_uid)) && (grp = getgrgid(file.st_gid)) == NULL)
-			perror("error from pwd grp");
-		perm_format(&file);
-		ft_putstr("  ");
-		printwithspace(maxs->lnk, file.st_nlink);
-		ft_putstr("  ");
-		ft_putstr(pwd->pw_name);
-		ft_putstr("  ");
-		ft_putstr(grp->gr_name);
-		ft_putstr("  ");
-		printwithspace(maxs->size, file.st_size);
-		ft_putstr("  ");
-		print_ctime(ctime(&file.st_mtime));
-		ft_putstr("  ");
-		ft_putstr(pathtrim(filename));
-		ft_putendl("");
+        if (S_ISLNK(file.st_mode))
+            printstat(&file, filename, maxs);
+        else
+        {
+            if (stat(filename, &file) < 0)
+                perror("error from stat");
+             printstat(&file, filename, maxs);
+        }
 }
 
 void	print_ctime(char *time)
