@@ -17,21 +17,24 @@ void	ft_list(char *directory, char *options, int ac, char **av)
 {
     static int i = 0;
 
-    // a virer
-	if (i == 0 && ((av[1][0] == '-') || (ac > 2 && av[1][0] != '-')))
-	{
-        ft_putstr(directory);
-		ft_putendl(":");
-	}
-    av++;
+    if (ac > 2)
+    {
+        if (i == 0 && (av[1][0] == '-' || (ac > 2 && av[1][0] != '-')))
+        {
+            ft_putstr(directory);
+            ft_putendl(":");
+        }
+        if (i != 0)
+        {
+            ft_putchar('\n');
+            ft_putstr(directory);
+            ft_putendl(":");
+        }
+    }
 	if (ft_strchr(options, 'R'))
 		recurdir(directory, options);
 	else
-    {
-        // a virer
-        ac++;
         listdir(directory, options);
-    }
     i++;
 }
 

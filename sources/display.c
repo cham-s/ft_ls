@@ -154,7 +154,7 @@ void	recurdir(char *directory, char *options)
 			list = list->next;
 		else
 		{
-            //skip dots todo
+            //skip dots todo function
             if (ft_strchr(options, 'a') == NULL && pathtrim(list->filename)[0] == '.')
             {
                 list = list->next;
