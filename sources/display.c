@@ -113,33 +113,46 @@ void	listallfilesfree(t_file **list, char *options, t_max *maxs, char *directory
 	t_file      *tmp;
     static int  i = 0;
 
-	if (i != 0)
-	{
-        ft_putchar('\n');
-        ft_putstr(directory);
-		ft_putendl(":");
-	}
-	if (ft_strchr(options, 'l'))
-		printtotal(list);
-    while (*list != NULL)
+    if ((*list)->next == NULL)
     {
-        tmp = *list;
-        if (ft_strchr(options, 'a') == NULL /*&& pathtrim((*list)->filename)[0] == '.'*/)
-        {
-            *list = (*list)->next;
-            free(tmp->filename);
-            free(tmp);
-            continue ;
-        }
+        //free this line
         if (ft_strchr(options, 'l'))
             print_l_format((*list)->filename, options, maxs);
         else
-            printfile(pathtrim((*list)->filename), options);
-        *list = (*list)->next;
-        free(tmp->filename);
-        free(tmp);
+            printfile((*list)->filename, options);
+        free((*list)->filename);
+        free(*list);
     }
-    i++;
+    else
+    {
+        if (i != 0)
+        {
+            ft_putchar('\n');
+            ft_putstr(directory);
+            ft_putendl(":");
+        }
+        if (ft_strchr(options, 'l'))
+            printtotal(list);
+        while (*list != NULL)
+        {
+            tmp = *list;
+            if (ft_strchr(options, 'a') == NULL && pathtrim((*list)->filename)[0] == '.')
+            {
+                *list = (*list)->next;
+                free(tmp->filename);
+                free(tmp);
+                continue ;
+            }
+            if (ft_strchr(options, 'l'))
+                print_l_format(pathtrim((*list)->filename), options, maxs);
+            else
+                printfile(pathtrim((*list)->filename), options);
+            *list = (*list)->next;
+            free(tmp->filename);
+            free(tmp);
+        }
+        i++;
+    }
 }
 
 void	listdir(char *directory, char *options)

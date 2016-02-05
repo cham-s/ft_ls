@@ -45,7 +45,7 @@ void	print_l_format(char *filename, char *options, t_max *maxs)
 		ft_putstr("  ");
 		print_ctime(ctime(&file.st_atime));
 		ft_putstr("  ");
-		ft_putstr(pathtrim(filename));
+		ft_putstr(filename);
 		ft_putendl("");
 }
 

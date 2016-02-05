@@ -12,7 +12,8 @@
 
 NAME = ft_ls
 SRCS = sources/main.c sources/parse.c sources/display.c sources/merge.c \
-	   sources/launcher.c sources/format.c sources/utility.c sources/filelist.c
+	   sources/launcher.c sources/format.c sources/utility.c sources/filelist.c\
+	   sources/format2.c
 LIBS = libft/libft.a
 INC = -I includes -I libft/includes
 FLAG = -Wall -Werror -Wextra
