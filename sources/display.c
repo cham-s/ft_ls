@@ -10,6 +10,24 @@
 #include <stdio.h>
 #include <time.h>
 
+void    apply_merge(t_file **list, char *options)
+{
+    if (*list == NULL)
+        return ;
+    if (ft_strchr(options, 't'))
+    {
+        if (ft_strchr(options, 'r'))
+            ft_lstmergesort(list, "r");
+        else
+            ft_lstmergesort(list, "");
+        ft_lstmergesort(list, "t");
+    }
+    else if (ft_strchr(options, 'r'))
+        ft_lstmergesort(list, "r");
+    else
+        ft_lstmergesort(list, "");
+}
+
 void    getfiles(char *filename, t_file **list, char *options, t_max *maxs)
 {
 	struct dirent   *dptr;
@@ -37,8 +55,8 @@ void    getfiles(char *filename, t_file **list, char *options, t_max *maxs)
         ft_lstfileappend(list, ft_lstfilenew(path));
 		free(path);
 	}
-	ft_lstmergesort(list, options);
     closedir(dfd);
+    apply_merge(list, options);
 }
 
 void	printtotal(t_file **list)
@@ -51,9 +69,16 @@ void	printtotal(t_file **list)
 	result = 0;
 	while (current != NULL)
 	{
-		if (stat(current->filename, &file) < 0)
-			ft_perror(current->filename);
-		result += file.st_blocks;
+        if (lstat(current->filename, &file) < 0)
+            perror("error from stat");
+        if (S_ISLNK(file.st_mode))
+            result += file.st_blocks;
+        else
+        {
+            if (stat(current->filename, &file) < 0)
+                perror("error from stat");
+            result += file.st_blocks;
+        }
 		current = current->next;
 	}
 	ft_putstr("total ");

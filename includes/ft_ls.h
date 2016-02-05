@@ -60,5 +60,6 @@ void	perm_format(struct stat *file);
 void	initmax(t_max *maxs);
 void	printwithspace(int nbrs, int size);
 int		nbrspace(int max);
+void    apply_merge(t_file **list, char *options);
 
 #endif

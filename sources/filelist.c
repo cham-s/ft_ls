@@ -12,24 +12,38 @@
 
 #include "ft_ls.h"
 #include "libft.h"
+#include <stdio.h> 
+
+static void    addstat(struct stat *file, char *filename, t_file *new)
+{
+	new->filename = ft_strnew(ft_strlen(filename));
+	ft_strcpy(new->filename, filename);
+	new->next = NULL;
+	new->date = file->st_mtime;
+}
 
 t_file	*ft_lstfilenew(char *filename)
 {
 	t_file *new;
 	struct stat file;
 
-	stat(filename, &file);
 	if ((new = (t_file *)ft_memalloc(sizeof(t_file))) == NULL
 		|| filename == NULL)
 		return (NULL);
-	new->filename = ft_strnew(ft_strlen(filename));
-	ft_strcpy(new->filename, filename);
-	new->next = NULL;
-	new->date = file.st_mtime;
+    if (lstat(filename, &file) < 0)
+        perror("error from stat");
+    if (S_ISLNK(file.st_mode))
+        addstat(&file, filename, new);
+    else
+    {
+        if (stat(filename, &file) < 0)
+            perror("error from stat");
+        addstat(&file, filename, new);
+    }
 	return (new);
 }
 
-void	ft_lstfileappend(t_file **list, t_file *new)
+void            ft_lstfileappend(t_file **list, t_file *new)
 {
 	t_file *current;
 
@@ -44,7 +58,7 @@ void	ft_lstfileappend(t_file **list, t_file *new)
 	}
 }
 
-void	initmax(t_max *maxs)
+void	        initmax(t_max *maxs)
 {
 	maxs->lnk = 0;
 	maxs->size = 0;

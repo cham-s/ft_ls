@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <time.h>
 
+// add to display.c
 void    print_path(char *fname)
 {
 	static int i = 0;
@@ -20,6 +21,16 @@ void    print_path(char *fname)
 	ft_putendl(":");
 }
 
+void    printlinkpath(char *filename)
+{
+    char    buf[1024];
+    size_t  len;
+
+    if ((len = readlink(filename, buf, sizeof(buf) - 1)) != (size_t)-1)
+        buf[len] = '\0';
+    ft_putstr(" -> ");
+    ft_putstr(buf);
+}
 void    printstat(struct stat *file, char *filename, t_max *maxs)
 {
 	struct passwd *pwd;
@@ -41,6 +52,8 @@ void    printstat(struct stat *file, char *filename, t_max *maxs)
     print_ctime(ctime(&file->st_mtime));
     ft_putstr("  ");
     ft_putstr(pathtrim(filename));
+    if (S_ISLNK(file->st_mode))
+        printlinkpath(filename);
     ft_putendl("");
 }
 

@@ -60,9 +60,9 @@ void			getdirs(t_file **list, int ac, char **av, char *options)
         }
         av++;
     }
-	ft_lstmergesort(&errors, "");
-	ft_lstmergesort(&filelist, "");
-	ft_lstmergesort(list, options);
+	apply_merge(&errors, options);
+	apply_merge(&filelist, options);
+	apply_merge(list, options);
     attachlist(&errors, &filelist);
     attachlist(&filelist, list);
 }
