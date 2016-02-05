@@ -13,22 +13,32 @@
 #include "ft_ls.h"
 #include "libft.h"
 
+void    nlafterfile(t_file *entry)
+{
+	struct stat file;
+
+    if (entry->next != NULL)
+    {
+        if (stat(entry->next->filename, &file) < 0)
+            return ;
+        if (S_ISDIR(file.st_mode))
+            ft_putchar('\n');
+    }
+}
+
 void	ft_list(char *directory, char *options, int ac, char **av)
 {
     static int i = 0;
 
     if (ac > 2)
     {
-        if (i == 0 && (av[1][0] == '-' || (ac > 2 && av[1][0] != '-')))
+        if (ac != 3)
         {
-            ft_putstr(directory);
-            ft_putendl(":");
-        }
-        if (i != 0)
-        {
-            ft_putchar('\n');
-            ft_putstr(directory);
-            ft_putendl(":");
+            if (i == 0 && (av[1][0] == '-' || (ac > 2 && av[1][0] != '-')))
+            {
+                ft_putstr(directory);
+                ft_putendl(":");
+            }
         }
     }
 	if (ft_strchr(options, 'R'))
@@ -54,7 +64,10 @@ void	apply_ft_list(t_file **list, char *options, int ac, char **av)
 			if (stat((*list)->filename, &file) < 0)
 				ft_perror((*list)->filename);
             else if (S_ISREG(file.st_mode))
+            {
                 ft_putendl((*list)->filename);
+                nlafterfile(*list);
+            }
 			else
 				ft_list((*list)->filename, options, ac, av);
 			*list = (*list)->next;

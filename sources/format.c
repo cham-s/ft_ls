@@ -43,7 +43,7 @@ void	print_l_format(char *filename, char *options, t_max *maxs)
 		ft_putstr("  ");
 		printwithspace(maxs->size, file.st_size);
 		ft_putstr("  ");
-		print_ctime(ctime(&file.st_atime));
+		print_ctime(ctime(&file.st_mtime));
 		ft_putstr("  ");
 		ft_putstr(pathtrim(filename));
 		ft_putendl("");
