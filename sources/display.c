@@ -17,44 +17,28 @@ void    getfiles(char *filename, t_file **list, char *options, t_max *maxs)
     char            *path;
 	struct stat		file;
 
-    if (stat(filename, &file) < 0)
+	if ((dfd = opendir(filename)) == NULL)
     {
         ft_perror(filename);
         return ;
     }
-    if (S_ISREG(file.st_mode))
+	while ((dptr = readdir(dfd)) != NULL)
     {
+        path = catpath(filename, dptr->d_name);
+		if (stat(path, &file) < 0)
+		{
+			ft_perror(filename);
+			return ;
+		}
 		if (nbrspace(file.st_nlink) > maxs->lnk)
 			maxs->lnk = nbrspace(file.st_nlink);
 		if (nbrspace(file.st_size) > maxs->size)
 			maxs->size = nbrspace(file.st_size);
-        ft_lstfileappend(list, ft_lstfilenew(filename));
-    }
-    else
-    {
-        if ((dfd = opendir(filename)) == NULL)
-        {
-            ft_perror(filename);
-            return ;
-        }
-        while ((dptr = readdir(dfd)) != NULL)
-        {
-            path = catpath(filename, dptr->d_name);
-            if (stat(path, &file) < 0)
-            {
-                ft_perror(path);
-                return ;
-            }
-            if (nbrspace(file.st_nlink) > maxs->lnk)
-                maxs->lnk = nbrspace(file.st_nlink);
-            if (nbrspace(file.st_size) > maxs->size)
-                maxs->size = nbrspace(file.st_size);
-            ft_lstfileappend(list, ft_lstfilenew(path));
-            free(path);
-        }
-        ft_lstmergesort(list, options);
-        closedir(dfd);
-    }
+        ft_lstfileappend(list, ft_lstfilenew(path));
+		free(path);
+	}
+	ft_lstmergesort(list, options);
+    closedir(dfd);
 }
 
 void	printtotal(t_file **list)
@@ -82,11 +66,10 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 	t_file		*current;
 	static int	i = 0;
 
-    // make a function out of this
 	if (i != 0)
 	{
         ft_putchar('\n');
-        ft_putstr(directory);
+		ft_putstr(directory);
 		ft_putendl(":");
 	}
 	current = *list;
@@ -108,63 +91,42 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 	i++;
 }
 
-void	listallfilesfree(t_file **list, char *options, t_max *maxs, char *directory)
+void	listallfilesfree(t_file **list, char *options, t_max *maxs)
 {
 	t_file      *tmp;
-    static int  i = 0;
 
-    if ((*list)->next == NULL)
+	if (ft_strchr(options, 'l'))
+		printtotal(list);
+    while (*list != NULL)
     {
-        //free this line
-        if (ft_strchr(options, 'l'))
-            print_l_format((*list)->filename, options, maxs);
-        else
-            printfile((*list)->filename, options);
-        free((*list)->filename);
-        free(*list);
-    }
-    else
-    {
-        if (i != 0)
+        tmp = *list;
+        if (ft_strchr(options, 'a') == NULL && pathtrim((*list)->filename)[0] == '.')
         {
-            ft_putchar('\n');
-            ft_putstr(directory);
-            ft_putendl(":");
-        }
-        if (ft_strchr(options, 'l'))
-            printtotal(list);
-        while (*list != NULL)
-        {
-            tmp = *list;
-            if (ft_strchr(options, 'a') == NULL && pathtrim((*list)->filename)[0] == '.')
-            {
-                *list = (*list)->next;
-                free(tmp->filename);
-                free(tmp);
-                continue ;
-            }
-            if (ft_strchr(options, 'l'))
-                print_l_format(pathtrim((*list)->filename), options, maxs);
-            else
-                printfile(pathtrim((*list)->filename), options);
             *list = (*list)->next;
             free(tmp->filename);
             free(tmp);
+            continue ;
         }
-        i++;
+        if (ft_strchr(options, 'l'))
+            print_l_format((*list)->filename, options, maxs);
+        else
+            printfile(pathtrim((*list)->filename), options);
+        *list = (*list)->next;
+        free(tmp->filename);
+        free(tmp);
     }
 }
 
 void	listdir(char *directory, char *options)
 {
-	t_file      *list;
-	t_max       maxs;
+	t_file	*list;
+	t_max	maxs;
 
 	list = NULL;
 	initmax(&maxs);
-    getfiles(directory, &list, options, &maxs);
+	getfiles(directory, &list, options, &maxs);
 	//free the list after this line
-	listallfilesfree(&list, options, &maxs, directory);
+	listallfilesfree(&list, options, &maxs);
 }
 
 void    printfile(char *fname, char *options)
