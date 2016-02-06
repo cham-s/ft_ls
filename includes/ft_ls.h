@@ -41,19 +41,12 @@ void	apply_ft_list(t_file **list, char *options, int ac, char **av);
 void	listdir(char *directory, char *options);
 void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs);
 void    printfile(char *fname, char *options);
-void	insert_files(char *dirname, t_file **list);
 void    ft_perror(char *name);
-void    ft_ls(char *name);
 char    *catpath(char *folder, char *file);
-char    *catfilenames(char *folder, char *file);
-void    get_filename(char *dirname, t_file **list);
 void	print_l_format(char *filename, t_max *max);
-void	print_dirname(char *filename);
-void	ft_lstfileprint_l_format(t_file **alst);
 void    ft_lstmergesort(t_file **source, char *options);
 char    *pathtrim(char *longpath);
 void    print_path(char *fname);
-void    foldersofar(char *fname, t_file **list);
 void    printlist(t_file **list);
 void	print_ctime(char *time);
 void	perm_format(struct stat *file);
@@ -61,5 +54,6 @@ void	initmax(t_max *maxs);
 void	printwithspace(int nbrs, int size);
 int		nbrspace(int max);
 void    apply_merge(t_file **list, char *options);
+void    printdirnl(char *directory, t_bool first);
 
 #endif

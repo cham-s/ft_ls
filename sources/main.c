@@ -20,7 +20,7 @@ int		main(int ac, char **av)
 
 	if ((options = (char *)ft_memalloc(OPT_MAX)) == NULL)
 	{
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	filelist = NULL;
 	getoptions(ac, av, options, "Ralrt1");

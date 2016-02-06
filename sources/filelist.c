@@ -30,14 +30,12 @@ t_file	*ft_lstfilenew(char *filename)
 	if ((new = (t_file *)ft_memalloc(sizeof(t_file))) == NULL
 		|| filename == NULL)
 		return (NULL);
-    if (lstat(filename, &file) < 0)
-        perror("error from stat");
+    lstat(filename, &file);
     if (S_ISLNK(file.st_mode))
         addstat(&file, filename, new);
     else
     {
-        if (stat(filename, &file) < 0)
-            perror("error from stat");
+        stat(filename, &file);
         addstat(&file, filename, new);
     }
 	return (new);

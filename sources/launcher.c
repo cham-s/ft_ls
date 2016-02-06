@@ -30,17 +30,8 @@ void	ft_list(char *directory, char *options, int ac, char **av)
 {
     static int i = 0;
 
-    if (ac > 2)
-    {
-        if (ac != 3)
-        {
-            if (i == 0 && (av[1][0] == '-' || (ac > 2 && av[1][0] != '-')))
-            {
-                ft_putstr(directory);
-                ft_putendl(":");
-            }
-        }
-    }
+    av++;
+    ac++;
 	if (ft_strchr(options, 'R'))
 		recurdir(directory, options);
 	else
@@ -52,6 +43,7 @@ void	apply_ft_list(t_file **list, char *options, int ac, char **av)
 {
 	t_file      *tmp;
 	struct stat file;
+    static int  i = 0;
 
 	tmp = NULL;
 	if (*list == NULL)
@@ -62,14 +54,29 @@ void	apply_ft_list(t_file **list, char *options, int ac, char **av)
 		{
 			tmp = *list;
 			if (stat((*list)->filename, &file) < 0)
+            {
 				ft_perror((*list)->filename);
+                if ((*list)->next)
+                {
+                    stat((*list)->next->filename, &file);
+                    if (S_ISDIR(file.st_mode))
+                        printdirnl((*list)->next->filename, true);
+                }
+            }
             else if (S_ISREG(file.st_mode))
             {
                 ft_putendl((*list)->filename);
                 nlafterfile(*list);
             }
 			else
+            {
+                if ((*list)->next != NULL && i == 0)
+                    printdirnl((*list)->filename, true);
+                else if (i != 0 && ft_strchr(options, 'R') == NULL)
+                    printdirnl((*list)->filename, false);
 				ft_list((*list)->filename, options, ac, av);
+                i++;
+            }
 			*list = (*list)->next;
 			free(tmp->filename);
 			free(tmp);

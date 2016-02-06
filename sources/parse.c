@@ -57,6 +57,11 @@ void			getdirs(t_file **list, int ac, char **av, char *options)
     }
     while (ac-- >= 1)
     {
+        if (ft_strcmp(*av, "") == 0)
+        {
+            ft_putendl_fd("ft_ls: fts_open: No such file or directory", 2);
+            exit(EXIT_FAILURE);
+        }
 		if (stat(*av, &file) < 0)
 			ft_lstfileappend(&errors, ft_lstfilenew(*av));
 		else
@@ -68,7 +73,7 @@ void			getdirs(t_file **list, int ac, char **av, char *options)
         }
         av++;
     }
-	apply_merge(&errors, options);
+	apply_merge(&errors, "");
 	apply_merge(&filelist, options);
 	apply_merge(list, options);
     attachlist(&errors, &filelist);

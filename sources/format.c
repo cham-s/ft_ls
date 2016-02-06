@@ -62,13 +62,13 @@ void	print_l_format(char *filename, t_max *maxs)
 	struct stat file;
 
 		if (lstat(filename, &file) < 0)
-			perror("error from stat");
+            return ;
         if (S_ISLNK(file.st_mode))
             printstat(&file, filename, maxs);
         else
         {
             if (stat(filename, &file) < 0)
-                perror("error from stat");
+                return ;
              printstat(&file, filename, maxs);
         }
 }

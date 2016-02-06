@@ -70,13 +70,15 @@ void	printtotal(t_file **list)
 	while (current != NULL)
 	{
         if (lstat(current->filename, &file) < 0)
-            perror("error from stat");
+            return ;
+        // error from stat
         if (S_ISLNK(file.st_mode))
             result += file.st_blocks;
         else
         {
             if (stat(current->filename, &file) < 0)
-                perror("error from stat");
+                return ;
+            // error from stat
             result += file.st_blocks;
         }
 		current = current->next;
@@ -86,18 +88,29 @@ void	printtotal(t_file **list)
 	ft_putendl("");
 }
 
+void    printdirnl(char *directory, t_bool first)
+{
+    if (first)
+    {
+        ft_putstr(directory);
+        ft_putendl(":");
+    }
+    else
+    {
+        ft_putchar('\n');
+        ft_putstr(directory);
+        ft_putendl(":");
+    }
+}
+
 void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 {
 	t_file		*current;
 	static int	i = 0;
 
-	if (i != 0)
-	{
-        ft_putchar('\n');
-		ft_putstr(directory);
-		ft_putendl(":");
-	}
 	current = *list;
+    if (i != 0)
+        printdirnl(directory, false);
 	if (ft_strchr(options, 'l'))
 		printtotal(list);
 	while (current != NULL)
@@ -119,14 +132,9 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 void	listallfilesfree(t_file **list, char *options,char *directory, t_max *maxs)
 {
 	t_file      *tmp;
-	static int	i = 0;
+	//static int	i = 0;
 
-	if (i != 0)
-	{
-        ft_putchar('\n');
-		ft_putstr(directory);
-		ft_putendl(":");
-	}
+    directory++;
 	if (ft_strchr(options, 'l'))
 		printtotal(list);
     while (*list != NULL)
@@ -147,7 +155,7 @@ void	listallfilesfree(t_file **list, char *options,char *directory, t_max *maxs)
         free(tmp->filename);
         free(tmp);
     }
-    i++;
+    //i++;
 }
 
 void	listdir(char *directory, char *options)
