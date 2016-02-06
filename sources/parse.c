@@ -46,7 +46,15 @@ void			getdirs(t_file **list, int ac, char **av, char *options)
 	errors = NULL;
 	av++;
     while (ac-- > 1 && (*av)[0] == '-' && (*av)[1] != '\0')
-		av++;
+    {
+        if (ft_strcmp(*av, "--") == 0)
+        {
+            ac--;
+            av++;
+            break ;
+        }
+        av++;
+    }
     while (ac-- >= 1)
     {
 		if (stat(*av, &file) < 0)
@@ -79,10 +87,10 @@ void			getoptions(int ac, char **av, char *options, char* optlist)
     while (ac-- > 1 && av[i][0] == '-' && av[i][1] != '\0')
 	{
 		j = 1;
+        if (ft_strcmp(av[i], "--") == 0)
+            break ;
 		while (av[i][j])
 		{
-            if (ft_strcmp(av[i], "--") == 0)
-                break ;
 			if (ft_strchr(optlist, av[i][j]) == NULL)
 				usage(av[i][j]);
 			else
