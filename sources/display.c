@@ -44,10 +44,8 @@ void    getfiles(char *filename, t_file **list, char *options, t_max *maxs)
     {
         path = catpath(filename, dptr->d_name);
 		if (stat(path, &file) < 0)
-		{
-			ft_perror(filename);
-			return ;
-		}
+			if (lstat(path, &file) < 0)
+				ft_perror(filename);
 		if (nbrspace(file.st_nlink) > maxs->lnk)
 			maxs->lnk = nbrspace(file.st_nlink);
 		if (nbrspace(file.st_size) > maxs->size)
@@ -129,13 +127,11 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 	i++;
 }
 
-void	listallfilesfree(t_file **list, char *options,char *directory, t_max *maxs)
+void	listallfilesfree(t_file **list, char *options, t_max *maxs)
 {
 	t_file      *tmp;
-	//static int	i = 0;
 
-    directory++;
-	if (ft_strchr(options, 'l'))
+	if (ft_strchr(options, 'l') && (*list)->next->next != NULL)
 		printtotal(list);
     while (*list != NULL)
     {
@@ -155,7 +151,6 @@ void	listallfilesfree(t_file **list, char *options,char *directory, t_max *maxs)
         free(tmp->filename);
         free(tmp);
     }
-    //i++;
 }
 
 void	listdir(char *directory, char *options)
@@ -167,7 +162,7 @@ void	listdir(char *directory, char *options)
 	initmax(&maxs);
 	getfiles(directory, &list, options, &maxs);
 	//free the list after this line
-	listallfilesfree(&list, options, directory, &maxs);
+	listallfilesfree(&list, options, &maxs);
 }
 
 void	listfile(char *filename, char *options)

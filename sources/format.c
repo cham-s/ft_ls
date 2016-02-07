@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/07 08:52:13 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/07 11:17:58 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/07 14:48:12 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,19 @@ void    printstat(struct stat *file, char *filename, t_max *maxs)
 	struct group *grp;
 
     grp = NULL;
-    if ((pwd = getpwuid(file->st_uid)) && (grp = getgrgid(file->st_gid)) == NULL)
-        perror("error from pwd grp");
     perm_format(file);
     ft_putstr("  ");
     printwithspace(maxs->lnk, file->st_nlink);
     ft_putstr("  ");
-    ft_putstr(pwd->pw_name);
+    if ((pwd = getpwuid(file->st_uid)) == NULL)
+		ft_putnbr(file->st_uid);
+	else
+		ft_putstr(pwd->pw_name);
     ft_putstr("  ");
-    ft_putstr(grp->gr_name);
+    if ((grp = getgrgid(file->st_gid)) == NULL)
+		ft_putnbr(file->st_gid);
+	else
+		ft_putstr(grp->gr_name);
     ft_putstr("  ");
     printwithspace(maxs->size, file->st_size);
     ft_putstr("  ");
