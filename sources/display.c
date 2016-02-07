@@ -170,6 +170,18 @@ void	listdir(char *directory, char *options)
 	listallfilesfree(&list, options, directory, &maxs);
 }
 
+void	listfile(char *filename, char *options)
+{
+	t_max	maxs;
+
+	initmax(&maxs);
+	//getmaxs
+	if (ft_strchr(options, 'l'))
+		print_l_format(filename, &maxs);
+	else
+		ft_putendl(filename);
+}
+
 void    printfile(char *fname, char *options)
 {
 	if (ft_strchr(options, 'l') == NULL)

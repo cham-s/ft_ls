@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/07 08:52:13 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/07 08:52:39 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/07 11:17:58 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ void    printstat(struct stat *file, char *filename, t_max *maxs)
     ft_putstr("  ");
     print_ctime(ctime(&file->st_mtime));
     ft_putstr("  ");
-    ft_putstr(pathtrim(filename));
+	if (ft_strrchr(filename, '/') == NULL)
+		ft_putstr(filename);
+	else
+		ft_putstr(pathtrim(filename));
     if (S_ISLNK(file->st_mode))
         printlinkpath(filename);
     ft_putendl("");
@@ -73,16 +76,16 @@ void	print_l_format(char *filename, t_max *maxs)
 {
 	struct stat file;
 
-		if (lstat(filename, &file) < 0)
-            return ;
-        if (S_ISLNK(file.st_mode))
-            printstat(&file, filename, maxs);
-        else
-        {
-            if (stat(filename, &file) < 0)
-                return ;
-             printstat(&file, filename, maxs);
-        }
+	if (lstat(filename, &file) < 0)
+		return ;
+	if (S_ISLNK(file.st_mode))
+		printstat(&file, filename, maxs);
+	else
+	{
+		if (stat(filename, &file) < 0)
+			return ;
+		 printstat(&file, filename, maxs);
+	}
 }
 
 void	print_ctime(char *time)

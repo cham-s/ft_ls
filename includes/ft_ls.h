@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/05 09:45:59 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/03 21:42:35 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/07 10:42:56 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	getdirs(t_file **list, int ac, char **av, char *options);
 void	recurdir(char *directory, char *options);
 void    getfiles(char *filename, t_file **list, char *options, t_max *maxs);
 void	apply_ft_list(t_file **list, char *options, int ac, char **av);
+void	listfile(char *filename, char *options);
 void	listdir(char *directory, char *options);
 void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs);
 void    printfile(char *fname, char *options);

@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/03 19:18:15 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/03 21:32:48 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/07 11:24:27 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int		nbrspace(int max)
 
 void	printwithspace(int nbrs, int size)
 {
-	int spc = nbrs - nbrspace(size);
+	int spc;
+	spc = nbrs - nbrspace(size);
+	spc = (spc < 0? 0: spc);
 	while (spc--)
 		ft_putchar(' ');
 	ft_putnbr(size);

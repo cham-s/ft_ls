@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 14:26:40 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/07 09:41:35 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/07 10:44:48 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	ft_list(char *directory, char *options, int ac, char **av)
     i++;
 }
 
-static void		checkfile(t_file *list, int (*fstat)(const char *name, struct stat *buf))
+static void		checkfile(t_file *list, 
+				int (*fstat)(const char *name, struct stat *buf),
+				char *options)
 {
 
 	struct stat file;
@@ -57,7 +59,7 @@ static void		checkfile(t_file *list, int (*fstat)(const char *name, struct stat 
 	}
 	else if (!S_ISDIR(file.st_mode))
 	{
-		ft_putendl((list)->filename);
+		listfile((list)->filename, options);
 		nlafterfile(list);
 	}
 }
@@ -77,9 +79,9 @@ void	apply_ft_list(t_file **list, char *options, int ac, char **av)
 		{
 			tmp = *list;
 			if (stat((*list)->filename, &file) < 0)
-				checkfile(*list, lstat);
+				checkfile(*list, lstat, options);
 			else if (S_ISREG(file.st_mode))
-				checkfile(*list, stat);
+				checkfile(*list, stat, options);
 			else
             {
                 if ((*list)->next != NULL && i == 0)
