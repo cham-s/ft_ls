@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/07 08:52:13 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/07 14:48:12 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/09 15:31:17 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void    printstat(struct stat *file, char *filename, t_max *maxs)
 
     grp = NULL;
     perm_format(file);
-    ft_putstr("  ");
+    ft_putstr(" ");
     printwithspace(maxs->lnk, file->st_nlink);
     ft_putstr("  ");
     if ((pwd = getpwuid(file->st_uid)) == NULL)
@@ -65,7 +65,7 @@ void    printstat(struct stat *file, char *filename, t_max *maxs)
     ft_putstr("  ");
     printwithspace(maxs->size, file->st_size);
     ft_putstr("  ");
-    print_ctime(ctime(&file->st_mtime));
+    print_ctime(&file->st_mtimespec);
     ft_putstr("  ");
 	if (ft_strrchr(filename, '/') == NULL)
 		ft_putstr(filename);
@@ -90,15 +90,6 @@ void	print_l_format(char *filename, t_max *maxs)
 			return ;
 		 printstat(&file, filename, maxs);
 	}
-}
-
-void	print_ctime(char *time)
-{
-    char *end;
-
-    time = ft_strchr(time, ' ') + 1;
-    end = ft_strrchr(time, ':');
-	write(1, time, (end - time));
 }
 
 void	perm_format(struct stat *file)

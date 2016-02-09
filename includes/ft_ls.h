@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/05 09:45:59 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/07 10:42:56 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/09 15:11:37 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "libft.h"
 # include <sys/stat.h>
 # define OPT_MAX 6
+# define SIX_MON 15552000
 
 typedef struct		s_file
 {
@@ -49,12 +50,12 @@ void    ft_lstmergesort(t_file **source, char *options);
 char    *pathtrim(char *longpath);
 void    print_path(char *fname);
 void    printlist(t_file **list);
-void	print_ctime(char *time);
 void	perm_format(struct stat *file);
 void	initmax(t_max *maxs);
 void	printwithspace(int nbrs, int size);
 int		nbrspace(int max);
 void    apply_merge(t_file **list, char *options);
 void    printdirnl(char *directory, t_bool first);
+void	print_ctime(struct timespec *atime);
 
 #endif
