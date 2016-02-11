@@ -33,23 +33,17 @@ void    getfiles(char *filename, t_file **list, char *options, t_max *maxs)
 	struct dirent   *dptr;
 	DIR             *dfd;
     char            *path;
-	struct stat		file;
 
 	if ((dfd = opendir(filename)) == NULL)
     {
         ft_perror(filename);
+        ft_putendl("you got my ass");
         return ;
     }
 	while ((dptr = readdir(dfd)) != NULL)
     {
         path = catpath(filename, dptr->d_name);
-		if (stat(path, &file) < 0)
-			if (lstat(path, &file) < 0)
-				ft_perror(filename);
-		if (nbrspace(file.st_nlink) > maxs->lnk)
-			maxs->lnk = nbrspace(file.st_nlink);
-		if (nbrspace(file.st_size) > maxs->size)
-			maxs->size = nbrspace(file.st_size);
+        getmaxs(path, maxs);
         ft_lstfileappend(list, ft_lstfilenew(path));
 		free(path);
 	}
@@ -57,7 +51,7 @@ void    getfiles(char *filename, t_file **list, char *options, t_max *maxs)
     apply_merge(list, options);
 }
 
-void	printtotal(t_file **list)
+void	printtotal(t_file **list, char *options)
 {
 	int			result;
 	t_file		*current;
@@ -67,6 +61,11 @@ void	printtotal(t_file **list)
 	result = 0;
 	while (current != NULL)
 	{
+        if (ft_strchr(options, 'a') == NULL && pathtrim(current->filename)[0] == '.')
+        {
+            current = current->next;
+            continue ;
+        }
         if (lstat(current->filename, &file) < 0)
             return ;
         // error from stat
@@ -110,7 +109,7 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
     if (i != 0)
         printdirnl(directory, false);
 	if (ft_strchr(options, 'l'))
-		printtotal(list);
+		printtotal(list, options);
 	while (current != NULL)
 	{
         if (ft_strchr(options, 'a') == NULL && pathtrim(current->filename)[0] == '.')
@@ -119,7 +118,7 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
             continue ;
         }
 		if (ft_strchr(options, 'l'))
-			print_l_format(current->filename, maxs);
+			print_l_format(current->filename, maxs, false);
 		else
 			printfile(pathtrim(current->filename), options);
 		current = current->next;
@@ -127,12 +126,15 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 	i++;
 }
 
-void	listallfilesfree(t_file **list, char *options, t_max *maxs)
+void	listallfilesfree(t_file **list, char *directory, char *options, t_max *maxs)
 {
 	t_file      *tmp;
+	static int	i = 0;
 
+    if (i++ != 0)
+        printdirnl(directory, false);
 	if (ft_strchr(options, 'l') && (*list)->next->next != NULL)
-		printtotal(list);
+		printtotal(list, options);
     while (*list != NULL)
     {
         tmp = *list;
@@ -144,7 +146,7 @@ void	listallfilesfree(t_file **list, char *options, t_max *maxs)
             continue ;
         }
         if (ft_strchr(options, 'l'))
-            print_l_format((*list)->filename, maxs);
+            print_l_format((*list)->filename, maxs, false);
         else
             printfile(pathtrim((*list)->filename), options);
         *list = (*list)->next;
@@ -162,7 +164,7 @@ void	listdir(char *directory, char *options)
 	initmax(&maxs);
 	getfiles(directory, &list, options, &maxs);
 	//free the list after this line
-	listallfilesfree(&list, options, &maxs);
+	listallfilesfree(&list, directory, options, &maxs);
 }
 
 void	listfile(char *filename, char *options)
@@ -172,7 +174,7 @@ void	listfile(char *filename, char *options)
 	initmax(&maxs);
 	//getmaxs
 	if (ft_strchr(options, 'l'))
-		print_l_format(filename, &maxs);
+		print_l_format(filename, &maxs, true);
 	else
 		ft_putendl(filename);
 }
@@ -211,10 +213,8 @@ void	recurdir(char *directory, char *options)
                 continue ;
             }
 			if(stat(list->filename, &file) < 0)
-			{
-				ft_perror(list->filename);
-				return ;
-			}
+                if(lstat(list->filename, &file) < 0)
+                    ft_perror(list->filename);
 			if (S_ISDIR(file.st_mode))
 				recurdir(list->filename, options);
 			list = list->next;

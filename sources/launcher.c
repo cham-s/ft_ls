@@ -40,61 +40,85 @@ void	ft_list(char *directory, char *options, int ac, char **av)
     i++;
 }
 
-static void		checkfile(t_file *list, 
-				int (*fstat)(const char *name, struct stat *buf),
-				char *options)
+void    print_errors(t_file **list)
 {
-
 	struct stat file;
+    t_file *tmp;
+    t_bool is_empty;
 
-	if (fstat((list)->filename, &file) < 0)
-	{
-		ft_perror((list)->filename);
-		if ((list)->next)
-		{
-			stat((list)->next->filename, &file);
-			if (S_ISDIR(file.st_mode))
-				printdirnl((list)->next->filename, true);
-		}
-	}
-	else if (!S_ISDIR(file.st_mode))
-	{
-		listfile((list)->filename, options);
-		nlafterfile(list);
-	}
+    is_empty = (list[ERRORS] == NULL? true: false);
+    while (*list != NULL)
+    {
+        tmp = *list;
+        if (stat((*list)->filename, &file) < 0)
+            if (lstat((*list)->filename, &file) < 0)
+                ft_perror((*list)->filename);
+        *list = (*list)->next;
+        free(tmp->filename);
+        free(tmp);
+    }
+    if (list[DIRS] != NULL && is_empty == false)
+        ft_putchar('\n');
 }
 
-void	apply_ft_list(t_file **list, char *options, int ac, char **av)
+void    print_files(t_file **list, char *options, t_max *maxs)
 {
-	t_file      *tmp;
-	struct stat file;
-    static int  i = 0;
+    t_file *tmp;
+    t_bool is_empty;
 
-	tmp = NULL;
-	if (*list == NULL)
+    is_empty = (list[FILES] == NULL? true: false);
+    while (list[FILES] != NULL)
+    {
+        tmp = list[FILES];
+        if (ft_strchr(options, 'l'))
+            print_l_format((list[FILES])->filename, maxs, true);
+        else
+            ft_putendl((list[FILES])->filename);
+        list[FILES] = list[FILES]->next;
+        free(tmp->filename);
+        free(tmp);
+    }
+    if (list[DIRS] != NULL && is_empty == false)
+        ft_putchar('\n');
+}
+
+void    print_folders(t_file **list, char *options, int ac, char **av)
+{
+	t_file  *tmp;
+    int     i;
+
+    i = 0;
+    while (*list != NULL)
+    {
+        if (i++ != 0 && ft_strchr(options, 'R') == NULL)
+            printdirnl((*list)->filename, true);
+        tmp = *list;
+        ft_list((*list)->filename, options, ac, av);
+        *list = (*list)->next;
+        free(tmp->filename);
+        free(tmp);
+    }
+}
+
+void	apply_ft_list(t_file **tablist, char *options, int ac, char **av)
+{
+    t_max   maxs;
+    int     len; 
+
+	if (tablist[ERRORS] == NULL && tablist[FILES] == NULL
+            && tablist[DIRS] == NULL)
 		ft_list(".", options, ac, av);
 	else
 	{
-		while (*list != NULL)
-		{
-			tmp = *list;
-			if (stat((*list)->filename, &file) < 0)
-				checkfile(*list, lstat, options);
-			else if (S_ISREG(file.st_mode))
-				checkfile(*list, stat, options);
-			else
-            {
-                if ((*list)->next != NULL && i == 0)
-                    printdirnl((*list)->filename, true);
-                else if (i != 0 && ft_strchr(options, 'R') == NULL)
-                    printdirnl((*list)->filename, false);
-				ft_list((*list)->filename, options, ac, av);
-                i++;
-            }
-			*list = (*list)->next;
-			free(tmp->filename);
-			free(tmp);
-		}
+        initmax(&maxs);
+        browse_list_for_maxs(&tablist[FILES], &maxs);
+        print_errors(&tablist[ERRORS]);
+        print_files(tablist, options, &maxs);
+        print_folders(&tablist[DIRS], options, ac, av);
 	}
 	free(options);
+    len = LIST_SIZE;
+    while (len--)
+        free(*tablist);
+    free(tablist);
 }

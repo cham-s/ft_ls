@@ -43,31 +43,56 @@ void    printlinkpath(char *filename)
     ft_putstr(" -> ");
     ft_putstr(buf);
 }
-void    printstat(struct stat *file, char *filename, t_max *maxs)
+
+void    print_device(dev_t device)
+{
+    ft_putnbr(minor(device));
+    ft_putchar(',');
+    ft_putstr(" ");
+    ft_putnbr(major(device));
+    ft_putstr(" ");
+}
+
+void    print_size(off_t size, t_max *maxs)
+{
+    print_space_nbr(maxs->size, size);
+}
+
+t_bool  is_device(mode_t mode)
+{
+    if (S_ISBLK(mode) || S_ISSOCK(mode) ||
+            S_ISFIFO(mode) || S_ISCHR(mode))
+        return true;
+    return false;
+}
+void    printstat(struct stat *file, char *filename, t_max *maxs, t_bool is_file)
 {
 	struct passwd *pwd;
 	struct group *grp;
 
     grp = NULL;
     perm_format(file);
-    ft_putstr(" ");
-    printwithspace(maxs->lnk, file->st_nlink);
     ft_putstr("  ");
+    print_space_nbr(maxs->lnk, file->st_nlink);
+    ft_putstr(" ");
     if ((pwd = getpwuid(file->st_uid)) == NULL)
-		ft_putnbr(file->st_uid);
+		print_space_nbr(maxs->uid , file->st_uid);
 	else
 		ft_putstr(pwd->pw_name);
     ft_putstr("  ");
     if ((grp = getgrgid(file->st_gid)) == NULL)
-		ft_putnbr(file->st_gid);
+		print_space_nbr(maxs->gid , file->st_gid);
 	else
 		ft_putstr(grp->gr_name);
     ft_putstr("  ");
-    printwithspace(maxs->size, file->st_size);
-    ft_putstr("  ");
+    if (is_device(file->st_mode))
+        print_device(file->st_dev);
+    else
+        print_size(file->st_size, maxs);
+    ft_putstr(" ");
     print_ctime(&file->st_mtimespec);
-    ft_putstr("  ");
-	if (ft_strrchr(filename, '/') == NULL)
+    ft_putstr(" ");
+	if (is_file)
 		ft_putstr(filename);
 	else
 		ft_putstr(pathtrim(filename));
@@ -76,20 +101,42 @@ void    printstat(struct stat *file, char *filename, t_max *maxs)
     ft_putendl("");
 }
 
-void	print_l_format(char *filename, t_max *maxs)
+void	print_l_format(char *filename, t_max *maxs, t_bool is_file)
 {
 	struct stat file;
 
 	if (lstat(filename, &file) < 0)
 		return ;
 	if (S_ISLNK(file.st_mode))
-		printstat(&file, filename, maxs);
+		printstat(&file, filename, maxs, is_file);
 	else
 	{
 		if (stat(filename, &file) < 0)
 			return ;
-		 printstat(&file, filename, maxs);
+		 printstat(&file, filename, maxs, is_file);
 	}
+}
+
+void    print_perm(mode_t mode)
+{
+	ft_putchar((mode & S_IRUSR) ? 'r' : '-');
+	ft_putchar((mode & S_IWUSR) ? 'w' : '-');
+    if (mode & S_ISUID)
+        ft_putchar((mode & S_IXUSR) ? 's' : 'S');
+    else
+        ft_putchar((mode & S_IXUSR) ? 'x' : '-');
+	ft_putchar((mode & S_IRGRP) ? 'r' : '-');
+	ft_putchar((mode & S_IWGRP) ? 'w' : '-');
+    if (mode & S_ISGID)
+        ft_putchar((mode & S_IXGRP) ? 's' : 'S');
+    else
+        ft_putchar((mode & S_IXGRP) ? 'x' : '-');
+	ft_putchar((mode & S_IROTH) ? 'r' : '-');
+	ft_putchar((mode & S_IWOTH) ? 'w' : '-');
+    if (mode & S_ISVTX)
+        ft_putchar((mode & S_IXOTH) ? 't' : 'T');
+    else
+        ft_putchar((mode & S_IXOTH) ? 'x' : '-');
 }
 
 void	perm_format(struct stat *file)
@@ -108,13 +155,5 @@ void	perm_format(struct stat *file)
         ft_putchar('p');
     else
         ft_putchar('-');
-	ft_putchar((file->st_mode & S_IRUSR) ? 'r' : '-');
-	ft_putchar((file->st_mode & S_IWUSR) ? 'w' : '-');
-	ft_putchar((file->st_mode & S_IXUSR) ? 'x' : '-');
-	ft_putchar((file->st_mode & S_IRGRP) ? 'r' : '-');
-	ft_putchar((file->st_mode & S_IWGRP) ? 'w' : '-');
-	ft_putchar((file->st_mode & S_IXGRP) ? 'x' : '-');
-	ft_putchar((file->st_mode & S_IROTH) ? 'r' : '-');
-	ft_putchar((file->st_mode & S_IWOTH) ? 'w' : '-');
-	ft_putchar((file->st_mode & S_IXOTH) ? 'x' : '-');
+    print_perm(file->st_mode);
 }

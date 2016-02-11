@@ -15,16 +15,18 @@
 
 int		main(int ac, char **av)
 {
-	t_file	*filelist;
+	t_file	**tablist;
 	char	*options;
 
-	if ((options = (char *)ft_memalloc(OPT_MAX)) == NULL)
-	{
+	if ((options = (char *)ft_memalloc(OPT_SIZE)) == NULL)
 		return (EXIT_FAILURE);
-	}
-	filelist = NULL;
+	if ((tablist = (t_file **)malloc(sizeof(t_file *) * LIST_SIZE)) == NULL)
+        return (EXIT_FAILURE);
+    tablist[ERRORS] = NULL;
+    tablist[FILES] = NULL;
+    tablist[DIRS] = NULL;
 	getoptions(ac, av, options, "Ralrt1");
-	getdirs(&filelist, ac, av, options);
-	apply_ft_list(&filelist, options, ac, av);
+	getdirs(tablist, ac, av, options);
+	apply_ft_list(tablist, options, ac, av);
 	return (0);
 }

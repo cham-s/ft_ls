@@ -36,14 +36,10 @@ void            attachlist(t_file **a, t_file **b)
 	}
 }
 
-void			getdirs(t_file **list, int ac, char **av, char *options)
+void			getdirs(t_file **tablist, int ac, char **av, char *options)
 {
-	t_file		*errors;
-    t_file      *filelist;
 	struct stat	file;
 
-    filelist = NULL;
-	errors = NULL;
 	av++;
     while (ac-- > 1 && (*av)[0] == '-' && (*av)[1] != '\0')
     {
@@ -63,21 +59,16 @@ void			getdirs(t_file **list, int ac, char **av, char *options)
             exit(EXIT_FAILURE);
         }
 		if (stat(*av, &file) < 0)
-			ft_lstfileappend(&errors, ft_lstfilenew(*av));
-		else
-        {
-            if (!S_ISDIR(file.st_mode))
-                ft_lstfileappend(&filelist, ft_lstfilenew(*av));
-            else
-                ft_lstfileappend(list, ft_lstfilenew(*av));
-        }
+            ft_lstfileappend(&tablist[ERRORS], ft_lstfilenew(*av));
+        if (S_ISDIR(file.st_mode))
+            ft_lstfileappend(&tablist[DIRS], ft_lstfilenew(*av));
+        else
+            ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
         av++;
     }
-	apply_merge(&errors, "");
-	apply_merge(&filelist, options);
-	apply_merge(list, options);
-    attachlist(&errors, &filelist);
-    attachlist(&filelist, list);
+	apply_merge(&tablist[ERRORS], "");
+	apply_merge(&tablist[FILES], options);
+	apply_merge(&tablist[DIRS], options);
 }
 
 void			getoptions(int ac, char **av, char *options, char* optlist)

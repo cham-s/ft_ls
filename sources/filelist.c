@@ -59,6 +59,9 @@ void            ft_lstfileappend(t_file **list, t_file *new)
 void	        initmax(t_max *maxs)
 {
 	maxs->lnk = 0;
+    maxs->uid = 0;
+    maxs->gid = 0;
+    maxs->minor = 0;
+    maxs->major = 0;
 	maxs->size = 0;
-	maxs->day = 0;
 }
