@@ -60,12 +60,6 @@ void			getdirs(t_file **tablist, int ac, char **av, char *options)
         }
 		if (stat(*av, &file) < 0)
         {
-            ft_lstfileappend(&tablist[ERRORS], ft_lstfilenew(*av));
-            av++;
-            continue ;
-        }
-        else
-        {
             if (lstat(*av, &file) < 0)
             {
                 ft_lstfileappend(&tablist[ERRORS], ft_lstfilenew(*av));
