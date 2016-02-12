@@ -17,37 +17,42 @@
 #include <uuid/uuid.h>
 #include <grp.h>
 
-void            browse_list_for_maxs(t_file **list, t_max *maxs)
+void            browse_list_for_maxs(t_file **list, t_max *maxs, char *options)
 {
     t_file      *current;      
 
     current = *list;
 	while (current != NULL)
     {
-        getmaxs(current->filename, maxs);
+        getmaxs(current->filename, maxs, options);
         current = current->next;
     }
 }
 
-void            getmaxs(char *filename, t_max *maxs)
+void            getmaxs(char *filename, t_max *maxs, char *options)
 {
 	struct stat file;
 	struct      passwd *pwd;
 	struct      group *grp;
+    char        *name;
 
-    if (stat(filename, &file) < 0)
+    name = (ft_strrchr(filename, '/')? pathtrim(filename): filename);
+    if (!(ft_strchr(options, 'a') == NULL && name[0] == '.'))
+    {
         if (lstat(filename, &file) < 0)
-            ft_perror(filename);
-    if (nbrspace(file.st_nlink) > maxs->lnk)
-        maxs->lnk = nbrspace(file.st_nlink);
-    if (nbrspace(file.st_size) > maxs->size)
-        maxs->size = nbrspace(file.st_size);
-    if ((pwd = getpwuid(file.st_uid)) == NULL)
-        if (nbrspace(file.st_uid) > maxs->uid)
-            maxs->uid = nbrspace(file.st_uid);
-    if ((grp = getgrgid(file.st_gid)) == NULL)
-        if (nbrspace(file.st_gid) > maxs->gid)
-            maxs->gid = nbrspace(file.st_gid);
+            if (stat(filename, &file) < 0)
+                ft_perror(name);
+        if (nbrspace(file.st_nlink) > maxs->lnk)
+            maxs->lnk = nbrspace(file.st_nlink);
+        if (nbrspace(file.st_size) > maxs->size)
+            maxs->size = nbrspace(file.st_size);
+        if ((pwd = getpwuid(file.st_uid)) == NULL)
+            if (nbrspace(file.st_uid) > maxs->uid)
+                maxs->uid = nbrspace(file.st_uid);
+        if ((grp = getgrgid(file.st_gid)) == NULL)
+            if (nbrspace(file.st_gid) > maxs->gid)
+                maxs->gid = nbrspace(file.st_gid);
+    }
 }
 
 int				nbrspace(int max)

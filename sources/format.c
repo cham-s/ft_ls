@@ -46,10 +46,10 @@ void    printlinkpath(char *filename)
 
 void    print_device(dev_t device)
 {
-    ft_putnbr(minor(device));
+    ft_putnbr((long )major(device));
     ft_putchar(',');
     ft_putstr(" ");
-    ft_putnbr(major(device));
+    ft_putnbr((long )minor(device));
     ft_putstr(" ");
 }
 

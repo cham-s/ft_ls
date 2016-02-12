@@ -19,7 +19,7 @@
 # define SIX_MON 15552000
 # define ERRORS 0
 # define FILES  1
-# define DIRS   2
+# define DIRS   2 
 
 typedef struct		s_file
 {
@@ -38,8 +38,8 @@ typedef struct		s_max
 	int				size;
 }					t_max;
 
-void     browse_list_for_maxs(t_file **list, t_max *maxs);
-void     getmaxs(char *filename, t_max *maxs);
+void     browse_list_for_maxs(t_file **list, t_max *maxs, char *options);
+void     getmaxs(char *filename, t_max *maxs, char *options);
 t_file	*ft_lstfilenew(char *filename);
 void	ft_lstfileappend(t_file **file, t_file *new);
 void	ft_list(char *filename, char *options, int ac, char **av);

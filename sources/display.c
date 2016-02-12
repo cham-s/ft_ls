@@ -37,13 +37,12 @@ void    getfiles(char *filename, t_file **list, char *options, t_max *maxs)
 	if ((dfd = opendir(filename)) == NULL)
     {
         ft_perror(filename);
-        ft_putendl("you got my ass");
         return ;
     }
 	while ((dptr = readdir(dfd)) != NULL)
     {
         path = catpath(filename, dptr->d_name);
-        getmaxs(path, maxs);
+        getmaxs(path, maxs, options);
         ft_lstfileappend(list, ft_lstfilenew(path));
 		free(path);
 	}
@@ -191,10 +190,13 @@ void	recurdir(char *directory, char *options)
 	t_file		*tmp;
 	struct stat	file;
 	t_max		maxs;
+    //static int i = 0;
 
 	list = NULL;
 	initmax(&maxs);
 	getfiles(directory, &list, options, &maxs);
+    //if (i++ != 0)
+       // exit(4);
 	listallfiles(&list, options, directory, &maxs);
 	while (list != NULL)
 	{
