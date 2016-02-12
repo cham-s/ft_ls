@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 16:20:42 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/03 20:48:40 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/12 16:36:25 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void            ft_lstfileappend(t_file **list, t_file *new)
 void	        initmax(t_max *maxs)
 {
 	maxs->lnk = 0;
+	maxs->user = 0;
+	maxs->group = 0;
     maxs->uid = 0;
     maxs->gid = 0;
     maxs->minor = 0;

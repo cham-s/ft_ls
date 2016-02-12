@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/07 08:52:13 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/09 15:31:17 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/12 16:46:26 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ void    printstat(struct stat *file, char *filename, t_max *maxs, t_bool is_file
     if ((pwd = getpwuid(file->st_uid)) == NULL)
 		print_space_nbr(maxs->uid , file->st_uid);
 	else
-		ft_putstr(pwd->pw_name);
+		print_space_str(maxs->user , pwd->pw_name);
     ft_putstr("  ");
     if ((grp = getgrgid(file->st_gid)) == NULL)
 		print_space_nbr(maxs->gid , file->st_gid);
 	else
-		ft_putstr(grp->gr_name);
+		print_space_str(maxs->group, grp->gr_name);
     ft_putstr("  ");
     if (is_device(file->st_mode))
         print_device(file->st_dev);

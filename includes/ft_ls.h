@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/05 09:45:59 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/09 15:11:37 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/12 16:37:57 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct		s_file
 typedef struct		s_max
 {
 	int				lnk;
+	int				user;
+	int				group;
     int             uid;
     int             gid;
     int             minor;
@@ -62,6 +64,7 @@ void    printlist(t_file **list);
 void	perm_format(struct stat *file);
 void	initmax(t_max *maxs);
 void	print_space_nbr(int max, long long size);
+void	print_space_str(int max, char *str);
 int		nbrspace(int max);
 void    apply_merge(t_file **list, char *options);
 void    printdirnl(char *directory, t_bool first);

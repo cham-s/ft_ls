@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/03 19:18:15 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/09 15:25:50 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/12 16:44:36 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,25 @@ void            getmaxs(char *filename, t_max *maxs, char *options)
         if (nbrspace(file.st_size) > maxs->size)
             maxs->size = nbrspace(file.st_size);
         if ((pwd = getpwuid(file.st_uid)) == NULL)
+		{
             if (nbrspace(file.st_uid) > maxs->uid)
                 maxs->uid = nbrspace(file.st_uid);
+		}
+		else
+		{
+            if ((int )ft_strlen(pwd->pw_name) > maxs->user)
+                maxs->user = (int )ft_strlen(pwd->pw_name);
+		}
         if ((grp = getgrgid(file.st_gid)) == NULL)
+		{
             if (nbrspace(file.st_gid) > maxs->gid)
                 maxs->gid = nbrspace(file.st_gid);
+		}
+		else
+		{
+            if ((int )ft_strlen(grp->gr_name) > maxs->group)
+                maxs->group = (int )ft_strlen(grp->gr_name);
+		}
     }
 }
 
@@ -76,6 +90,16 @@ void			print_space_nbr(int max, long long size)
 	while (spc--)
 		ft_putchar(' ');
     ft_putnbr(size);
+}
+
+void			print_space_str(int max, char *str)
+{
+	int spc;
+
+    spc = max - (int )ft_strlen(str);
+    ft_putstr(str);
+	while (spc--)
+		ft_putchar(' ');
 }
 
 static int		is_dateinrange(time_t atime)
