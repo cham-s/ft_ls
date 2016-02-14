@@ -60,8 +60,7 @@ void    print_size(off_t size, t_max *maxs)
 
 t_bool  is_device(mode_t mode)
 {
-    if (S_ISBLK(mode) || S_ISSOCK(mode) ||
-            S_ISFIFO(mode) || S_ISCHR(mode))
+    if (S_ISBLK(mode) || S_ISCHR(mode))
         return true;
     return false;
 }

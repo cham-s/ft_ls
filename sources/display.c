@@ -107,7 +107,10 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 	current = *list;
     if (i != 0)
         printdirnl(directory, false);
-	if (ft_strchr(options, 'l'))
+	//if (isoptin(options, 'l'))
+	if (ft_strchr(options, 'l') && current->next->next != NULL)
+		printtotal(list, options);
+    else if (ft_strchr(options, 'l') && current->next->next == NULL  && isoptin(options, 'a'))
 		printtotal(list, options);
 	while (current != NULL)
 	{

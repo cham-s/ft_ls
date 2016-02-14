@@ -57,8 +57,11 @@ void    print_errors(t_file **list)
         free(tmp->filename);
         free(tmp);
     }
-    if (list[DIRS] != NULL && list[FILES] == NULL && is_empty == false)
-        ft_putchar('\n');
+    if (list[DIRS])
+        if (list[DIRS]->next == NULL && is_empty == false)
+            printdirnl(list[DIRS]->filename, true);
+    //if (list[DIRS] != NULL && list[FILES] == NULL && is_empty == false)
+        //ft_putchar('\n');
 }
 
 void    print_files(t_file **list, char *options, t_max *maxs)
@@ -89,20 +92,18 @@ void    print_folders(t_file **list, char *options, int ac, char **av)
 
     if (list[DIRS])
     {
-        if (i++ == 0 && list[DIRS]->next != NULL)
+        if (i == 0 && (list[DIRS]->next != NULL || (!list[FILES] && list[ERRORS])))
             printdirnl(list[DIRS]->filename, true);
     }
-    i = 0;
     while (list[DIRS] != NULL)
     {
-        //if (i++ != 0 && ft_strchr(options, 'R') == NULL)
-            //printdirnl((*list)->filename, true);
         tmp = list[DIRS];
         ft_list(list[DIRS]->filename, options, ac, av);
         list[DIRS] = list[DIRS]->next;
         free(tmp->filename);
         free(tmp);
     }
+    i++;
 }
 
 void	apply_ft_list(t_file **tablist, char *options, int ac, char **av)
