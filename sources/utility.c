@@ -27,9 +27,3 @@ void    ft_perror(char *name)
     perror(merror);
     ft_strdel(&merror);
 }
-
-char    *pathtrim(char *longpath)
-{
-    return (ft_strrchr(longpath, '/') + 1);
-}
-

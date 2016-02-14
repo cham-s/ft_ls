@@ -20,6 +20,10 @@
 # define ERRORS 0
 # define FILES  1
 # define DIRS   2 
+# define MINOR(dev) ((int) (((unsigned int) (dev) >> 8) & 0xff))
+# define MAJOR(dev) ((int) ((dev) & 0xff))
+# define pathtrim(longname) (ft_strrchr(longname, '/') + 1)
+# define isoptin(options, c) ft_strchr(options, c)
 
 typedef struct		s_file
 {
@@ -40,34 +44,33 @@ typedef struct		s_max
 	int				size;
 }					t_max;
 
-void     browse_list_for_maxs(t_file **list, t_max *maxs, char *options);
-void     getmaxs(char *filename, t_max *maxs, char *options);
-t_file	*ft_lstfilenew(char *filename);
-void	ft_lstfileappend(t_file **file, t_file *new);
-void	ft_list(char *filename, char *options, int ac, char **av);
-void	getoptions(int ac, char **av, char *options, char* optlist);
-void	getdirs(t_file **list, int ac, char **av, char *options);
-void	recurdir(char *directory, char *options);
-void    getfiles(char *filename, t_file **list, char *options, t_max *maxs);
-void	apply_ft_list(t_file **list, char *options, int ac, char **av);
-void	listfile(char *filename, char *options);
-void	listdir(char *directory, char *options);
-void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs);
-void    printfile(char *fname, char *options);
-void    ft_perror(char *name);
-char    *catpath(char *folder, char *file);
-void	print_l_format(char *filename, t_max *max, t_bool is_file);
-void    ft_lstmergesort(t_file **source, char *options);
-char    *pathtrim(char *longpath);
-void    print_path(char *fname);
-void    printlist(t_file **list);
-void	perm_format(struct stat *file);
-void	initmax(t_max *maxs);
-void	print_space_nbr(int max, long long size);
-void	print_space_str(int max, char *str);
-int		nbrspace(int max);
-void    apply_merge(t_file **list, char *options);
-void    printdirnl(char *directory, t_bool first);
-void	print_ctime(struct timespec *atime);
+void                 browse_list_for_maxs(t_file **list, t_max *maxs, char *options);
+void                getmaxs(char *filename, t_max *maxs, char *options);
+t_file	            *ft_lstfilenew(char *filename);
+void	            ft_lstfileappend(t_file **file, t_file *new);
+void	            ft_list(char *filename, char *options, int ac, char **av);
+void	            getoptions(int ac, char **av, char *options, char* optlist);
+void	            getdirs(t_file **list, int ac, char **av, char *options);
+void	            recurdir(char *directory, char *options);
+void                getfiles(char *filename, t_file **list, char *options, t_max *maxs);
+void	            apply_ft_list(t_file **list, char *options, int ac, char **av);
+void	            listfile(char *filename, char *options);
+void	            listdir(char *directory, char *options);
+void	            listallfiles(t_file **list, char *options, char *directory, t_max *maxs);
+void                printfile(char *fname, char *options);
+void                ft_perror(char *name);
+char                *catpath(char *folder, char *file);
+void	            print_l_format(char *filename, t_max *max, t_bool is_file);
+void                ft_lstmergesort(t_file **source, char *options);
+void                print_path(char *fname);
+void                printlist(t_file **list);
+void	            perm_format(struct stat *file);
+void	            initmax(t_max *maxs);
+void	            print_space_nbr(int max, long long size);
+void	            print_space_str(int max, char *str);
+int		            nbrspace(int max);
+void                apply_merge(t_file **list, char *options);
+void                printdirnl(char *directory, t_bool first);
+void	            print_ctime(struct timespec *atime);
 
 #endif

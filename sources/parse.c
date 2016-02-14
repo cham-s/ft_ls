@@ -35,11 +35,24 @@ void            attachlist(t_file **a, t_file **b)
 		*b = tmp;
 	}
 }
-
-void			getdirs(t_file **tablist, int ac, char **av, char *options)
+void            check_file(t_file **tablist, char **av, char *filename, char *options)
 {
 	struct stat	file;
 
+    if ((lstat(filename, &file)) < 0)
+        ft_lstfileappend(&tablist[ERRORS], ft_lstfilenew(*av));
+    if (S_ISLNK(file.st_mode) && isoptin(options, 'l'))
+            ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
+    else if ((stat(filename, &file)) == 0) 
+    {
+        if (S_ISREG(file.st_mode))
+            ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
+        else
+            ft_lstfileappend(&tablist[DIRS], ft_lstfilenew(*av));
+    }
+}
+void			getdirs(t_file **tablist, int ac, char **av, char *options)
+{
 	av++;
     while (ac-- > 1 && (*av)[0] == '-' && (*av)[1] != '\0')
     {
@@ -58,19 +71,7 @@ void			getdirs(t_file **tablist, int ac, char **av, char *options)
             ft_putendl_fd("ft_ls: fts_open: No such file or directory", 2);
             exit(EXIT_FAILURE);
         }
-		if (stat(*av, &file) < 0)
-        {
-            if (lstat(*av, &file) < 0)
-            {
-                ft_lstfileappend(&tablist[ERRORS], ft_lstfilenew(*av));
-                av++;
-                continue ;
-            }
-        }
-        if (S_ISDIR(file.st_mode))
-            ft_lstfileappend(&tablist[DIRS], ft_lstfilenew(*av));
-        else
-            ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
+        check_file(tablist, av, *av, options);
         av++;
     }
 	apply_merge(&tablist[ERRORS], "");

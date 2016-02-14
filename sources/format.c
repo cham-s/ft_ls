@@ -46,10 +46,10 @@ void    printlinkpath(char *filename)
 
 void    print_device(dev_t device)
 {
-    ft_putnbr((long )major(device));
+    ft_putnbr(MAJOR(device));
     ft_putchar(',');
     ft_putstr(" ");
-    ft_putnbr((long )minor(device));
+    ft_putnbr(MINOR(device));
     ft_putstr(" ");
 }
 
@@ -67,8 +67,8 @@ t_bool  is_device(mode_t mode)
 }
 void    printstat(struct stat *file, char *filename, t_max *maxs, t_bool is_file)
 {
-	struct passwd *pwd;
-	struct group *grp;
+	struct passwd   *pwd;
+	struct group    *grp;
 
     grp = NULL;
     perm_format(file);
@@ -88,8 +88,10 @@ void    printstat(struct stat *file, char *filename, t_max *maxs, t_bool is_file
     if (is_device(file->st_mode))
         print_device(file->st_dev);
     else
+    {
         print_size(file->st_size, maxs);
-    ft_putstr(" ");
+        ft_putstr(" "); // add to the function
+    }
     print_ctime(&file->st_mtimespec);
     ft_putstr(" ");
 	if (is_file)
