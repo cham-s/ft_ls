@@ -95,11 +95,11 @@ void			getoptions(int ac, char **av, char *options, char* optlist)
             break ;
 		while (av[i][j])
 		{
-			if (ft_strchr(optlist, av[i][j]) == NULL)
+			if (isoptin(optlist, av[i][j]) == NULL)
 				usage(av[i][j]);
 			else
 			{
-				if (ft_strchr(tmp, av[i][j]) == NULL)
+				if (isoptin(tmp, av[i][j]) == NULL)
 				{
 					while(*options)
 						options++;
