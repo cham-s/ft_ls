@@ -20,8 +20,6 @@
 # define ERRORS 0
 # define FILES  1
 # define DIRS   2 
-# define MINOR(dev) ((int) (((unsigned int) (dev) >> 8) & 0xff))
-# define MAJOR(dev) ((int) ((dev) & 0xff))
 # define pathtrim(longname) (ft_strrchr(longname, '/') + 1)
 # define isoptin(options, c) ft_strchr(options, c)
 

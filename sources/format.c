@@ -44,12 +44,12 @@ void    printlinkpath(char *filename)
     ft_putstr(buf);
 }
 
-void    print_device(dev_t device)
+void    print_device(dev_t device, t_max *maxs)
 {
-    ft_putnbr(MAJOR(device));
+    print_space_nbr(maxs->major, major(device));
     ft_putchar(',');
     ft_putstr(" ");
-    ft_putnbr(MINOR(device));
+    print_space_nbr(maxs->minor, minor(device));
     ft_putstr(" ");
 }
 
@@ -85,7 +85,7 @@ void    printstat(struct stat *file, char *filename, t_max *maxs, t_bool is_file
 		print_space_str(maxs->group, grp->gr_name);
     ft_putstr("  ");
     if (is_device(file->st_mode))
-        print_device(file->st_dev);
+        print_device(file->st_rdev, maxs);
     else
     {
         print_size(file->st_size, maxs);

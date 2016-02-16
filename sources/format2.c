@@ -15,6 +15,7 @@
 #include <time.h>
 #include <pwd.h>
 #include <uuid/uuid.h>
+#include <sys/types.h>
 #include <grp.h>
 
 void            browse_list_for_maxs(t_file **list, t_max *maxs, char *options)
@@ -66,6 +67,10 @@ void            getmaxs(char *filename, t_max *maxs, char *options)
             if ((int )ft_strlen(grp->gr_name) > maxs->group)
                 maxs->group = (int )ft_strlen(grp->gr_name);
 		}
+        if (nbrspace(major(file.st_rdev)) > maxs->major)
+            maxs->major = nbrspace(major(file.st_rdev));
+        if (nbrspace(minor(file.st_rdev)) > maxs->minor)
+            maxs->minor = nbrspace(minor(file.st_rdev));
     }
 }
 
