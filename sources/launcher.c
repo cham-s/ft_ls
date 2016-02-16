@@ -13,19 +13,6 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-void    nlafterfile(t_file *entry)
-{
-	struct stat file;
-
-    if (entry->next != NULL)
-    {
-        if (stat(entry->next->filename, &file) < 0)
-            return ;
-        if (S_ISDIR(file.st_mode))
-            ft_putchar('\n');
-    }
-}
-
 void	ft_list(char *directory, char *options, int ac, char **av)
 {
     static int i = 0;
@@ -60,8 +47,6 @@ void    print_errors(t_file **list)
     if (list[DIRS])
         if (list[DIRS]->next == NULL && is_empty == false)
             printdirnl(list[DIRS]->filename, true);
-    //if (list[DIRS] != NULL && list[FILES] == NULL && is_empty == false)
-        //ft_putchar('\n');
 }
 
 void    print_files(t_file **list, char *options, t_max *maxs)

@@ -1,5 +1,5 @@
 #include "ft_ls.h"
-#include "../libft/includes/libft.h"
+#include "libft.h"
 #include <stdio.h>
 
 char    *catpath(char *folder, char *file)

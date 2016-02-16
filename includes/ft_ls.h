@@ -42,7 +42,12 @@ typedef struct		s_max
 	int				size;
 }					t_max;
 
-void                 browse_list_for_maxs(t_file **list, t_max *maxs, char *options);
+void                print_size(off_t size, t_max *maxs);
+void                printstat2(struct stat *file, char *filename, t_bool is_file);
+void                print_device(dev_t device, t_max *maxs);
+t_bool              is_device(mode_t mode);
+void               	printtotal(t_file **list, char *options);
+void                browse_list_for_maxs(t_file **list, t_max *maxs, char *options);
 void                getmaxs(char *filename, t_max *maxs, char *options);
 t_file	            *ft_lstfilenew(char *filename);
 void	            ft_lstfileappend(t_file **file, t_file *new);
@@ -61,7 +66,6 @@ char                *catpath(char *folder, char *file);
 void	            print_l_format(char *filename, t_max *max, t_bool is_file);
 void                ft_lstmergesort(t_file **source, char *options);
 void                print_path(char *fname);
-void                printlist(t_file **list);
 void	            perm_format(struct stat *file, char *path);
 void	            initmax(t_max *maxs);
 void	            print_space_nbr(int max, long long size);
