@@ -38,7 +38,7 @@ void            getmaxs(char *filename, t_max *maxs, char *options)
     char        *name;
 
     name = (ft_strrchr(filename, '/')? pathtrim(filename): filename);
-    if (!(ft_strchr(options, 'a') == NULL && name[0] == '.'))
+    if (!(isoptin(options, 'a') == NULL && name[0] == '.'))
     {
         if (lstat(filename, &file) < 0)
             if (stat(filename, &file) < 0)

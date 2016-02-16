@@ -62,7 +62,7 @@ void	            print_l_format(char *filename, t_max *max, t_bool is_file);
 void                ft_lstmergesort(t_file **source, char *options);
 void                print_path(char *fname);
 void                printlist(t_file **list);
-void	            perm_format(struct stat *file);
+void	            perm_format(struct stat *file, char *path);
 void	            initmax(t_max *maxs);
 void	            print_space_nbr(int max, long long size);
 void	            print_space_str(int max, char *str);
