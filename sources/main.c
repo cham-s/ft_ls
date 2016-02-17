@@ -25,7 +25,7 @@ int		main(int ac, char **av)
     tablist[ERRORS] = NULL;
     tablist[FILES] = NULL;
     tablist[DIRS] = NULL;
-	getoptions(ac, av, options, "Radlrt1");
+	getoptions(ac, av, options, OPTS);
 	getdirs(tablist, ac, av, options);
 	apply_ft_list(tablist, options, ac, av);
 	return (0);
