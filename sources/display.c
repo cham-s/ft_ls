@@ -105,10 +105,13 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 	current = *list;
     if (i != 0)
         printdirnl(directory, false);
-	if (ft_strchr(options, 'l') && current->next->next != NULL)
-		printtotal(list, options);
-    else if (ft_strchr(options, 'l') && current->next->next == NULL  && isoptin(options, 'a'))
-		printtotal(list, options);
+	if (current && current->next)
+	{
+		if (ft_strchr(options, 'l') && current->next->next != NULL)
+			printtotal(list, options);
+		else if (ft_strchr(options, 'l') && current->next->next == NULL  && isoptin(options, 'a'))
+			printtotal(list, options);
+	}
 	while (current != NULL)
 	{
         if (ft_strchr(options, 'a') == NULL && pathtrim(current->filename)[0] == '.')
