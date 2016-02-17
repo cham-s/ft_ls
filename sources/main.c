@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/04 14:54:05 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/02 12:35:41 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/17 13:47:55 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		main(int ac, char **av)
     tablist[ERRORS] = NULL;
     tablist[FILES] = NULL;
     tablist[DIRS] = NULL;
-	getoptions(ac, av, options, "Ralrt1");
+	getoptions(ac, av, options, "Radlrt1");
 	getdirs(tablist, ac, av, options);
 	apply_ft_list(tablist, options, ac, av);
 	return (0);

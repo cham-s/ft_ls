@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/17 14:32:15 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/17 14:36:10 by cattouma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 #include "libft.h"
 #include <dirent.h>
@@ -12,31 +24,31 @@
 
 void	listallfilesfree(t_file **list, char *directory, char *options, t_max *maxs)
 {
-	t_file      *tmp;
+	t_file		*tmp;
 	static int	i = 0;
 
-    if (i++ != 0)
-        printdirnl(directory, false);
+	if (i++ != 0)
+		printdirnl(directory, false);
 	if (ft_strchr(options, 'l') && (*list)->next->next != NULL)
 		printtotal(list, options);
-    while (*list != NULL)
-    {
-        tmp = *list;
-        if (ft_strchr(options, 'a') == NULL && pathtrim((*list)->filename)[0] == '.')
-        {
-            *list = (*list)->next;
-            free(tmp->filename);
-            free(tmp);
-            continue ;
-        }
-        if (ft_strchr(options, 'l'))
-            print_l_format((*list)->filename, maxs, false);
-        else
-            printfile(pathtrim((*list)->filename), options);
-        *list = (*list)->next;
-        free(tmp->filename);
-        free(tmp);
-    }
+	while (*list != NULL)
+	{
+		tmp = *list;
+		if (ft_strchr(options, 'a') == NULL && pathtrim((*list)->filename)[0] == '.')
+		{
+			*list = (*list)->next;
+			free(tmp->filename);
+			free(tmp);
+			continue ;
+		}
+		if (ft_strchr(options, 'l'))
+			print_l_format((*list)->filename, maxs, false);
+		else
+			printfile(pathtrim((*list)->filename), options);
+		*list = (*list)->next;
+		free(tmp->filename);
+		free(tmp);
+	}
 }
 
 void	listdir(char *directory, char *options)
@@ -61,7 +73,7 @@ void	listfile(char *filename, char *options)
 		ft_putendl(filename);
 }
 
-void    printfile(char *fname, char *options)
+void	printfile(char *fname, char *options)
 {
 	if (ft_strchr(options, 'l') == NULL)
 		ft_putendl(fname);
@@ -81,22 +93,22 @@ void	recurdir(char *directory, char *options)
 	while (list != NULL)
 	{
 		tmp = list;
-        if (ft_strcmp(pathtrim(list->filename), ".") == 0
-        || ft_strcmp(pathtrim(list->filename), "..") == 0)
+		if (ft_strcmp(pathtrim(list->filename), ".") == 0
+		|| ft_strcmp(pathtrim(list->filename), "..") == 0)
 			list = list->next;
 		else
 		{
-            //skip dots todo function
-            if (ft_strchr(options, 'a') == NULL && pathtrim(list->filename)[0] == '.')
-            {
-                list = list->next;
-                free(tmp->filename);
-                free(tmp);
-                continue ;
-            }
+			//skip dots todo function
+			if (ft_strchr(options, 'a') == NULL && pathtrim(list->filename)[0] == '.')
+			{
+				list = list->next;
+				free(tmp->filename);
+				free(tmp);
+				continue ;
+			}
 			if(stat(list->filename, &file) < 0)
-                if(lstat(list->filename, &file) < 0)
-                    ft_perror(list->filename);
+				if(lstat(list->filename, &file) < 0)
+					ft_perror(list->filename);
 			if (S_ISDIR(file.st_mode))
 				recurdir(list->filename, options);
 			list = list->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/07 08:52:13 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/12 16:46:26 by cattouma         ###   ########.fr       */
+/*   Created: 2016/02/17 13:44:25 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/17 13:47:54 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,47 +24,47 @@
 #include <sys/xattr.h>
 #include <sys/acl.h>
 
-void    printlinkpath(char *filename)
+void	printlinkpath(char *filename)
 {
-    char    buf[1024];
-    size_t  len;
+	char	buf[1024];
+	size_t	len;
 
-    if ((len = readlink(filename, buf, sizeof(buf) - 1)) != (size_t)-1)
-        buf[len] = '\0';
-    ft_putstr(" -> ");
-    ft_putstr(buf);
+	if ((len = readlink(filename, buf, sizeof(buf) - 1)) != (size_t)-1)
+		buf[len] = '\0';
+	ft_putstr(" -> ");
+	ft_putstr(buf);
 }
 
-void    print_device(dev_t device, t_max *maxs)
+void	print_device(dev_t device, t_max *maxs)
 {
-    print_space_nbr(maxs->major, major(device));
-    ft_putchar(',');
-    ft_putstr(" ");
-    print_space_nbr(maxs->minor, minor(device));
-    ft_putstr(" ");
+	print_space_nbr(maxs->major, major(device));
+	ft_putchar(',');
+	ft_putstr(" ");
+	print_space_nbr(maxs->minor, minor(device));
+	ft_putstr(" ");
 }
 
-void    print_size(off_t size, t_max *maxs)
+void	print_size(off_t size, t_max *maxs)
 {
-    print_space_nbr(maxs->size, size);
+	print_space_nbr(maxs->size, size);
 }
 
-t_bool  is_device(mode_t mode)
+t_bool	is_device(mode_t mode)
 {
-    if (S_ISBLK(mode) || S_ISCHR(mode))
-        return true;
-    return false;
+	if (S_ISBLK(mode) || S_ISCHR(mode))
+		return (true);
+	return (false);
 }
 
-void    printstat2(struct stat *file, char *filename, t_bool is_file)
+void	printstat2(struct stat *file, char *filename, t_bool is_file)
 {
-    print_ctime(&file->st_mtimespec);
-    ft_putstr(" ");
-    if (is_file)
-        ft_putstr(filename);
-    else
-        ft_putstr(pathtrim(filename));
-    if (S_ISLNK(file->st_mode))
-        printlinkpath(filename);
-    ft_putendl("");
+	print_ctime(&file->st_mtimespec);
+	ft_putstr(" ");
+	if (is_file)
+		ft_putstr(filename);
+	else
+		ft_putstr(pathtrim(filename));
+	if (S_ISLNK(file->st_mode))
+		printlinkpath(filename);
+	ft_putendl("");
 }
