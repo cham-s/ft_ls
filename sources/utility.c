@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 14:05:06 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/17 14:36:12 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/17 19:07:14 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_perror(char *name)
 
 	merror = ft_strjoin("ft_ls: ", name);
 	perror(merror);
-	ft_strdel(&merror);
+	free(merror);
 }
 
 int				nbrspace(int max)
@@ -62,7 +62,7 @@ int		is_dateinrange(time_t atime)
 	result = 0;
 	now = time(&now);
 	result = atime - now;
-	result = (result < 0? -result: result);
+	result = (result < 0 ? -result : result);
 	return (result <= SIX_MON);
 }
 

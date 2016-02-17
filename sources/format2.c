@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 14:03:03 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/17 14:18:27 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/17 19:07:15 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void			getmaxs(char *filename, t_max *maxs, char *options)
 		if (nbrspace(minor(file.st_rdev)) > maxs->minor)
 			maxs->minor = nbrspace(minor(file.st_rdev));
 	}
+	//exit(3);
 }
 
 void			print_space_nbr(int max, long long size)

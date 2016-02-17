@@ -82,6 +82,10 @@ void			getdirs(t_file **tablist, int ac, char **av, char *options)
 	apply_merge(&tablist[ERRORS], "");
 	apply_merge(&tablist[FILES], options);
 	apply_merge(&tablist[DIRS], options);
+	if (tablist[ERRORS] == NULL && tablist[FILES] == NULL
+			&& tablist[DIRS] == NULL && isoptin(options, 'd'))
+				ft_lstfileappend(&tablist[FILES], ft_lstfilenew("."));
+
 }
 
 void			getoptions(int ac, char **av, char *options, char* optlist)
