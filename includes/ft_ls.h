@@ -14,7 +14,7 @@
 # define FT_LS_H
 # include "libft.h"
 # include <sys/stat.h>
-# define OPTS       "Radlrt1@"
+# define OPTS       "ARadlrt1@"
 # define OPT_SIZE (sizeof(OPTS)) 
 # define pathtrim(longname) (ft_strrchr(longname, '/') + 1)
 # define isoptin(options, c) ft_strchr(options, c)

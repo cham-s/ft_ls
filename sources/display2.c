@@ -34,12 +34,25 @@ void	listallfilesfree(t_file **list, char *directory, char *options, t_max *maxs
 	while (*list != NULL)
 	{
 		tmp = *list;
-		if (ft_strchr(options, 'a') == NULL && pathtrim((*list)->filename)[0] == '.')
+		if (isoptin(options, 'a') == NULL && 
+            pathtrim((*list)->filename)[0] == '.' &&
+            isoptin(options, 'A') == NULL)
 		{
 			*list = (*list)->next;
 			free(tmp->filename);
 			free(tmp);
 			continue ;
+		}
+        else if (isoptin(options, 'A') && isoptin(options, 'a') == NULL)
+		{
+            if (ft_strcmp(pathtrim((*list)->filename), ".") == 0 ||
+                ft_strcmp(pathtrim((*list)->filename), "..") == 0)
+            {
+                *list = (*list)->next;
+                free(tmp->filename);
+                free(tmp);
+                continue ;
+            }
 		}
 		if (ft_strchr(options, 'l'))
 			print_l_format((*list)->filename, maxs, false);
@@ -99,13 +112,26 @@ void	recurdir(char *directory, char *options)
 		else
 		{
 			//skip dots todo function
-			if (ft_strchr(options, 'a') == NULL && pathtrim(list->filename)[0] == '.')
-			{
-				list = list->next;
-				free(tmp->filename);
-				free(tmp);
-				continue ;
-			}
+            if (isoptin(options, 'a') == NULL && 
+                pathtrim((list)->filename)[0] == '.' &&
+                isoptin(options, 'A') == NULL)
+            {
+                list = (list)->next;
+                free(tmp->filename);
+                free(tmp);
+                continue ;
+            }
+            else if (isoptin(options, 'A') && isoptin(options, 'a') == NULL)
+            {
+                if (ft_strcmp(pathtrim((list)->filename), ".") == 0 ||
+                    ft_strcmp(pathtrim((list)->filename), "..") == 0)
+                {
+                    list = (list)->next;
+                    free(tmp->filename);
+                    free(tmp);
+                    continue ;
+                }
+            }
 			if(stat(list->filename, &file) < 0)
 				if(lstat(list->filename, &file) < 0)
 					ft_perror(list->filename);

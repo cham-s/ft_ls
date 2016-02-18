@@ -72,10 +72,21 @@ void	printtotal(t_file **list, char *options)
 	result = 0;
 	while (current != NULL)
 	{
-		if (isoptin(options, 'a') == NULL && pathtrim(current->filename)[0] == '.')
+		if (isoptin(options, 'a') == NULL && 
+            pathtrim(current->filename)[0] == '.' &&
+            isoptin(options, 'A') == NULL)
 		{
 			current = current->next;
 			continue ;
+		}
+        else if (isoptin(options, 'A') && isoptin(options, 'a') == NULL)
+		{
+            if (pathtrim(current->filename) == "." ||
+                pathtrim(current->filename) == "..")
+            {
+                current = current->next;
+                continue ;
+            }
 		}
 		if (lstat(current->filename, &file) < 0)
 			return ;
@@ -126,10 +137,21 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 	}
 	while (current != NULL)
 	{
-		if (ft_strchr(options, 'a') == NULL && pathtrim(current->filename)[0] == '.')
+		if (isoptin(options, 'a') == NULL && 
+            pathtrim(current->filename)[0] == '.' &&
+            isoptin(options, 'A') == NULL)
 		{
 			current = current->next;
 			continue ;
+		}
+        else if (isoptin(options, 'A') && isoptin(options, 'a') == NULL)
+		{
+            if (ft_strcmp(pathtrim(current->filename), ".") == 0 ||
+                ft_strcmp(pathtrim(current->filename), "..") == 0)
+            {
+                current = current->next;
+                continue ;
+            }
 		}
 		if (ft_strchr(options, 'l'))
 			print_l_format(current->filename, maxs, false);
