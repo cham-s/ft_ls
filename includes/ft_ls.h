@@ -28,6 +28,7 @@ typedef struct		s_file
 {
 	char			*filename;
 	time_t			date;
+    off_t           size;
 	struct s_file	*next;
 }					t_file;
 

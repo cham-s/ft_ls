@@ -20,6 +20,7 @@ static void    addstat(struct stat *file, char *filename, t_file *new)
 	ft_strcpy(new->filename, filename);
 	new->next = NULL;
 	new->date = file->st_mtime;
+    new->size = file->st_size;
 }
 
 t_file	*ft_lstfilenew(char *filename)

@@ -30,9 +30,7 @@ void	apply_merge(t_file **list, char *options)
 	{
 		if (ft_strchr(options, 'r'))
 			ft_lstmergesort(list, "r");
-		else
-			ft_lstmergesort(list, "");
-		ft_lstmergesort(list, "t");
+        ft_lstmergesort(list, "t");
 	}
 	else if (ft_strchr(options, 'r'))
 		ft_lstmergesort(list, "r");

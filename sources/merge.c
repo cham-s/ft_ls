@@ -52,6 +52,50 @@ t_file	*ft_mergelists(t_file *a, t_file *b, int (*cmp)())
 	return mergedlist;
 }
 
+t_file	*ft_mergelists_rev_s(t_file *a, t_file *b)
+{
+	t_file	*mergedlist;
+
+	mergedlist = NULL;
+	if (a == NULL)
+		return b;
+	else if (b == NULL)
+		return a;
+	if (a->size >= b->size)
+	{
+		mergedlist = a;
+		mergedlist->next = ft_mergelists_rev_s(a->next, b);
+	}
+	else
+	{
+		mergedlist = b;
+		mergedlist->next = ft_mergelists_rev_s(a, b->next);
+	}
+	return mergedlist;
+}
+
+t_file	*ft_mergelists_rev_t(t_file *a, t_file *b)
+{
+	t_file	*mergedlist;
+
+	mergedlist = NULL;
+	if (a == NULL)
+		return b;
+	else if (b == NULL)
+		return a;
+	if (a->date <= b->date)
+	{
+		mergedlist = a;
+		mergedlist->next = ft_mergelists_rev_t(a->next, b);
+	}
+	else
+	{
+		mergedlist = b;
+		mergedlist->next = ft_mergelists_rev_t(a, b->next);
+	}
+	return mergedlist;
+}
+
 t_file	*ft_mergelists_rev(t_file *a, t_file *b, int (*cmp)())
 {
 	t_file	*mergedlist;
@@ -110,10 +154,22 @@ void	ft_lstmergesort(t_file **source, char *options)
 	ft_lstpartition(head, &a, &b);
 	ft_lstmergesort(&a, options);
 	ft_lstmergesort(&b, options);
-	if (ft_strchr(options, 'r'))
-		*source = ft_mergelists_rev(a, b, ft_strcmp);
-	else if (ft_strchr(options, 't'))
-		*source = ft_mergelists_tim(a, b);
-	else
-		*source = ft_mergelists(a, b, ft_strcmp);
+
+
+    if (!isoptin(options, 'r'))
+    {
+        if (isoptin(options, 't'))
+            *source = ft_mergelists_tim(a, b);
+        else
+            *source = ft_mergelists(a, b, ft_strcmp);
+    }
+    else
+    {
+        if (isoptin(options, 't'))
+            *source = ft_mergelists_rev_t(a, b);
+        else if (isoptin(options, 'S'))
+            *source = ft_mergelists_rev_s(a, b);
+        else
+            *source = ft_mergelists_rev(a, b, ft_strcmp);
+    }
 }
