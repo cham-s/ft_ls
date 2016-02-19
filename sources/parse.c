@@ -41,11 +41,11 @@ void			check_file(t_file **tablist, char **av, char *filename, char *options)
 
 	if ((lstat(filename, &file)) < 0)
 		ft_lstfileappend(&tablist[ERRORS], ft_lstfilenew(*av));
-	if (S_ISLNK(file.st_mode) && isoptin(options, 'l'))
+	if (S_ISLNK(file.st_mode) && OPTIN(options, 'l'))
 			ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
 	else if ((stat(filename, &file)) == 0) 
 	{
-		if (isoptin(options, 'd'))
+		if (OPTIN(options, 'd'))
 				ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
 		else
 		{
@@ -83,7 +83,7 @@ void			getdirs(t_file **tablist, int ac, char **av, char *options)
 	apply_merge(&tablist[FILES], options);
 	apply_merge(&tablist[DIRS], options);
 	if (tablist[ERRORS] == NULL && tablist[FILES] == NULL
-			&& tablist[DIRS] == NULL && isoptin(options, 'd'))
+			&& tablist[DIRS] == NULL && OPTIN(options, 'd'))
 				ft_lstfileappend(&tablist[FILES], ft_lstfilenew("."));
 
 }
@@ -104,11 +104,11 @@ void			getoptions(int ac, char **av, char *options, char* optlist)
 			break ;
 		while (av[i][j])
 		{
-			if (isoptin(optlist, av[i][j]) == NULL)
+			if (OPTIN(optlist, av[i][j]) == NULL)
 				usage(av[i][j]);
 			else
 			{
-				if (isoptin(tmp, av[i][j]) == NULL)
+				if (OPTIN(tmp, av[i][j]) == NULL)
 				{
 					while(*options)
 						options++;

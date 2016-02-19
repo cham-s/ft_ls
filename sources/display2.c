@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   display2.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 14:32:15 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/17 14:36:10 by cattouma         ###   ########.fr       */
-/*                                                                            */
+/*																			  */
+/*														  :::	   ::::::::   */
+/*	 display2.c											:+:		 :+:	:+:   */
+/*													  +:+ +:+		  +:+	  */
+/*	 By: cattouma <cattouma@student.42.fr>			+#+  +:+	   +#+		  */
+/*												  +#+#+#+#+#+	+#+			  */
+/*	 Created: 2016/02/17 14:32:15 by cattouma		   #+#	  #+#			  */
+/*	 Updated: 2016/02/19 17:10:32 by cattouma		  ###	########.fr		  */
+/*																			  */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
@@ -34,30 +34,30 @@ void	listallfilesfree(t_file **list, char *directory, char *options, t_max *maxs
 	while (*list != NULL)
 	{
 		tmp = *list;
-		if (isoptin(options, 'a') == NULL && 
-            pathtrim((*list)->filename)[0] == '.' &&
-            isoptin(options, 'A') == NULL)
+		if (OPTIN(options, 'a') == NULL && 
+			TRIM((*list)->filename)[0] == '.' &&
+			OPTIN(options, 'A') == NULL)
 		{
 			*list = (*list)->next;
 			free(tmp->filename);
 			free(tmp);
 			continue ;
 		}
-        else if (isoptin(options, 'A') && isoptin(options, 'a') == NULL)
+		else if (OPTIN(options, 'A') && OPTIN(options, 'a') == NULL)
 		{
-            if (ft_strcmp(pathtrim((*list)->filename), ".") == 0 ||
-                ft_strcmp(pathtrim((*list)->filename), "..") == 0)
-            {
-                *list = (*list)->next;
-                free(tmp->filename);
-                free(tmp);
-                continue ;
-            }
+			if (ft_strcmp(TRIM((*list)->filename), ".") == 0 ||
+				ft_strcmp(TRIM((*list)->filename), "..") == 0)
+			{
+				*list = (*list)->next;
+				free(tmp->filename);
+				free(tmp);
+				continue ;
+			}
 		}
 		if (ft_strchr(options, 'l'))
 			print_l_format((*list)->filename, maxs, false);
 		else
-			printfile(pathtrim((*list)->filename), options);
+			printfile(TRIM((*list)->filename), options);
 		*list = (*list)->next;
 		free(tmp->filename);
 		free(tmp);
@@ -106,32 +106,32 @@ void	recurdir(char *directory, char *options)
 	while (list != NULL)
 	{
 		tmp = list;
-		if (ft_strcmp(pathtrim(list->filename), ".") == 0
-		|| ft_strcmp(pathtrim(list->filename), "..") == 0)
+		if (ft_strcmp(TRIM(list->filename), ".") == 0
+		|| ft_strcmp(TRIM(list->filename), "..") == 0)
 			list = list->next;
 		else
 		{
 			//skip dots todo function
-            if (isoptin(options, 'a') == NULL && 
-                pathtrim((list)->filename)[0] == '.' &&
-                isoptin(options, 'A') == NULL)
-            {
-                list = (list)->next;
-                free(tmp->filename);
-                free(tmp);
-                continue ;
-            }
-            else if (isoptin(options, 'A') && isoptin(options, 'a') == NULL)
-            {
-                if (ft_strcmp(pathtrim((list)->filename), ".") == 0 ||
-                    ft_strcmp(pathtrim((list)->filename), "..") == 0)
-                {
-                    list = (list)->next;
-                    free(tmp->filename);
-                    free(tmp);
-                    continue ;
-                }
-            }
+			if (OPTIN(options, 'a') == NULL && 
+				TRIM((list)->filename)[0] == '.' &&
+				OPTIN(options, 'A') == NULL)
+			{
+				list = (list)->next;
+				free(tmp->filename);
+				free(tmp);
+				continue ;
+			}
+			else if (OPTIN(options, 'A') && OPTIN(options, 'a') == NULL)
+			{
+				if (ft_strcmp(TRIM((list)->filename), ".") == 0 ||
+					ft_strcmp(TRIM((list)->filename), "..") == 0)
+				{
+					list = (list)->next;
+					free(tmp->filename);
+					free(tmp);
+					continue ;
+				}
+			}
 			if(stat(list->filename, &file) < 0)
 				if(lstat(list->filename, &file) < 0)
 					ft_perror(list->filename);

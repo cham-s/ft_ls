@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 14:31:36 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/19 16:39:30 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/19 18:04:45 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,27 @@ void	getfiles(char *filename, t_file **list, char *options, t_max *maxs)
 	apply_merge(list, options);
 }
 
+int		check_for_a(t_file *current, char *options)
+{
+	if (OPTIN(options, 'a') == NULL && 
+		TRIM(current->filename)[0] == '.' &&
+		OPTIN(options, 'A') == NULL)
+	{
+		current = current->next;
+		return (1);
+	}
+	else if (OPTIN(options, 'A') && OPTIN(options, 'a') == NULL)
+	{
+		if (TRIM(current->filename) == "." ||
+			TRIM(current->filename) == "..")
+		{
+			current = current->next;
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	printtotal(t_file **list, char *options)
 {
 	int			result;
@@ -95,17 +116,17 @@ void	printtotal(t_file **list, char *options)
 	result = 0;
 	while (current != NULL)
 	{
-		if (isoptin(options, 'a') == NULL && 
-            pathtrim(current->filename)[0] == '.' &&
-            isoptin(options, 'A') == NULL)
+		if (OPTIN(options, 'a') == NULL && 
+            TRIM(current->filename)[0] == '.' &&
+            OPTIN(options, 'A') == NULL)
 		{
 			current = current->next;
 			continue ;
 		}
-        else if (isoptin(options, 'A') && isoptin(options, 'a') == NULL)
+        else if (OPTIN(options, 'A') && OPTIN(options, 'a') == NULL)
 		{
-            if (pathtrim(current->filename) == "." ||
-                pathtrim(current->filename) == "..")
+            if (TRIM(current->filename) == "." ||
+                TRIM(current->filename) == "..")
             {
                 current = current->next;
                 continue ;
@@ -155,22 +176,22 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 	{
 		if (ft_strchr(options, 'l') && current->next->next != NULL)
 			printtotal(list, options);
-		else if (ft_strchr(options, 'l') && current->next->next == NULL && isoptin(options, 'a'))
+		else if (ft_strchr(options, 'l') && current->next->next == NULL && OPTIN(options, 'a'))
 			printtotal(list, options);
 	}
 	while (current != NULL)
 	{
-		if (isoptin(options, 'a') == NULL && 
-            pathtrim(current->filename)[0] == '.' &&
-            isoptin(options, 'A') == NULL)
+		if (OPTIN(options, 'a') == NULL && 
+            TRIM(current->filename)[0] == '.' &&
+            OPTIN(options, 'A') == NULL)
 		{
 			current = current->next;
 			continue ;
 		}
-        else if (isoptin(options, 'A') && isoptin(options, 'a') == NULL)
+        else if (OPTIN(options, 'A') && OPTIN(options, 'a') == NULL)
 		{
-            if (ft_strcmp(pathtrim(current->filename), ".") == 0 ||
-                ft_strcmp(pathtrim(current->filename), "..") == 0)
+            if (ft_strcmp(TRIM(current->filename), ".") == 0 ||
+                ft_strcmp(TRIM(current->filename), "..") == 0)
             {
                 current = current->next;
                 continue ;
@@ -179,7 +200,7 @@ void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
 		if (ft_strchr(options, 'l'))
 			print_l_format(current->filename, maxs, false);
 		else
-			printfile(pathtrim(current->filename), options);
+			printfile(TRIM(current->filename), options);
 		current = current->next;
 	}
 	i++;

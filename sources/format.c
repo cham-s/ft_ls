@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   format.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 13:44:25 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/17 13:47:54 by cattouma         ###   ########.fr       */
-/*                                                                            */
+/*																			  */
+/*														  :::	   ::::::::   */
+/*	 format.c											:+:		 :+:	:+:   */
+/*													  +:+ +:+		  +:+	  */
+/*	 By: cattouma <cattouma@student.42.fr>			+#+  +:+	   +#+		  */
+/*												  +#+#+#+#+#+	+#+			  */
+/*	 Created: 2016/02/17 13:44:25 by cattouma		   #+#	  #+#			  */
+/*	 Updated: 2016/02/17 13:47:54 by cattouma		  ###	########.fr		  */
+/*																			  */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
@@ -63,7 +63,7 @@ void	printstat2(struct stat *file, char *filename, t_bool is_file)
 	if (is_file)
 		ft_putstr(filename);
 	else
-		ft_putstr(pathtrim(filename));
+		ft_putstr(TRIM(filename));
 	if (S_ISLNK(file->st_mode))
 		printlinkpath(filename);
 	ft_putendl("");

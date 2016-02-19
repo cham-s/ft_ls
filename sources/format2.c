@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   format2.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 14:03:03 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/17 19:07:15 by cattouma         ###   ########.fr       */
-/*                                                                            */
+/*																			  */
+/*														  :::	   ::::::::   */
+/*	 format2.c											:+:		 :+:	:+:   */
+/*													  +:+ +:+		  +:+	  */
+/*	 By: cattouma <cattouma@student.42.fr>			+#+  +:+	   +#+		  */
+/*												  +#+#+#+#+#+	+#+			  */
+/*	 Created: 2016/02/17 14:03:03 by cattouma		   #+#	  #+#			  */
+/*	 Updated: 2016/02/17 19:07:15 by cattouma		  ###	########.fr		  */
+/*																			  */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
@@ -25,8 +25,8 @@ void			getmaxs(char *filename, t_max *maxs, char *options)
 	struct group	*grp;
 	char			*name;
 
-	name = (ft_strrchr(filename, '/') ? pathtrim(filename) : filename);
-	if (!(isoptin(options, 'a') == NULL && name[0] == '.') || isoptin(options, 'd'))
+	name = (ft_strrchr(filename, '/') ? TRIM(filename) : filename);
+	if (!(OPTIN(options, 'a') == NULL && name[0] == '.') || OPTIN(options, 'd'))
 	{
 		if (lstat(filename, &file) < 0)
 			if (stat(filename, &file) < 0)
