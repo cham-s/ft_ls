@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::   */
-/*	 main.c												:+:		 :+:	:+:   */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: cattouma <cattouma@student.42.fr>			+#+  +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2016/01/04 14:54:05 by cattouma		   #+#	  #+#			  */
-/*	 Updated: 2016/02/17 13:47:55 by cattouma		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/19 22:06:28 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/19 22:34:09 by cattouma         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
@@ -27,6 +27,6 @@ int		main(int ac, char **av)
 	tablist[DIRS] = NULL;
 	getoptions(ac, av, options, OPTS);
 	getdirs(tablist, ac, av, options);
-	apply_ft_list(tablist, options, ac, av);
+	apply_ft_list(tablist, options);
 	return (0);
 }

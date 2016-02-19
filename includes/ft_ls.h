@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 17:28:45 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/19 17:29:09 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/19 22:28:29 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 # define FT_LS_H
 # include "libft.h"
 # include <sys/stat.h>
-# define OPTS		"ARadlrt1@"
-# define OPT_SIZE (sizeof(OPTS))
 # define TRIM(longname) (ft_strrchr(longname, '/') + 1)
 # define OPTIN(options, c) ft_strchr(options, c)
+# define OPTS		"ARadlrt1@"
 # define LIST_SIZE	3
 # define SIX_MON	15552000
 # define ERRORS		0
 # define FILES		1
 # define DIRS		2
+# define OPT_SIZE (sizeof(OPTS))
 
 typedef struct		s_file
 {
@@ -43,6 +43,8 @@ typedef struct		s_max
 	int				size;
 }					t_max;
 
+void				free_content_and_node(t_file *node);
+int					check_for_a(t_file *current, char *options);
 int					is_dateinrange(time_t atime);
 void				print_size(off_t size, t_max *maxs);
 void				printstat2(struct stat *file, char *filename,
@@ -55,16 +57,14 @@ void				browse_list_for_maxs(t_file **list, t_max *maxs,
 void				getmaxs(char *filename, t_max *maxs, char *options);
 t_file				*ft_lstfilenew(char *filename);
 void				ft_lstfileappend(t_file **file, t_file *new);
-void				ft_list(char *filename, char *options, int ac,
-														char **av);
+void				ft_list(char *filename, char *options);
 void				getoptions(int ac, char **av, char *options,
 												char *optlist);
 void				getdirs(t_file **list, int ac, char **av, char *options);
 void				recurdir(char *directory, char *options);
 void				getfiles(char *filename, t_file **list, char *options,
 															t_max *maxs);
-void				apply_ft_list(t_file **list, char *options, int ac,
-															char **av);
+void				apply_ft_list(t_file **list, char *options);
 void				listfile(char *filename, char *options);
 void				listdir(char *directory, char *options);
 void				listallfiles(t_file **list, char *options,

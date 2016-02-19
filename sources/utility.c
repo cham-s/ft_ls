@@ -15,6 +15,12 @@
 #include <stdio.h>
 #include <time.h>
 
+void	free_content_and_node(t_file *node)
+{
+	free(node->filename);
+	free(node);
+}
+
 char	*catpath(char *folder, char *file)
 {
 	size_t	len1;

@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::   */
-/*	 format2.c											:+:		 :+:	:+:   */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: cattouma <cattouma@student.42.fr>			+#+  +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2016/02/17 14:03:03 by cattouma		   #+#	  #+#			  */
-/*	 Updated: 2016/02/17 19:07:15 by cattouma		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   format2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/19 21:24:23 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/19 21:56:26 by cattouma         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
@@ -18,11 +18,30 @@
 #include <grp.h>
 #include <time.h>
 
+void			get_group_maxs(struct stat *file, t_max *maxs)
+{
+	struct group	*grp;
+
+	if ((grp = getgrgid(file->st_gid)) == NULL)
+	{
+		if (nbrspace(file->st_gid) > maxs->gid)
+			maxs->gid = nbrspace(file->st_gid);
+	}
+	else
+	{
+		if ((int)ft_strlen(grp->gr_name) > maxs->group)
+			maxs->group = (int)ft_strlen(grp->gr_name);
+	}
+	if (nbrspace(major(file->st_rdev)) > maxs->major)
+		maxs->major = nbrspace(major(file->st_rdev));
+	if (nbrspace(minor(file->st_rdev)) > maxs->minor)
+		maxs->minor = nbrspace(minor(file->st_rdev));
+}
+
 void			getmaxs(char *filename, t_max *maxs, char *options)
 {
 	struct stat		file;
 	struct passwd	*pwd;
-	struct group	*grp;
 	char			*name;
 
 	name = (ft_strrchr(filename, '/') ? TRIM(filename) : filename);
@@ -45,22 +64,8 @@ void			getmaxs(char *filename, t_max *maxs, char *options)
 			if ((int)ft_strlen(pwd->pw_name) > maxs->user)
 				maxs->user = (int)ft_strlen(pwd->pw_name);
 		}
-		if ((grp = getgrgid(file.st_gid)) == NULL)
-		{
-			if (nbrspace(file.st_gid) > maxs->gid)
-				maxs->gid = nbrspace(file.st_gid);
-		}
-		else
-		{
-			if ((int)ft_strlen(grp->gr_name) > maxs->group)
-				maxs->group = (int)ft_strlen(grp->gr_name);
-		}
-		if (nbrspace(major(file.st_rdev)) > maxs->major)
-			maxs->major = nbrspace(major(file.st_rdev));
-		if (nbrspace(minor(file.st_rdev)) > maxs->minor)
-			maxs->minor = nbrspace(minor(file.st_rdev));
+		get_group_maxs(&file, maxs);
 	}
-	//exit(3);
 }
 
 void			print_space_nbr(int max, long long size)
@@ -83,6 +88,16 @@ void			print_space_str(int max, char *str)
 		ft_putchar(' ');
 }
 
+void			print_year(char *s)
+{
+	ft_putchar(' ');
+	while (*s != '\n')
+	{
+		ft_putchar(*s);
+		s++;
+	}
+}
+
 void			print_ctime(struct timespec *atime)
 {
 	char *strtime;
@@ -103,12 +118,5 @@ void			print_ctime(struct timespec *atime)
 	if (is_dateinrange(atime->tv_sec))
 		ft_putstr(hours);
 	else
-	{
-		ft_putchar(' ');
-		while (*year != '\n')
-		{
-			ft_putchar(*year);
-			year++;
-		}
-	}
+		print_year(year);
 }

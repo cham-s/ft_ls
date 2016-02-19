@@ -1,52 +1,38 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::   */
-/*	 parse.c											:+:		 :+:	:+:   */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: cattouma <marvin@42.fr>					+#+  +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2016/01/29 15:59:04 by cattouma		   #+#	  #+#			  */
-/*	 Updated: 2016/02/17 13:17:25 by cattouma		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/19 22:13:19 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/19 22:23:14 by cattouma         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "libft.h"
 
-static void    usage(char c)
+static void		usage(char c)
 {
 	ft_putstr_fd("ft_ls: illegal option -- ", 2);
 	ft_putchar_fd(c, 2);
 	ft_putendl_fd("\nusage: ft_ls [-Ralrt] [file ...]", 2);
-	exit (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
-void			attachlist(t_file **a, t_file **b)
-{
-	t_file *tmp;
-
-	tmp = NULL;
-	if (*a != NULL)
-	{
-		tmp  = *a;
-		while ((*a)->next != NULL)
-			*a = (*a)->next;
-		(*a)->next = *b;
-		*b = tmp;
-	}
-}
-void			check_file(t_file **tablist, char **av, char *filename, char *options)
+void			check_file(t_file **tablist, char **av, char *name, char *opts)
 {
 	struct stat	file;
 
-	if ((lstat(filename, &file)) < 0)
+	if ((lstat(name, &file)) < 0)
 		ft_lstfileappend(&tablist[ERRORS], ft_lstfilenew(*av));
-	if (S_ISLNK(file.st_mode) && OPTIN(options, 'l'))
-			ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
-	else if ((stat(filename, &file)) == 0) 
+	if (S_ISLNK(file.st_mode) && OPTIN(opts, 'l'))
+		ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
+	else if ((stat(name, &file)) == 0)
 	{
-		if (OPTIN(options, 'd'))
-				ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
+		if (OPTIN(opts, 'd'))
+			ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
 		else
 		{
 			if (S_ISREG(file.st_mode))
@@ -56,7 +42,17 @@ void			check_file(t_file **tablist, char **av, char *filename, char *options)
 		}
 	}
 }
-void			getdirs(t_file **tablist, int ac, char **av, char *options)
+
+void			check_fts_open(char *s)
+{
+	if (ft_strcmp(s, "") == 0)
+	{
+		ft_putendl_fd("ft_ls: fts_open: No such file or directory", 2);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void			getdirs(t_file **tablist, int ac, char **av, char *opts)
 {
 	av++;
 	while (ac-- > 1 && (*av)[0] == '-' && (*av)[1] != '\0')
@@ -71,31 +67,26 @@ void			getdirs(t_file **tablist, int ac, char **av, char *options)
 	}
 	while (ac-- >= 1)
 	{
-		if (ft_strcmp(*av, "") == 0)
-		{
-			ft_putendl_fd("ft_ls: fts_open: No such file or directory", 2);
-			exit(EXIT_FAILURE);
-		}
-		check_file(tablist, av, *av, options);
+		check_fts_open(*av);
+		check_file(tablist, av, *av, opts);
 		av++;
 	}
 	apply_merge(&tablist[ERRORS], "");
-	apply_merge(&tablist[FILES], options);
-	apply_merge(&tablist[DIRS], options);
+	apply_merge(&tablist[FILES], opts);
+	apply_merge(&tablist[DIRS], opts);
 	if (tablist[ERRORS] == NULL && tablist[FILES] == NULL
-			&& tablist[DIRS] == NULL && OPTIN(options, 'd'))
-				ft_lstfileappend(&tablist[FILES], ft_lstfilenew("."));
-
+			&& tablist[DIRS] == NULL && OPTIN(opts, 'd'))
+		ft_lstfileappend(&tablist[FILES], ft_lstfilenew("."));
 }
 
-void			getoptions(int ac, char **av, char *options, char* optlist)
+void			getopts(int ac, char **av, char *opts, char *optlist)
 {
 	char	*tmp;
 	int		i;
 	int		j;
 
 	i = 0;
-	tmp = options;
+	tmp = opts;
 	i++;
 	while (ac-- > 1 && av[i][0] == '-' && av[i][1] != '\0')
 	{
@@ -110,9 +101,9 @@ void			getoptions(int ac, char **av, char *options, char* optlist)
 			{
 				if (OPTIN(tmp, av[i][j]) == NULL)
 				{
-					while(*options)
-						options++;
-					*options = av[i][j];
+					while (*opts)
+						opts++;
+					*opts = av[i][j];
 				}
 			}
 			j++;

@@ -1,25 +1,22 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::   */
-/*	 launcher.c											:+:		 :+:	:+:   */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: cattouma <cattouma@student.42.fr>			+#+  +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2016/01/29 14:26:40 by cattouma		   #+#	  #+#			  */
-/*	 Updated: 2016/02/17 13:47:58 by cattouma		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   launcher.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/19 22:02:26 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/19 22:27:45 by cattouma         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "libft.h"
 
-void	ft_list(char *directory, char *options, int ac, char **av)
+void	ft_list(char *directory, char *options)
 {
 	static int i = 0;
 
-	// a virer?
-	av++;
-	ac++;
 	if (ft_strchr(options, 'R'))
 		recurdir(directory, options);
 	else
@@ -29,11 +26,11 @@ void	ft_list(char *directory, char *options, int ac, char **av)
 
 void	print_errors(t_file **list)
 {
-	struct stat file;
-	t_file *tmp;
-	t_bool is_empty;
+	struct stat	file;
+	t_file		*tmp;
+	t_bool		is_empty;
 
-	is_empty = (list[ERRORS] == NULL? true: false);
+	is_empty = (list[ERRORS] == NULL ? true : false);
 	while (list[ERRORS] != NULL)
 	{
 		tmp = list[ERRORS];
@@ -54,7 +51,7 @@ void	print_files(t_file **list, char *options, t_max *maxs)
 	t_file *tmp;
 	t_bool is_empty;
 
-	is_empty = (list[FILES] == NULL? true: false);
+	is_empty = (list[FILES] == NULL ? true : false);
 	while (list[FILES] != NULL)
 	{
 		tmp = list[FILES];
@@ -70,20 +67,21 @@ void	print_files(t_file **list, char *options, t_max *maxs)
 		ft_putchar('\n');
 }
 
-void	print_folders(t_file **list, char *options, int ac, char **av)
+void	print_folders(t_file **list, char *options)
 {
 	t_file		*tmp;
 	static int	i = 0;
 
 	if (list[DIRS])
 	{
-		if (i == 0 && (list[DIRS]->next != NULL || (!list[FILES] && list[ERRORS])))
+		if (i == 0 && (list[DIRS]->next != NULL ||
+		(!list[FILES] && list[ERRORS])))
 			printdirnl(list[DIRS]->filename, true);
 	}
 	while (list[DIRS] != NULL)
 	{
 		tmp = list[DIRS];
-		ft_list(list[DIRS]->filename, options, ac, av);
+		ft_list(list[DIRS]->filename, options);
 		list[DIRS] = list[DIRS]->next;
 		free(tmp->filename);
 		free(tmp);
@@ -91,21 +89,21 @@ void	print_folders(t_file **list, char *options, int ac, char **av)
 	i++;
 }
 
-void	apply_ft_list(t_file **tablist, char *options, int ac, char **av)
+void	apply_ft_list(t_file **tablist, char *options)
 {
 	t_max	maxs;
-	int		len; 
+	int		len;
 
 	if (tablist[ERRORS] == NULL && tablist[FILES] == NULL
 			&& tablist[DIRS] == NULL)
-		ft_list(".", options, ac, av);
+		ft_list(".", options);
 	else
 	{
 		initmax(&maxs);
 		browse_list_for_maxs(&tablist[FILES], &maxs, options);
 		print_errors(tablist);
 		print_files(tablist, options, &maxs);
-		print_folders(tablist, options, ac, av);
+		print_folders(tablist, options);
 	}
 	free(options);
 	len = LIST_SIZE;

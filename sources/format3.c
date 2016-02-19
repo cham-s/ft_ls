@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   format3.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/19 21:58:55 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/19 22:29:40 by cattouma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 #include "libft.h"
 #include <dirent.h>
@@ -12,22 +24,22 @@
 #include <sys/xattr.h>
 #include <sys/acl.h>
 
-void	printstat(struct stat *file, char *filename, t_max *maxs, t_bool is_file)
+void	printstat(struct stat *file, char *name, t_max *maxs, t_bool is_file)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
 
 	grp = NULL;
-	perm_format(file, filename);
+	perm_format(file, name);
 	print_space_nbr(maxs->lnk, file->st_nlink);
 	ft_putstr(" ");
 	if ((pwd = getpwuid(file->st_uid)) == NULL)
-		print_space_nbr(maxs->uid , file->st_uid);
+		print_space_nbr(maxs->uid, file->st_uid);
 	else
-		print_space_str(maxs->user , pwd->pw_name);
+		print_space_str(maxs->user, pwd->pw_name);
 	ft_putstr("  ");
 	if ((grp = getgrgid(file->st_gid)) == NULL)
-		print_space_nbr(maxs->gid , file->st_gid);
+		print_space_nbr(maxs->gid, file->st_gid);
 	else
 		print_space_str(maxs->group, grp->gr_name);
 	ft_putstr("  ");
@@ -38,7 +50,7 @@ void	printstat(struct stat *file, char *filename, t_max *maxs, t_bool is_file)
 		print_size(file->st_size, maxs);
 		ft_putstr(" ");
 	}
-	printstat2(file, filename, is_file);
+	printstat2(file, name, is_file);
 }
 
 void	print_l_format(char *filename, t_max *maxs, t_bool is_file)
@@ -67,6 +79,7 @@ void	has_xattr_or_acl(char *path)
 		ft_putchar(' ');
 	ft_putchar(' ');
 }
+
 void	print_perm(mode_t mode, char *path)
 {
 	ft_putchar((mode & S_IRUSR) ? 'r' : '-');

@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   merge.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/19 22:07:14 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/19 22:10:57 by cattouma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "ft_ls.h"
 
-void	ft_lstpartition (t_file *head, t_file **front, t_file **back)	  
+void	ft_lstpartition(t_file *head, t_file **front, t_file **back)
 {
 	t_file	*fast;
 	t_file	*slow;
@@ -36,9 +48,9 @@ t_file	*ft_mergelists(t_file *a, t_file *b, int (*cmp)())
 
 	mergedlist = NULL;
 	if (a == NULL)
-		return b;
+		return (b);
 	else if (b == NULL)
-		return a;
+		return (a);
 	if (cmp(a->filename, b->filename) <= 0)
 	{
 		mergedlist = a;
@@ -49,7 +61,7 @@ t_file	*ft_mergelists(t_file *a, t_file *b, int (*cmp)())
 		mergedlist = b;
 		mergedlist->next = ft_mergelists(a, b->next, cmp);
 	}
-	return mergedlist;
+	return (mergedlist);
 }
 
 t_file	*ft_mergelists_rev(t_file *a, t_file *b, int (*cmp)())
@@ -58,9 +70,9 @@ t_file	*ft_mergelists_rev(t_file *a, t_file *b, int (*cmp)())
 
 	mergedlist = NULL;
 	if (a == NULL)
-		return b;
+		return (b);
 	else if (b == NULL)
-		return a;
+		return (a);
 	if (cmp(a->filename, b->filename) >= 0)
 	{
 		mergedlist = a;
@@ -71,7 +83,7 @@ t_file	*ft_mergelists_rev(t_file *a, t_file *b, int (*cmp)())
 		mergedlist = b;
 		mergedlist->next = ft_mergelists_rev(a, b->next, cmp);
 	}
-	return mergedlist;
+	return (mergedlist);
 }
 
 t_file	*ft_mergelists_rev_t(t_file *a, t_file *b)
@@ -80,9 +92,9 @@ t_file	*ft_mergelists_rev_t(t_file *a, t_file *b)
 
 	mergedlist = NULL;
 	if (a == NULL)
-		return b;
+		return (b);
 	else if (b == NULL)
-		return a;
+		return (a);
 	if (a->date >= b->date)
 	{
 		mergedlist = a;
@@ -93,7 +105,7 @@ t_file	*ft_mergelists_rev_t(t_file *a, t_file *b)
 		mergedlist = b;
 		mergedlist->next = ft_mergelists_rev_t(a, b->next);
 	}
-	return mergedlist;
+	return (mergedlist);
 }
 
 t_file	*ft_mergelists_tim(t_file *a, t_file *b)
@@ -102,9 +114,9 @@ t_file	*ft_mergelists_tim(t_file *a, t_file *b)
 
 	mergedlist = NULL;
 	if (a == NULL)
-		return b;
+		return (b);
 	else if (b == NULL)
-		return a;
+		return (a);
 	if (a->date >= b->date)
 	{
 		mergedlist = a;
@@ -115,7 +127,7 @@ t_file	*ft_mergelists_tim(t_file *a, t_file *b)
 		mergedlist = b;
 		mergedlist->next = ft_mergelists_tim(a, b->next);
 	}
-	return mergedlist;
+	return (mergedlist);
 }
 
 void	ft_lstmergesort(t_file **source, char *options)
@@ -127,7 +139,7 @@ void	ft_lstmergesort(t_file **source, char *options)
 	head = *source;
 	a = NULL;
 	b = NULL;
-	if (head == NULL || head->next ==  NULL)
+	if (head == NULL || head->next == NULL)
 		return ;
 	ft_lstpartition(head, &a, &b);
 	ft_lstmergesort(&a, options);
