@@ -18,7 +18,7 @@
 # define OPTIN(options, c) ft_strchr(options, c)
 # define OPTS		"ARadlrt1@"
 # define LIST_SIZE	3
-# define SIX_MON	15552000
+# define SIX_MON	15776000	
 # define ERRORS		0
 # define FILES		1
 # define DIRS		2

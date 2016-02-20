@@ -38,34 +38,42 @@ void			get_group_maxs(struct stat *file, t_max *maxs)
 		maxs->minor = nbrspace(minor(file->st_rdev));
 }
 
+void			get_infos_maxs(struct stat *file, t_max *maxs, char *filename, char *name)
+{
+	struct passwd	*pwd;
+
+	if (lstat(filename, file) < 0)
+		if (stat(filename, file) < 0)
+			ft_perror(name);
+	if (nbrspace(file->st_nlink) > maxs->lnk)
+		maxs->lnk = nbrspace(file->st_nlink);
+	if (nbrspace(file->st_size) > maxs->size)
+		maxs->size = nbrspace(file->st_size);
+	if ((pwd = getpwuid(file->st_uid)) == NULL)
+	{
+		if (nbrspace(file->st_uid) > maxs->uid)
+			maxs->uid = nbrspace(file->st_uid);
+	}
+	else
+	{
+		if ((int)ft_strlen(pwd->pw_name) > maxs->user)
+			maxs->user = (int)ft_strlen(pwd->pw_name);
+	}
+	get_group_maxs(file, maxs);
+}
+
 void			getmaxs(char *filename, t_max *maxs, char *options)
 {
 	struct stat		file;
-	struct passwd	*pwd;
 	char			*name;
 
 	name = (ft_strrchr(filename, '/') ? TRIM(filename) : filename);
-	if (!(OPTIN(options, 'a') == NULL && name[0] == '.') || OPTIN(options, 'd'))
-	{
-		if (lstat(filename, &file) < 0)
-			if (stat(filename, &file) < 0)
-				ft_perror(name);
-		if (nbrspace(file.st_nlink) > maxs->lnk)
-			maxs->lnk = nbrspace(file.st_nlink);
-		if (nbrspace(file.st_size) > maxs->size)
-			maxs->size = nbrspace(file.st_size);
-		if ((pwd = getpwuid(file.st_uid)) == NULL)
-		{
-			if (nbrspace(file.st_uid) > maxs->uid)
-				maxs->uid = nbrspace(file.st_uid);
-		}
-		else
-		{
-			if ((int)ft_strlen(pwd->pw_name) > maxs->user)
-				maxs->user = (int)ft_strlen(pwd->pw_name);
-		}
-		get_group_maxs(&file, maxs);
-	}
+	if (!(!OPTIN(options, 'a') && name[0] == '.')
+			|| OPTIN(options, 'd'))
+		get_infos_maxs(&file, maxs, filename, name);
+	else if (!OPTIN(options, 'a') && OPTIN(options, 'A') &&
+			name[1] != '.' && name[1] != '\0')
+		get_infos_maxs(&file, maxs, filename, name);
 }
 
 void			print_space_nbr(int max, long long size)
