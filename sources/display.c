@@ -76,8 +76,8 @@ int		check_for_a(t_file *current, char *options)
 		return (1);
 	else if (OPTIN(options, 'A') && OPTIN(options, 'a') == NULL)
 	{
-		if (TRIM(current->filename) == "." ||
-			TRIM(current->filename) == "..")
+		if (ft_strcmp(TRIM(current->filename), "." ) == 0||
+			ft_strcmp(TRIM(current->filename), "..") == 0)
 			return (1);
 	}
 	return (0);

@@ -72,14 +72,15 @@ int		is_dateinrange(time_t atime)
 	return (result <= SIX_MON);
 }
 
-void			browse_list_for_maxs(t_file **list, t_max *maxs, char *options)
+void			browse_list_for_maxs(t_file **list, t_max *maxs,
+                                    char *opts)
 {
 	t_file		*current;	   
 
 	current = *list;
 	while (current != NULL)
 	{
-		getmaxs(current->filename, maxs, options);
+		getmaxs(current->filename, maxs, opts);
 		current = current->next;
 	}
 }

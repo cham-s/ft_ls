@@ -95,7 +95,7 @@ t_file	*ft_mergelists_rev_t(t_file *a, t_file *b)
 		return (b);
 	else if (b == NULL)
 		return (a);
-	if (a->date >= b->date)
+	if (a->date <= b->date)
 	{
 		mergedlist = a;
 		mergedlist->next = ft_mergelists_rev_t(a->next, b);

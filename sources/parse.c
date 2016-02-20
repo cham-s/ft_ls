@@ -79,7 +79,7 @@ void			getdirs(t_file **tablist, int ac, char **av, char *opts)
 		ft_lstfileappend(&tablist[FILES], ft_lstfilenew("."));
 }
 
-void			getopts(int ac, char **av, char *opts, char *optlist)
+void			getoptions(int ac, char **av, char *opts, char *optlist)
 {
 	char	*tmp;
 	int		i;
