@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 17:28:45 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/19 22:28:29 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/20 19:52:55 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <sys/stat.h>
 # define TRIM(longname) (ft_strrchr(longname, '/') + 1)
 # define OPTIN(options, c) ft_strchr(options, c)
-# define OPTS		"ARadlrt1@"
+# define OPTS		"ARSadlrt1"
 # define LIST_SIZE	3
 # define SIX_MON	15776000	
 # define ERRORS		0
@@ -28,6 +28,7 @@ typedef struct		s_file
 {
 	char			*filename;
 	time_t			date;
+	off_t			size;
 	struct s_file	*next;
 }					t_file;
 

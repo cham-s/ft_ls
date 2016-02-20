@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 16:20:42 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/12 16:36:25 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/20 19:52:15 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static void    addstat(struct stat *file, char *filename, t_file *new)
 	new->filename = ft_strnew(ft_strlen(filename));
 	ft_strcpy(new->filename, filename);
 	new->next = NULL;
-	new->date = file->st_mtime;
+	new->date = file->st_mtimespec.tv_sec;
+	new->size = file->st_size;
 }
 
 t_file	*ft_lstfilenew(char *filename)

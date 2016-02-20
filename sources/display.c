@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 14:31:36 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/19 19:37:33 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/20 18:55:39 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,45 @@ void	apply_merge(t_file **list, char *options)
 {
 	if (*list == NULL)
 		return ;
+
 	if (ft_strchr(options, 'r'))
-		if (ft_strchr(options, 't'))
-		{
-			ft_lstmergesort(list, "r");
-			ft_lstmergesort(list, "tr");
-		}
-		else
-			ft_lstmergesort(list, "r");
+	{
+		ft_lstmergesort(list, "r");
+		ft_lstmergesort(list, options);
+	}
 	else
 	{
-		if (ft_strchr(options, 't'))
-		{
-			ft_lstmergesort(list, "");
-			ft_lstmergesort(list, "t");
-		}
-		else
-			ft_lstmergesort(list, "");
+		ft_lstmergesort(list, "");
+		ft_lstmergesort(list, options);
 	}
+	/* if (ft_strchr(options, 'r')) */
+	/* 	if (OPTIN(options, 't') && !OPTIN(options, 'S')) */
+	/* 	{ */
+	/* 		ft_lstmergesort(list, "r"); */
+	/* 		ft_lstmergesort(list, "tr"); */
+	/* 	} */
+	/* 	else if (OPTIN(options, 'S')) */
+	/* 	{ */
+	/* 		ft_lstmergesort(list, "r"); */
+	/* 		ft_lstmergesort(list, "Sr"); */
+	/* 	} */
+	/* 	else */
+	/* 		ft_lstmergesort(list, "r"); */
+	/* else */
+	/* { */
+	/* 	if (OPTIN(options, 't') && !OPTIN(options, 'S')) */
+	/* 	{ */
+	/* 		ft_lstmergesort(list, ""); */
+	/* 		ft_lstmergesort(list, "t"); */
+	/* 	} */
+	/* 	else if (OPTIN(options, 'S')) */
+	/* 	{ */
+	/* 		ft_lstmergesort(list, ""); */
+	/* 		ft_lstmergesort(list, "S"); */
+	/* 	} */
+	/* 	else */
+	/* 		ft_lstmergesort(list, ""); */
+	/* } */
 }
 
 void	getfiles(char *filename, t_file **list, char *options, t_max *maxs)
