@@ -11,24 +11,35 @@
 # **************************************************************************** #
 
 NAME = ft_ls
-SRCS = sources/main.c sources/parse.c sources/display.c sources/merge.c \
-	   sources/launcher.c sources/format.c sources/utility.c sources/filelist.c\
-	   sources/format2.c sources/format3.c sources/display2.c
-LIBS = libft/libft.a
+CC = clang
+OBJS = main.o parse.o display.o merge.o \
+	   launcher.o format.o utility.o filelist.o\
+	   format2.o format3.o display2.o
+LIB = libft/libft.a
 INC = -I includes -I libft/includes
-FLAG = -Wall -Werror -Wextra
+FLAG = -g -Wall -Werror -Wextra
+.PHONY: all clean fclean re
+
+VPATH = sources/
 
 all: $(NAME)
 
-$(NAME):
-	make fclean -C libft && make -C libft
-	clang -g $(FLAG) -o $(NAME) $(SRCS) $(LIBS) $(INC)
+$(NAME): $(OBJS) $(LIB)
+	$(CC) $(FLAG) $(OBJS) $(LIB) $(INC) -o $(NAME)
+
+$(LIB):
+	make -C libft/
+
+%.o: %.c
+	$(CC) -c $(FLAG) $(INC) $< -o $@ 
+
 
 clean:
-	rm -f $(NAME)
-	rm -rf $(NAME).dSYM
-	make fclean -C libft/
+	-rm -f $(OBJS)
+	-rm -rf $(NAME).dSYM
+	-make fclean -C libft/
 
 fclean: clean
+	-rm -f $(NAME)
 
 re: fclean all
