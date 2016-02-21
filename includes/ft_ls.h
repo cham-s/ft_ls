@@ -18,7 +18,7 @@
 # define OPTIN(options, c) ft_strchr(options, c)
 # define OPTS		"ARSadlrt1"
 # define LIST_SIZE	3
-# define SIX_MON	15776000	
+# define SIX_MON	15770000	
 # define ERRORS		0
 # define FILES		1
 # define DIRS		2
@@ -44,6 +44,11 @@ typedef struct		s_max
 	int				size;
 }					t_max;
 
+void				check_fts_open(char *s);
+void				ft_lstpartition(t_file *head, t_file **front, t_file **back);
+t_file				*ft_mergelists(t_file *a, t_file *b, int (*cmp)());
+t_file				*ft_mergelists_rev(t_file *a, t_file *b, int (*cmp)());
+t_file				*ft_mergelists_rev_t(t_file *a, t_file *b);
 void				free_content_and_node(t_file *node);
 int					check_for_a(t_file *current, char *options);
 int					is_dateinrange(time_t atime);

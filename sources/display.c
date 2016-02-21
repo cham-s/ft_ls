@@ -37,34 +37,6 @@ void	apply_merge(t_file **list, char *options)
 		ft_lstmergesort(list, "");
 		ft_lstmergesort(list, options);
 	}
-	/* if (ft_strchr(options, 'r')) */
-	/* 	if (OPTIN(options, 't') && !OPTIN(options, 'S')) */
-	/* 	{ */
-	/* 		ft_lstmergesort(list, "r"); */
-	/* 		ft_lstmergesort(list, "tr"); */
-	/* 	} */
-	/* 	else if (OPTIN(options, 'S')) */
-	/* 	{ */
-	/* 		ft_lstmergesort(list, "r"); */
-	/* 		ft_lstmergesort(list, "Sr"); */
-	/* 	} */
-	/* 	else */
-	/* 		ft_lstmergesort(list, "r"); */
-	/* else */
-	/* { */
-	/* 	if (OPTIN(options, 't') && !OPTIN(options, 'S')) */
-	/* 	{ */
-	/* 		ft_lstmergesort(list, ""); */
-	/* 		ft_lstmergesort(list, "t"); */
-	/* 	} */
-	/* 	else if (OPTIN(options, 'S')) */
-	/* 	{ */
-	/* 		ft_lstmergesort(list, ""); */
-	/* 		ft_lstmergesort(list, "S"); */
-	/* 	} */
-	/* 	else */
-	/* 		ft_lstmergesort(list, ""); */
-	/* } */
 }
 
 void	getfiles(char *filename, t_file **list, char *options, t_max *maxs)
@@ -104,7 +76,7 @@ int		check_for_a(t_file *current, char *options)
 	return (0);
 }
 
-void	compute_total(t_file **list, int *result,
+static void	compute_total(t_file **list, int *result,
 		struct stat *file, char *options)
 {
 	t_file		*current;
@@ -141,55 +113,4 @@ void	printtotal(t_file **list, char *options)
 	ft_putstr("total ");
 	ft_putnbr(result);
 	ft_putendl("");
-}
-
-void	printdirnl(char *directory, t_bool first)
-{
-	if (first)
-	{
-		ft_putstr(directory);
-		ft_putendl(":");
-	}
-	else
-	{
-		ft_putchar('\n');
-		ft_putstr(directory);
-		ft_putendl(":");
-	}
-}
-
-void	apply_format(t_file **current, char *options, t_max *maxs)
-{
-	while (*current != NULL)
-	{
-		if (check_for_a(*current, options))
-		{
-			*current = (*current)->next;
-			continue ;
-		}
-		if (ft_strchr(options, 'l'))
-			print_l_format((*current)->filename, maxs, false);
-		else
-			printfile(TRIM((*current)->filename), options);
-		*current = (*current)->next;
-	}
-}
-
-void	listallfiles(t_file **list, char *options, char *directory, t_max *maxs)
-{
-	t_file		*current;
-	static int	i = 0;
-
-	current = *list;
-	if (i++ != 0)
-		printdirnl(directory, false);
-	if (current && current->next)
-	{
-		if (ft_strchr(options, 'l') && current->next->next)
-			printtotal(list, options);
-		else if (ft_strchr(options, 'l') &&
-				!current->next->next && OPTIN(options, 'a'))
-			printtotal(list, options);
-	}
-	apply_format(&current, options, maxs);
 }

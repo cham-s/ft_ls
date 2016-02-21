@@ -43,15 +43,6 @@ void			check_file(t_file **tablist, char **av, char *name, char *opts)
 	}
 }
 
-void			check_fts_open(char *s)
-{
-	if (ft_strcmp(s, "") == 0)
-	{
-		ft_putendl_fd("ft_ls: fts_open: No such file or directory", 2);
-		exit(EXIT_FAILURE);
-	}
-}
-
 void			getdirs(t_file **tablist, int ac, char **av, char *opts)
 {
 	av++;
