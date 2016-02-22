@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 14:31:36 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 08:14:51 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 17:22:15 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ void		getfiles(char *filename, t_file **list, char *options, t_max *maxs)
 	struct dirent	*dptr;
 	DIR				*dfd;
 	char			*path;
+	char			*name;
 
+	name = (ft_strrchr(filename, '/') ? TRIM(filename) : filename);
 	if ((dfd = opendir(filename)) == NULL)
 	{
-		ft_perror(filename);
+		ft_perror(name);
 		return ;
 	}
 	while ((dptr = readdir(dfd)) != NULL)

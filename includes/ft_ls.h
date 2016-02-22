@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 17:28:45 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 10:46:33 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 14:49:51 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define FILES		1
 # define DIRS		2
 # define OPT_SIZE (sizeof(OPTS))
+
+typedef struct		stat s;
 
 typedef struct		s_file
 {
