@@ -6,7 +6,7 @@
 #    By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/06 10:07:18 by cattouma          #+#    #+#              #
-#    Updated: 2016/02/17 12:13:55 by cattouma         ###   ########.fr        #
+#    Updated: 2016/02/22 09:55:00 by cattouma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = ft_ls
 CC = clang
 OBJS = main.o parse.o display.o merge.o \
 	   launcher.o format.o utility.o filelist.o\
-	   format2.o format3.o display2.o
+	   format2.o format3.o display2.o display3.o merge2.o utils2.o
 LIB = libft/libft.a
 INC = -I includes -I libft/includes
 FLAG = -g -Wall -Werror -Wextra
