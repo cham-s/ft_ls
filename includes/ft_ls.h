@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 17:28:45 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 09:41:06 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 10:46:33 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define OPTIN(options, c) ft_strchr(options, c)
 # define OPTS		"ARSadlrt1"
 # define LIST_SIZE	3
-# define SIX_MON	15770000	
+# define SIX_MON	15770000
 # define ERRORS		0
 # define FILES		1
 # define DIRS		2
@@ -45,7 +45,7 @@ typedef struct		s_max
 }					t_max;
 
 void				check_fts_open(char *s);
-void				ft_lstpartition(t_file *head, t_file **front, t_file **back);
+void				ft_lstpartition(t_file *h, t_file **front, t_file **back);
 t_file				*ft_mergelists(t_file *a, t_file *b, int (*cmp)());
 t_file				*ft_mergelists_rev(t_file *a, t_file *b, int (*cmp)());
 t_file				*ft_mergelists_rev_t(t_file *a, t_file *b);

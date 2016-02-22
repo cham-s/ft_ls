@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_size_to_allocate.c                              :+:      :+:    :+:   */
+/*   ft_strjoinfree.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/25 18:41:21 by cattouma          #+#    #+#             */
-/*   Updated: 2016/01/25 18:41:24 by cattouma         ###   ########.fr       */
+/*   Created: 2016/01/25 14:50:33 by cattouma          #+#    #+#             */
+/*   Updated: 2016/01/25 14:55:59 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	size_to_allocate(const char *s, char c)
+char	*ft_strjoinfree(char *s1, char *s2)
 {
-	size_t	size;
+	char	*new;
+	size_t	len1;
+	size_t	len2;
 
-	size = 0;
-	while (*s == c && *s)
-		s++;
-	while (*s)
-	{
-		while (*s == c)
-			s++;
-		if ((*s && (*s != c)) && ((*(s + 1) == c) || *(s + 1) == '\0'))
-			size++;
-		if (*s)
-			s++;
-	}
-	return (size);
+	if (!s1 || !s2)
+		return (NULL);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	new = ft_strnew(len1 + len2);
+	if (!new)
+		return (NULL);
+	ft_memcpy(new, s1, len1);
+	ft_memcpy((new + len1), s2, len2);
+	ft_strdel(&s1);
+	return (new);
 }

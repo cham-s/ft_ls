@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_splitspaces.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/01/25 18:41:46 by cattouma          #+#    #+#             */
+/*   Updated: 2016/01/25 18:43:26 by cattouma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static size_t	to_allocate(const char *s)
@@ -11,7 +23,8 @@ static size_t	to_allocate(const char *s)
 	{
 		while (ft_isspace(*s))
 			s++;
-		if ((*s && (!ft_isspace(*s))) && ((ft_isspace(*(s + 1))) || *(s + 1) == '\0'))
+		if ((*s && (!ft_isspace(*s))) &&
+				((ft_isspace(*(s + 1))) || *(s + 1) == '\0'))
 			size++;
 		if (*s)
 			s++;
