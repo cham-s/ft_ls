@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 20:51:11 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/19 21:19:04 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 08:29:28 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,6 @@ void	listfile(char *filename, char *opts)
 		print_l_format(filename, &maxs, true);
 	else
 		ft_putendl(filename);
-}
-
-void	printfile(char *fname, char *opts)
-{
-	if (ft_strchr(opts, 'l') == NULL)
-		ft_putendl(fname);
 }
 
 void	apply_recurdir(t_file **list, struct stat *file, char *opts)

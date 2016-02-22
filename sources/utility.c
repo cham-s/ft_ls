@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::   */
-/*	 utility.c											:+:		 :+:	:+:   */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: cattouma <cattouma@student.42.fr>			+#+  +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2016/02/17 14:05:06 by cattouma		   #+#	  #+#			  */
-/*	 Updated: 2016/02/17 19:07:14 by cattouma		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utility.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/22 08:56:20 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/22 08:58:03 by cattouma         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
@@ -29,7 +29,6 @@ char	*catpath(char *folder, char *file)
 
 	len1 = ft_strlen(folder);
 	len2 = ft_strlen(file);
-	
 	if ((name = ft_strnew((len1 + len2) + 1)) == NULL)
 		return (NULL);
 	ft_memcpy(name, folder, len1);
@@ -47,7 +46,7 @@ void	ft_perror(char *name)
 	free(merror);
 }
 
-int				nbrspace(int max)
+int		nbrspace(int max)
 {
 	int i;
 
@@ -71,4 +70,3 @@ int		is_dateinrange(time_t atime)
 	result = (result < 0 ? -result : result);
 	return (result <= SIX_MON);
 }
-

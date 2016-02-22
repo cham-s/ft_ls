@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 14:31:36 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/20 18:55:39 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 08:14:51 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@
 #include <stdio.h>
 #include <time.h>
 
-void	apply_merge(t_file **list, char *options)
+void		apply_merge(t_file **list, char *options)
 {
 	if (*list == NULL)
 		return ;
-
 	if (ft_strchr(options, 'r'))
 	{
 		ft_lstmergesort(list, "r");
@@ -39,7 +38,7 @@ void	apply_merge(t_file **list, char *options)
 	}
 }
 
-void	getfiles(char *filename, t_file **list, char *options, t_max *maxs)
+void		getfiles(char *filename, t_file **list, char *options, t_max *maxs)
 {
 	struct dirent	*dptr;
 	DIR				*dfd;
@@ -61,7 +60,7 @@ void	getfiles(char *filename, t_file **list, char *options, t_max *maxs)
 	apply_merge(list, options);
 }
 
-int		check_for_a(t_file *current, char *options)
+int			check_for_a(t_file *current, char *options)
 {
 	if (OPTIN(options, 'a') == NULL &&
 		TRIM(current->filename)[0] == '.' &&
@@ -69,7 +68,7 @@ int		check_for_a(t_file *current, char *options)
 		return (1);
 	else if (OPTIN(options, 'A') && OPTIN(options, 'a') == NULL)
 	{
-		if (ft_strcmp(TRIM(current->filename), "." ) == 0||
+		if (ft_strcmp(TRIM(current->filename), ".") == 0 ||
 			ft_strcmp(TRIM(current->filename), "..") == 0)
 			return (1);
 	}
@@ -103,7 +102,7 @@ static void	compute_total(t_file **list, int *result,
 	}
 }
 
-void	printtotal(t_file **list, char *options)
+void		printtotal(t_file **list, char *options)
 {
 	int			result;
 	struct stat	file;

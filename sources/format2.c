@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 21:24:23 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/19 21:56:26 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 08:39:27 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void			get_group_maxs(struct stat *file, t_max *maxs)
 		maxs->minor = nbrspace(minor(file->st_rdev));
 }
 
-void			get_infos_maxs(struct stat *file, t_max *maxs, char *filename, char *name)
+void			get_infos_maxs(struct stat *file, t_max *maxs,
+									char *filename, char *name)
 {
 	struct passwd	*pwd;
 
@@ -74,26 +75,6 @@ void			getmaxs(char *filename, t_max *maxs, char *options)
 	else if (!OPTIN(options, 'a') && OPTIN(options, 'A') &&
 			name[1] != '.' && name[1] != '\0')
 		get_infos_maxs(&file, maxs, filename, name);
-}
-
-void			print_space_nbr(int max, long long size)
-{
-	int spc;
-
-	spc = max - nbrspace(size);
-	while (spc--)
-		ft_putchar(' ');
-	ft_putnbr(size);
-}
-
-void			print_space_str(int max, char *str)
-{
-	int spc;
-
-	spc = max - (int)ft_strlen(str);
-	ft_putstr(str);
-	while (spc--)
-		ft_putchar(' ');
 }
 
 void			print_year(char *s)

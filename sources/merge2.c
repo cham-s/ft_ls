@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   merge2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/22 08:41:17 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/22 08:52:09 by cattouma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 #include "libft.h"
 
-t_file	*ft_mergelists_size(t_file *a, t_file *b)
+t_file		*ft_mergelists_size(t_file *a, t_file *b)
 {
 	t_file	*mergedlist;
 
@@ -23,7 +35,7 @@ t_file	*ft_mergelists_size(t_file *a, t_file *b)
 	return (mergedlist);
 }
 
-t_file	*ft_mergelists_rev_s(t_file *a, t_file *b)
+t_file		*ft_mergelists_rev_s(t_file *a, t_file *b)
 {
 	t_file	*mergedlist;
 
@@ -45,7 +57,7 @@ t_file	*ft_mergelists_rev_s(t_file *a, t_file *b)
 	return (mergedlist);
 }
 
-t_file	*ft_mergelists_tim(t_file *a, t_file *b)
+t_file		*ft_mergelists_tim(t_file *a, t_file *b)
 {
 	t_file	*mergedlist;
 
@@ -67,16 +79,24 @@ t_file	*ft_mergelists_tim(t_file *a, t_file *b)
 	return (mergedlist);
 }
 
-void	ft_lstmergesort(t_file **source, char *options)
+static int	init_sort(t_file **head, t_file ***source, t_file **a, t_file **b)
+{
+	*head = **source;
+	*a = NULL;
+	*b = NULL;
+	if (*head == NULL || (*head)->next == NULL)
+		return (0);
+	else
+		return (1);
+}
+
+void		ft_lstmergesort(t_file **source, char *options)
 {
 	t_file *head;
 	t_file *a;
 	t_file *b;
 
-	head = *source;
-	a = NULL;
-	b = NULL;
-	if (head == NULL || head->next == NULL)
+	if (!init_sort(&head, &source, &a, &b))
 		return ;
 	ft_lstpartition(head, &a, &b);
 	ft_lstmergesort(&a, options);

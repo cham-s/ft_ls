@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/29 16:20:42 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/20 19:52:15 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 08:35:07 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void    addstat(struct stat *file, char *filename, t_file *new)
 	new->size = file->st_size;
 }
 
-t_file	*ft_lstfilenew(char *filename)
+t_file			*ft_lstfilenew(char *filename)
 {
 	t_file *new;
 	struct stat file;
