@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 22:13:19 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/19 22:23:14 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 09:47:18 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ void			getdirs(t_file **tablist, int ac, char **av, char *opts)
 		ft_lstfileappend(&tablist[FILES], ft_lstfilenew("."));
 }
 
+static void		addopt(char *opts, char c)
+{
+	while (*opts)
+		opts++;
+	*opts = c;
+}
+
 void			getoptions(int ac, char **av, char *opts, char *optlist)
 {
 	char	*tmp;
@@ -91,11 +98,7 @@ void			getoptions(int ac, char **av, char *opts, char *optlist)
 			else
 			{
 				if (OPTIN(tmp, av[i][j]) == NULL)
-				{
-					while (*opts)
-						opts++;
-					*opts = av[i][j];
-				}
+					addopt(opts, av[i][j]);
 			}
 			j++;
 		}
