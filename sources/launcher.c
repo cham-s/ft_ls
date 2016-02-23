@@ -65,6 +65,9 @@ void	print_files(t_file **list, char *options, t_max *maxs)
 	}
 	if (list[DIRS] != NULL && is_empty == false)
 		ft_putchar('\n');
+	if (list[DIRS])
+		if (list[DIRS]->next == NULL && is_empty == false)
+			printdirnl(list[DIRS]->filename, true);
 }
 
 void	print_folders(t_file **list, char *options)

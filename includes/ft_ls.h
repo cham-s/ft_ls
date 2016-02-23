@@ -44,6 +44,12 @@ typedef struct		s_max
 	int				size;
 }					t_max;
 
+int					cmpsize(t_file *a, t_file *b);
+int					cmpsize_rev(t_file *a, t_file *b);
+int					cmpname(t_file *a, t_file *b);
+int					cmpname_rev(t_file *a, t_file *b);
+int					cmptime(t_file *a, t_file *b);
+int					cmptime_rev(t_file *a, t_file *b);
 void				check_fts_open(char *s);
 void				addstat(struct stat *file, char *filename, t_file *new);
 void				ft_lstpartition(t_file *h, t_file **front, t_file **back);

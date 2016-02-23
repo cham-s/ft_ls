@@ -17,7 +17,7 @@ static void		usage(char c)
 {
 	ft_putstr_fd("ft_ls: illegal option -- ", 2);
 	ft_putchar_fd(c, 2);
-	ft_putendl_fd("\nusage: ft_ls [-Ralrt] [file ...]", 2);
+	ft_putendl_fd("\nusage: ft_ls [-1ARSadlrt] [file ...]", 2);
 	exit(EXIT_FAILURE);
 }
 
