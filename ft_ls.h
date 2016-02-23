@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 17:28:45 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 14:49:51 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 18:19:01 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # define FILES		1
 # define DIRS		2
 # define OPT_SIZE (sizeof(OPTS))
-
-typedef struct		stat s;
 
 typedef struct		s_file
 {
@@ -47,6 +45,7 @@ typedef struct		s_max
 }					t_max;
 
 void				check_fts_open(char *s);
+void				addstat(struct stat *file, char *filename, t_file *new);
 void				ft_lstpartition(t_file *h, t_file **front, t_file **back);
 t_file				*ft_mergelists(t_file *a, t_file *b, int (*cmp)());
 t_file				*ft_mergelists_rev(t_file *a, t_file *b, int (*cmp)());

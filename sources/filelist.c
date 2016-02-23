@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 11:54:36 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 14:36:07 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/22 18:17:56 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 #include "libft.h"
 #include <stdio.h>
 
-void	addstat(s *file, char *filename, t_file *new)
+void	ft_lstfileappend(t_file **list, t_file *new)
 {
-	new->filename = ft_strnew(ft_strlen(filename));
-	ft_strcpy(new->filename, filename);
-	new->next = NULL;
-	new->date = file->st_mtimespec.tv_sec;
-	new->size = file->st_size;
+	t_file *current;
+
+	current = *list;
+	if (current == NULL)
+		*list = new;
+	else
+	{
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new;
+	}
 }
 
 t_file	*ft_lstfilenew(char *filename)
@@ -42,19 +48,13 @@ t_file	*ft_lstfilenew(char *filename)
 	return (new);
 }
 
-void	ft_lstfileappend(t_file **list, t_file *new)
+void	addstat(struct stat *file, char *filename, t_file *new)
 {
-	t_file *current;
-
-	current = *list;
-	if (current == NULL)
-		*list = new;
-	else
-	{
-		while (current->next != NULL)
-			current = current->next;
-		current->next = new;
-	}
+	new->filename = ft_strnew(ft_strlen(filename));
+	ft_strcpy(new->filename, filename);
+	new->next = NULL;
+	new->date = file->st_mtimespec.tv_sec;
+	new->size = file->st_size;
 }
 
 void	initmax(t_max *maxs)
