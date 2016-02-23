@@ -35,7 +35,6 @@ t_file		*ft_mergelists(t_file *a, t_file *b, int (*cmp)(t_file *a, t_file *b))
 	return (mergedlist);
 }
 
-
 void	ft_lstpartition(t_file *head, t_file **front, t_file **back)
 {
 	t_file	*fast;
@@ -76,7 +75,7 @@ static int	init_sort(t_file **head, t_file ***source, t_file **a, t_file **b)
 		return (1);
 }
 
-void		ft_lstmergesort(t_file **source, char *options)
+void		ft_lstmergesort(t_file **source)
 {
 	t_file *head;
 	t_file *a;
@@ -85,22 +84,12 @@ void		ft_lstmergesort(t_file **source, char *options)
 	if (!init_sort(&head, &source, &a, &b))
 		return ;
 	ft_lstpartition(head, &a, &b);
-	ft_lstmergesort(&a, options);
-	ft_lstmergesort(&b, options);
-	if (ft_strchr(options, 'r'))
-		if (OPTIN(options, 't') && !OPTIN(options, 'S'))
-			*source = ft_mergelists(a, b, cmptime_rev);
-		else if (OPTIN(options, 'S'))
-			*source = ft_mergelists(a, b, cmpsize_rev);
-		else
-			*source = ft_mergelists(a, b, cmpname_rev);
+	ft_lstmergesort(&a);
+	ft_lstmergesort(&b);
+	if (g_options.t && !g_options.S)
+		*source = ft_mergelists(a, b, cmptime);
+	else if (g_options.S)
+		*source = ft_mergelists(a, b, cmpsize);
 	else
-	{
-		if (OPTIN(options, 't') && !OPTIN(options, 'S'))
-			*source = ft_mergelists(a, b, cmptime);
-		else if (OPTIN(options, 'S'))
-			*source = ft_mergelists(a, b, cmpsize);
-		else
-			*source = ft_mergelists(a, b, cmpname);
-	}
+		*source = ft_mergelists(a, b, cmpname);
 }

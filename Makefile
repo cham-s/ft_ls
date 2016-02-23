@@ -14,7 +14,7 @@ NAME = ft_ls
 CC = clang
 OBJS = main.o parse.o display.o merge.o \
 	   launcher.o format.o utility.o filelist.o\
-	   format2.o format3.o display2.o display3.o merge2.o utils2.o
+	   format2.o format3.o display2.o display3.o merge2.o utils2.o initopt.o
 LIB = libft/libft.a
 INC = -I includes -I libft/includes
 FLAG = -g -Wall -Werror -Wextra

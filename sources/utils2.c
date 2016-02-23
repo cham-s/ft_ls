@@ -13,15 +13,14 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-void	browse_list_for_maxs(t_file **list, t_max *maxs,
-								char *opts)
+void	browse_list_for_maxs(t_file **list, t_max *maxs)
 {
 	t_file		*current;
 
 	current = *list;
 	while (current != NULL)
 	{
-		getmaxs(current->filename, maxs, opts);
+		getmaxs(current->filename, maxs);
 		current = current->next;
 	}
 }
@@ -35,9 +34,9 @@ void	check_fts_open(char *s)
 	}
 }
 
-void	printfile(char *fname, char *opts)
+void	printfile(char *fname)
 {
-	if (ft_strchr(opts, 'l') == NULL)
+	if (!g_options.l)
 		ft_putendl(fname);
 }
 

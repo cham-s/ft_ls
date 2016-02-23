@@ -17,21 +17,21 @@ static void		usage(char c)
 {
 	ft_putstr_fd("ft_ls: illegal option -- ", 2);
 	ft_putchar_fd(c, 2);
-	ft_putendl_fd("\nusage: ft_ls [-1ARSadlrt] [file ...]", 2);
+	ft_putendl_fd("\nusage: ft_ls [-1ARSadflrt] [file ...]", 2);
 	exit(EXIT_FAILURE);
 }
 
-void			check_file(t_file **tablist, char **av, char *name, char *opts)
+void			check_file(t_file **tablist, char **av, char *name)
 {
 	struct stat	file;
 
 	if ((lstat(name, &file)) < 0)
 		ft_lstfileappend(&tablist[ERRORS], ft_lstfilenew(*av));
-	if (S_ISLNK(file.st_mode) && OPTIN(opts, 'l'))
+	if (S_ISLNK(file.st_mode) && g_options.l)
 		ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
 	else if ((stat(name, &file)) == 0)
 	{
-		if (OPTIN(opts, 'd'))
+		if (g_options.d)
 			ft_lstfileappend(&tablist[FILES], ft_lstfilenew(*av));
 		else
 		{
@@ -43,7 +43,7 @@ void			check_file(t_file **tablist, char **av, char *name, char *opts)
 	}
 }
 
-void			getdirs(t_file **tablist, int ac, char **av, char *opts)
+void			getdirs(t_file **tablist, int ac, char **av)
 {
 	av++;
 	while (ac-- > 1 && (*av)[0] == '-' && (*av)[1] != '\0')
@@ -59,19 +59,20 @@ void			getdirs(t_file **tablist, int ac, char **av, char *opts)
 	while (ac-- >= 1)
 	{
 		check_fts_open(*av);
-		check_file(tablist, av, *av, opts);
+		check_file(tablist, av, *av);
 		av++;
 	}
-	apply_merge(&tablist[ERRORS], "");
-	apply_merge(&tablist[FILES], opts);
-	apply_merge(&tablist[DIRS], opts);
+	apply_merge(&tablist[ERRORS]);
+	apply_merge(&tablist[FILES]);
+	apply_merge(&tablist[DIRS]);
 	if (tablist[ERRORS] == NULL && tablist[FILES] == NULL
-			&& tablist[DIRS] == NULL && OPTIN(opts, 'd'))
+			&& tablist[DIRS] == NULL && g_options.d)
 		ft_lstfileappend(&tablist[FILES], ft_lstfilenew("."));
 }
 
 static void		addopt(char *opts, char c)
 {
+	addflag(&g_options, c);
 	while (*opts)
 		opts++;
 	*opts = c;

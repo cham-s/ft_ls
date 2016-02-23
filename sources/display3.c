@@ -28,24 +28,24 @@ void		printdirnl(char *dir, t_bool first)
 	}
 }
 
-static void	apply_format(t_file **current, char *opts, t_max *maxs)
+static void	apply_format(t_file **current, t_max *maxs)
 {
 	while (*current != NULL)
 	{
-		if (check_for_a(*current, opts))
+		if (check_for_a(*current))
 		{
 			*current = (*current)->next;
 			continue ;
 		}
-		if (ft_strchr(opts, 'l'))
+		if (g_options.l)
 			print_l_format((*current)->filename, maxs, false);
 		else
-			printfile(TRIM((*current)->filename), opts);
+			printfile(TRIM((*current)->filename));
 		*current = (*current)->next;
 	}
 }
 
-void		listallfiles(t_file **list, char *opts, char *dir, t_max *maxs)
+void		listallfiles(t_file **list, char *dir, t_max *maxs)
 {
 	t_file		*current;
 	static int	i = 0;
@@ -55,11 +55,11 @@ void		listallfiles(t_file **list, char *opts, char *dir, t_max *maxs)
 		printdirnl(dir, false);
 	if (current && current->next)
 	{
-		if (ft_strchr(opts, 'l') && current->next->next)
-			printtotal(list, opts);
-		else if (ft_strchr(opts, 'l') &&
-				!current->next->next && OPTIN(opts, 'a'))
-			printtotal(list, opts);
+		if (g_options.l && current->next->next)
+			printtotal(list);
+		else if (g_options.l &&
+				!current->next->next && g_options.a)
+			printtotal(list);
 	}
-	apply_format(&current, opts, maxs);
+	apply_format(&current, maxs);
 }

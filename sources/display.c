@@ -22,23 +22,17 @@
 #include <stdio.h>
 #include <time.h>
 
-void		apply_merge(t_file **list, char *options)
+void		apply_merge(t_file **list)
 {
 	if (*list == NULL)
 		return ;
-	if (ft_strchr(options, 'r'))
+	if (!g_options.f)
 	{
-		ft_lstmergesort(list, "r");
-		ft_lstmergesort(list, options);
-	}
-	else
-	{
-		ft_lstmergesort(list, "");
-		ft_lstmergesort(list, options);
+		ft_lstmergesort(list);
 	}
 }
 
-void		getfiles(char *filename, t_file **list, char *options, t_max *maxs)
+void		getfiles(char *filename, t_file **list, t_max *maxs)
 {
 	struct dirent	*dptr;
 	DIR				*dfd;
@@ -54,38 +48,41 @@ void		getfiles(char *filename, t_file **list, char *options, t_max *maxs)
 	while ((dptr = readdir(dfd)) != NULL)
 	{
 		path = catpath(filename, dptr->d_name);
-		getmaxs(path, maxs, options);
+		getmaxs(path, maxs);
 		ft_lstfileappend(list, ft_lstfilenew(path));
 		free(path);
 	}
 	closedir(dfd);
-	apply_merge(list, options);
+	apply_merge(list);
 }
 
-int			check_for_a(t_file *current, char *options)
+int			check_for_a(t_file *current)
 {
-	if (OPTIN(options, 'a') == NULL &&
-		TRIM(current->filename)[0] == '.' &&
-		OPTIN(options, 'A') == NULL)
-		return (1);
-	else if (OPTIN(options, 'A') && OPTIN(options, 'a') == NULL)
+	if (!g_options.f)
 	{
-		if (ft_strcmp(TRIM(current->filename), ".") == 0 ||
-			ft_strcmp(TRIM(current->filename), "..") == 0)
+		if (!g_options.a &&
+			TRIM(current->filename)[0] == '.' &&
+			!g_options.A)
 			return (1);
+		else if (g_options.A)
+		{
+			if (ft_strcmp(TRIM(current->filename), ".") == 0 ||
+				ft_strcmp(TRIM(current->filename), "..") == 0)
+				return (1);
+		}
 	}
 	return (0);
 }
 
 static void	compute_total(t_file **list, int *result,
-		struct stat *file, char *options)
+		struct stat *file)
 {
 	t_file		*current;
 
 	current = *list;
 	while (current != NULL)
 	{
-		if (check_for_a(current, options))
+		if (check_for_a(current))
 		{
 			current = current->next;
 			continue ;
@@ -104,13 +101,13 @@ static void	compute_total(t_file **list, int *result,
 	}
 }
 
-void		printtotal(t_file **list, char *options)
+void		printtotal(t_file **list)
 {
 	int			result;
 	struct stat	file;
 
 	result = 0;
-	compute_total(list, &result, &file, options);
+	compute_total(list, &result, &file);
 	ft_putstr("total ");
 	ft_putnbr(result);
 	ft_putendl("");

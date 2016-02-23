@@ -63,16 +63,16 @@ void			get_infos_maxs(struct stat *file, t_max *maxs,
 	get_group_maxs(file, maxs);
 }
 
-void			getmaxs(char *filename, t_max *maxs, char *options)
+void			getmaxs(char *filename, t_max *maxs)
 {
 	struct stat		file;
 	char			*name;
 
 	name = (ft_strrchr(filename, '/') ? TRIM(filename) : filename);
-	if (!(!OPTIN(options, 'a') && name[0] == '.')
-			|| OPTIN(options, 'd'))
+	if (!(!g_options.a && name[0] == '.')
+			|| g_options.d)
 		get_infos_maxs(&file, maxs, filename, name);
-	else if (!OPTIN(options, 'a') && OPTIN(options, 'A') &&
+	else if (!g_options.a && g_options.A &&
 			name[1] != '.' && name[1] != '\0')
 		get_infos_maxs(&file, maxs, filename, name);
 }

@@ -50,8 +50,7 @@ t_file	*ft_lstfilenew(char *filename)
 
 void	addstat(struct stat *file, char *filename, t_file *new)
 {
-	new->filename = ft_strnew(ft_strlen(filename));
-	ft_strcpy(new->filename, filename);
+	new->filename = ft_strdup(filename);
 	new->next = NULL;
 	new->date = file->st_mtimespec.tv_sec;
 	new->size = file->st_size;

@@ -13,14 +13,14 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-void	ft_list(char *directory, char *options)
+void	ft_list(char *directory)
 {
 	static int i = 0;
 
-	if (ft_strchr(options, 'R'))
-		recurdir(directory, options);
+	if (g_options.R)
+		recurdir(directory);
 	else
-		listdir(directory, options);
+		listdir(directory);
 	i++;
 }
 
@@ -46,7 +46,7 @@ void	print_errors(t_file **list)
 			printdirnl(list[DIRS]->filename, true);
 }
 
-void	print_files(t_file **list, char *options, t_max *maxs)
+void	print_files(t_file **list, t_max *maxs)
 {
 	t_file *tmp;
 	t_bool is_empty;
@@ -55,7 +55,7 @@ void	print_files(t_file **list, char *options, t_max *maxs)
 	while (list[FILES] != NULL)
 	{
 		tmp = list[FILES];
-		if (ft_strchr(options, 'l'))
+		if (g_options.l)
 			print_l_format((list[FILES])->filename, maxs, true);
 		else
 			ft_putendl((list[FILES])->filename);
@@ -70,7 +70,7 @@ void	print_files(t_file **list, char *options, t_max *maxs)
 			printdirnl(list[DIRS]->filename, true);
 }
 
-void	print_folders(t_file **list, char *options)
+void	print_folders(t_file **list)
 {
 	t_file		*tmp;
 	static int	i = 0;
@@ -84,7 +84,7 @@ void	print_folders(t_file **list, char *options)
 	while (list[DIRS] != NULL)
 	{
 		tmp = list[DIRS];
-		ft_list(list[DIRS]->filename, options);
+		ft_list(list[DIRS]->filename);
 		list[DIRS] = list[DIRS]->next;
 		free(tmp->filename);
 		free(tmp);
@@ -92,25 +92,19 @@ void	print_folders(t_file **list, char *options)
 	i++;
 }
 
-void	apply_ft_list(t_file **tablist, char *options)
+void	apply_ft_list(t_file **tablist)
 {
 	t_max	maxs;
-	int		len;
 
 	if (tablist[ERRORS] == NULL && tablist[FILES] == NULL
 			&& tablist[DIRS] == NULL)
-		ft_list(".", options);
+		ft_list(".");
 	else
 	{
 		initmax(&maxs);
-		browse_list_for_maxs(&tablist[FILES], &maxs, options);
+		browse_list_for_maxs(&tablist[FILES], &maxs);
 		print_errors(tablist);
-		print_files(tablist, options, &maxs);
-		print_folders(tablist, options);
+		print_files(tablist, &maxs);
+		print_folders(tablist);
 	}
-	free(options);
-	len = LIST_SIZE;
-	while (len--)
-		free(*tablist);
-	free(tablist);
 }
