@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 08:41:17 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 08:52:09 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/24 13:34:50 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,22 @@ void		ft_lstmergesort(t_file **source)
 	ft_lstpartition(head, &a, &b);
 	ft_lstmergesort(&a);
 	ft_lstmergesort(&b);
-	if (g_options.t && !g_options.S)
-		*source = ft_mergelists(a, b, cmptime);
-	else if (g_options.S)
-		*source = ft_mergelists(a, b, cmpsize);
+	if (g_options.r)
+	{
+		if (g_options.t && !g_options.S)
+			*source = ft_mergelists(a, b, cmptime);
+		else if (g_options.S)
+			*source = ft_mergelists(a, b, cmpsize);
+		else
+			*source = ft_mergelists(a, b, cmpname);
+	}
 	else
-		*source = ft_mergelists(a, b, cmpname);
+	{
+		if (g_options.t && !g_options.S)
+			*source = ft_mergelists(a, b, cmptime);
+		else if (g_options.S)
+			*source = ft_mergelists(a, b, cmpsize);
+		else
+			*source = ft_mergelists(a, b, cmpname);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 21:24:23 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 17:22:16 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/24 10:58:09 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void			getmaxs(char *filename, t_max *maxs)
 
 	name = (ft_strrchr(filename, '/') ? TRIM(filename) : filename);
 	if (!(!g_options.a && name[0] == '.')
-			|| g_options.d)
+			|| g_options.d || g_options.f)
 		get_infos_maxs(&file, maxs, filename, name);
 	else if (!g_options.a && g_options.A &&
 			name[1] != '.' && name[1] != '\0')

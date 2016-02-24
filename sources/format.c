@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 21:23:46 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 12:50:07 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/24 14:45:04 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,8 @@ void	printstat2(struct stat *file, char *filename, t_bool is_file)
 		ft_putstr(TRIM(filename));
 	if (S_ISLNK(file->st_mode))
 		printlinkpath(filename);
+	if (g_options.p)
+		if (S_ISDIR(file->st_mode))
+			ft_putchar('/');
 	ft_putendl("");
 }

@@ -8,6 +8,7 @@ void	initopt(t_opt *options)
 		options->d = 0; 
 		options->f = 0; 
 		options->l = 0; 
+		options->p = 0; 
 		options->r = 0; 
 		options->t = 0; 
 }
@@ -28,6 +29,8 @@ void	addflag(t_opt *options, char c)
 		options->f = 1;
 	else if (c == 'l')
 		options->l = 1;
+	else if (c == 'p')
+		options->p = 1;
 	else if (c == 'r')
 		options->r = 1;
 	else if (c == 't')

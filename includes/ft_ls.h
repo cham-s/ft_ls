@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 17:28:45 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 18:19:01 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/24 13:30:34 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define TRIM(longname) (ft_strrchr(longname, '/') + 1)
 # define OPTIN(options, c) ft_strchr(options, c)
 # define ADDFLAG	(t_opt, flag) (t_opt.flag = 1)
-# define OPTS		"1ARSadflrt"
+# define OPTS		"1ARSadflprt"
 # define LIST_SIZE	3
 # define SIX_MON	15770000
 # define ERRORS		0
@@ -55,6 +55,7 @@ typedef struct		s_opt
 	int				d;
 	int				f;
 	int				l;
+	int				p;
 	int				r;
 	int				t;
 }					t_opt;
