@@ -13,6 +13,7 @@
 #include "ft_ls.h"
 #include "libft.h"
 #include <stdio.h>
+#include <errno.h>
 
 void	ft_lstfileappend(t_file **list, t_file *new)
 {
@@ -29,31 +30,36 @@ void	ft_lstfileappend(t_file **list, t_file *new)
 	}
 }
 
-t_file	*ft_lstfilenew(char *filename)
+t_file	*ft_lstfilenew(char *pathname)
 {
 	t_file		*new;
-	struct stat	file;
 
 	new = (t_file *)ft_memalloc(sizeof(t_file));
-	if (!new || !filename)
+	if (!new || !pathname)
 		return (NULL);
-	lstat(filename, &file);
-	if (S_ISLNK(file.st_mode))
-		addstat(&file, filename, new);
-	else
+	new->fstat = ft_memalloc(sizeof(struct stat));
+	new->ferrno = 0;
+	if (lstat(pathname, new->fstat) < 0)
 	{
-		stat(filename, &file);
-		addstat(&file, filename, new);
+		new->ferrno = errno;
+		if (stat(pathname, new->fstat) < 0)
+			new->ferrno = errno;
 	}
+	addstat(pathname, new);
 	return (new);
 }
 
-void	addstat(struct stat *file, char *filename, t_file *new)
+void	addstat(char *pathname, t_file *new)
 {
-	new->filename = ft_strdup(filename);
+	new->pathname = ft_strdup(pathname);
+	if (!new->ferrno)
+	{
+		if (ft_strrchr(pathname, '/'))
+			new->filename = ft_strdup(TRIM(pathname)); 
+		else
+			new->filename = ft_strdup(pathname);
+	}
 	new->next = NULL;
-	new->date = file->st_mtimespec.tv_sec;
-	new->size = file->st_size;
 }
 
 void	initmax(t_max *maxs)

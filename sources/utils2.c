@@ -34,10 +34,10 @@ void	check_fts_open(char *s)
 	}
 }
 
-void	printfile(char *fname)
+void	printfile(t_file *entry)
 {
 	if (!g_options.l)
-		ft_putendl(fname);
+		ft_putendl(entry->filename);
 }
 
 void	print_space_nbr(int max, long long size)

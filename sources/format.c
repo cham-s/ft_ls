@@ -56,18 +56,18 @@ t_bool	is_device(mode_t mode)
 	return (false);
 }
 
-void	printstat2(struct stat *file, char *filename, t_bool is_file)
+void	printstat2(t_file *entry, t_bool is_file)
 {
-	print_ctime(&file->st_mtimespec);
+	print_ctime(&entry->fstat->st_mtimespec);
 	ft_putstr(" ");
 	if (is_file)
-		ft_putstr(filename);
+		ft_putstr(entry->filename);
 	else
-		ft_putstr(TRIM(filename));
-	if (S_ISLNK(file->st_mode))
-		printlinkpath(filename);
+		ft_putstr(entry->filename);
+	if (S_ISLNK(entry->fstat->st_mode))
+		printlinkpath(entry->pathname);
 	if (g_options.p)
-		if (S_ISDIR(file->st_mode))
+		if (S_ISDIR(entry->fstat->st_mode))
 			ft_putchar('/');
 	ft_putendl("");
 }

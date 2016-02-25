@@ -28,9 +28,10 @@
 
 typedef struct		s_file
 {
+	char			*pathname;
 	char			*filename;
-	time_t			date;
-	off_t			size;
+	struct stat		*fstat;
+	int				ferrno;
 	struct s_file	*next;
 }					t_file;
 
@@ -71,7 +72,7 @@ int					cmpname(t_file *a, t_file *b);
 int					cmptime(t_file *a, t_file *b);
 int					cmptime_rev(t_file *a, t_file *b);
 void				check_fts_open(char *s);
-void				addstat(struct stat *file, char *filename, t_file *new);
+void				addstat(char *filename, t_file *new);
 void				ft_lstpartition(t_file *h, t_file **front, t_file **back);
 t_file				*ft_mergelists(t_file *a, t_file *b, int (*cmp)());
 t_file				*ft_mergelists_rev(t_file *a, t_file *b, int (*cmp)());
@@ -80,7 +81,7 @@ void				free_content_and_node(t_file *node);
 int					check_for_a(t_file *current);
 int					is_dateinrange(time_t atime);
 void				print_size(off_t size, t_max *maxs);
-void				printstat2(struct stat *file, char *filename,
+void				printstat2(t_file *entry,
 					t_bool is_file);
 void				print_device(dev_t device, t_max *maxs);
 t_bool				is_device(mode_t mode);
@@ -89,25 +90,24 @@ void				browse_list_for_maxs(t_file **list, t_max *maxs);
 void				getmaxs(char *filename, t_max *maxs);
 t_file				*ft_lstfilenew(char *filename);
 void				ft_lstfileappend(t_file **file, t_file *new);
-void				ft_list(char *filename);
 void				getoptions(int ac, char **av,
 									char *options,			char *optlist);
 void				getdirs(t_file **list, int ac, char **av);
-void				recurdir(char *directory);
-void				getfiles(char *filename, t_file **list, t_max *maxs);
+void				recurdir(t_file *entry);
+void				getfiles(t_file *entry, t_file **list, t_max *maxs);
 void				apply_ft_list(t_file **list);
-void				listfile(char *filename);
-void				listdir(char *directory);
+void				listfile(t_file *entry);
+void				listdir(t_file *entry);
 void				listallfiles(t_file **list,
-								char *directory, t_max *maxs);
-void				printfile(char *fname);
+								t_file *entry, t_max *maxs);
+void				printfile(t_file *entry);
 void				ft_perror(char *name);
 char				*catpath(char *folder, char *file);
-void				print_l_format(char *filename, t_max *max,
+void				print_l_format(t_file *entry, t_max *max,
 												t_bool is_file);
 void				ft_lstmergesort(t_file **source, t_opt *options);
 void				print_path(char *fname);
-void				perm_format(struct stat *file, char *path);
+void				perm_format(t_file *entry);
 void				initmax(t_max *maxs);
 void				print_space_nbr(int max, long long size);
 void				print_space_str(int max, char *str);

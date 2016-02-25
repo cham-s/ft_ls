@@ -18,6 +18,8 @@
 void	free_content_and_node(t_file *node)
 {
 	free(node->filename);
+	free(node->pathname);
+	free(node->fstat);
 	free(node);
 }
 

@@ -15,12 +15,12 @@
 
 int			cmpsize(t_file *a, t_file *b)
 {
-	return (a->size >= b->size);
+	return (a->fstat->st_size >= b->fstat->st_size);
 }
 
 int			cmpsize_rev(t_file *a, t_file *b)
 {
-	return (a->size <= b->size);
+	return (a->fstat->st_size <= b->fstat->st_size);
 }
 
 int			cmpname(t_file *a, t_file *b)
@@ -35,10 +35,11 @@ int			cmpname_rev(t_file *a, t_file *b)
 
 int			cmptime(t_file *a, t_file *b)
 {
-	return (a->date >= b->date);
+	return (a->fstat->st_mtimespec.tv_sec >= b->fstat->st_mtimespec.tv_sec);
 }
 
 int			cmptime_rev(t_file *a, t_file *b)
 {
-	return (a->date <= b->date);
+	return (a->fstat->st_mtimespec.tv_sec <= b->fstat->st_mtimespec.tv_sec);
+	return(1);
 }

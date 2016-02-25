@@ -22,13 +22,13 @@
 #include <stdio.h>
 #include <time.h>
 
-void	listallfilesfree(t_file **list, char *dir, t_max *maxs)
+void	listallfilesfree(t_file **list, t_file *entry, t_max *maxs)
 {
 	t_file		*tmp;
 	static int	i = 0;
 
 	if (i++ != 0)
-		printdirnl(dir, false);
+		printdirnl(entry->pathname, false);
 	if (g_options.l && (*list)->next->next != NULL)
 		printtotal(list);
 	while (*list != NULL)
@@ -37,41 +37,41 @@ void	listallfilesfree(t_file **list, char *dir, t_max *maxs)
 		if (check_for_a(*list))
 		{
 			*list = (*list)->next;
-			free_content_and_node(tmp);
+			//free_content_and_node(tmp);
 			continue ;
 		}
 		if (g_options.l)
-			print_l_format((*list)->filename, maxs, false);
+			print_l_format(*list, maxs, false);
 		else
-			printfile(TRIM((*list)->filename));
+			printfile(*list);
 		*list = (*list)->next;
-		free_content_and_node(tmp);
+		//free_content_and_node(tmp);
 	}
 }
 
-void	listdir(char *dir)
+void	listdir(t_file *entry)
 {
 	t_file	*list;
 	t_max	maxs;
 
 	list = NULL;
 	initmax(&maxs);
-	getfiles(dir, &list, &maxs);
-	listallfilesfree(&list, dir, &maxs);
+	getfiles(entry, &list, &maxs);
+	listallfilesfree(&list, entry, &maxs);
 }
 
-void	listfile(char *filename)
+void	listfile(t_file *entry)
 {
 	t_max	maxs;
 
 	initmax(&maxs);
 	if (g_options.l)
-		print_l_format(filename, &maxs, true);
+		print_l_format(entry, &maxs, true);
 	else
-		ft_putendl(filename);
+		ft_putendl(entry->filename);
 }
 
-void	apply_recurdir(t_file **list, struct stat *file)
+static void	apply_recurdir(t_file **list, t_file *entry)
 {
 	t_file		*tmp;
 
@@ -89,26 +89,27 @@ void	apply_recurdir(t_file **list, struct stat *file)
 				free_content_and_node(tmp);
 				continue ;
 			}
-			if (lstat((*list)->filename, file) < 0)
-				if (stat((*list)->filename, file) < 0)
-					ft_perror((*list)->filename);
-			if (S_ISDIR(file->st_mode) && !S_ISLNK(file->st_mode))
-				recurdir((*list)->filename);
+			if (entry->ferrno)
+			{
+				strerror(entry->ferrno);
+			}
+					//ft_perror((*list)->filename);
+			if (S_ISDIR(entry->fstat->st_mode) && !S_ISLNK(entry->fstat->st_mode))
+				recurdir(*list);
 			*list = (*list)->next;
 		}
 		free_content_and_node(tmp);
 	}
 }
 
-void	recurdir(char *dir)
+void	recurdir(t_file *entry)
 {
-	t_file		*list;
-	struct stat	file;
 	t_max		maxs;
+	t_file		*list;
 
 	list = NULL;
 	initmax(&maxs);
-	getfiles(dir, &list, &maxs);
-	listallfiles(&list, dir, &maxs);
-	apply_recurdir(&list, &file);
+	getfiles(entry, &list, &maxs);
+	listallfiles(&list, entry, &maxs);
+	apply_recurdir(&list, entry);
 }

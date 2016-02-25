@@ -38,21 +38,21 @@ static void	apply_format(t_file **current, t_max *maxs)
 			continue ;
 		}
 		if (g_options.l)
-			print_l_format((*current)->filename, maxs, false);
+			print_l_format(*current, maxs, false);
 		else
-			printfile(TRIM((*current)->filename));
+			printfile(*current);
 		*current = (*current)->next;
 	}
 }
 
-void		listallfiles(t_file **list, char *dir, t_max *maxs)
+void		listallfiles(t_file **list, t_file *entry, t_max *maxs)
 {
 	t_file		*current;
 	static int	i = 0;
 
 	current = *list;
 	if (i++ != 0)
-		printdirnl(dir, false);
+		printdirnl(entry->pathname, false);
 	if (current && current->next)
 	{
 		if (g_options.l && current->next->next)

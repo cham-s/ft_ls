@@ -47,22 +47,20 @@ void		apply_merge(t_file **list)
 	}
 }
 
-void		getfiles(char *filename, t_file **list, t_max *maxs)
+void		getfiles(t_file *entry, t_file **list, t_max *maxs)
 {
 	struct dirent	*dptr;
 	DIR				*dfd;
 	char			*path;
-	char			*name;
 
-	name = (ft_strrchr(filename, '/') ? TRIM(filename) : filename);
-	if ((dfd = opendir(filename)) == NULL)
+	if ((dfd = opendir(entry->pathname)) == NULL)
 	{
-		ft_perror(name);
+		ft_perror(entry->filename);
 		return ;
 	}
 	while ((dptr = readdir(dfd)) != NULL)
 	{
-		path = catpath(filename, dptr->d_name);
+		path = catpath(entry->pathname, dptr->d_name);
 		getmaxs(path, maxs);
 		ft_lstfileappend(list, ft_lstfilenew(path));
 		free(path);
@@ -76,13 +74,13 @@ int			check_for_a(t_file *current)
 	if (!g_options.f)
 	{
 		if (!g_options.a &&
-			TRIM(current->filename)[0] == '.' &&
+			current->filename[0] == '.' &&
 			!g_options.A)
 			return (1);
 		else if (g_options.A)
 		{
-			if (ft_strcmp(TRIM(current->filename), ".") == 0 ||
-				ft_strcmp(TRIM(current->filename), "..") == 0)
+			if (ft_strcmp(current->filename, ".") == 0 ||
+				ft_strcmp(current->filename, "..") == 0)
 				return (1);
 		}
 	}

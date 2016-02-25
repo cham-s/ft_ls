@@ -13,20 +13,19 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-void	ft_list(char *directory)
+void	ft_list(t_file *entry)
 {
 	static int i = 0;
 
 	if (g_options.R)
-		recurdir(directory);
+		recurdir(entry);
 	else
-		listdir(directory);
+		listdir(entry);
 	i++;
 }
 
 void	print_errors(t_file **list)
 {
-	struct stat	file;
 	t_file		*tmp;
 	t_bool		is_empty;
 
@@ -34,16 +33,17 @@ void	print_errors(t_file **list)
 	while (list[ERRORS] != NULL)
 	{
 		tmp = list[ERRORS];
-		if (stat(list[ERRORS]->filename, &file) < 0)
-			if (lstat(list[ERRORS]->filename, &file) < 0)
-				ft_perror(list[ERRORS]->filename);
+		if (list[ERRORS]->ferrno)
+		{
+			strerror(list[ERRORS]->ferrno);
+				//ft_perror(list[ERRORS]->filename);
+		}
 		list[ERRORS] = list[ERRORS]->next;
-		free(tmp->filename);
-		free(tmp);
+		free_content_and_node(tmp);
 	}
 	if (list[DIRS])
 		if (list[DIRS]->next == NULL && is_empty == false)
-			printdirnl(list[DIRS]->filename, true);
+			printdirnl(list[DIRS]->pathname, true);
 }
 
 void	print_files(t_file **list, t_max *maxs)
@@ -56,18 +56,17 @@ void	print_files(t_file **list, t_max *maxs)
 	{
 		tmp = list[FILES];
 		if (g_options.l)
-			print_l_format((list[FILES])->filename, maxs, true);
+			print_l_format((list[FILES]), maxs, true);
 		else
 			ft_putendl((list[FILES])->filename);
 		list[FILES] = list[FILES]->next;
-		free(tmp->filename);
-		free(tmp);
+		free_content_and_node(tmp);
 	}
 	if (list[DIRS] != NULL && is_empty == false)
 		ft_putchar('\n');
 	if (list[DIRS])
 		if (list[DIRS]->next == NULL && is_empty == false)
-			printdirnl(list[DIRS]->filename, true);
+			printdirnl(list[DIRS]->pathname, true);
 }
 
 void	print_folders(t_file **list)
@@ -79,15 +78,14 @@ void	print_folders(t_file **list)
 	{
 		if (i == 0 && (list[DIRS]->next != NULL ||
 		(!list[FILES] && list[ERRORS])))
-			printdirnl(list[DIRS]->filename, true);
+			printdirnl(list[DIRS]->pathname, true);
 	}
 	while (list[DIRS] != NULL)
 	{
 		tmp = list[DIRS];
-		ft_list(list[DIRS]->filename);
+		ft_list(list[DIRS]);
 		list[DIRS] = list[DIRS]->next;
-		free(tmp->filename);
-		free(tmp);
+		free_content_and_node(tmp);
 	}
 	i++;
 }
@@ -98,7 +96,7 @@ void	apply_ft_list(t_file **tablist)
 
 	if (tablist[ERRORS] == NULL && tablist[FILES] == NULL
 			&& tablist[DIRS] == NULL)
-		ft_list(".");
+		ft_list(ft_lstfilenew("."));
 	else
 	{
 		initmax(&maxs);
