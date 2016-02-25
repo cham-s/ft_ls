@@ -89,10 +89,10 @@ void	apply_recurdir(t_file **list, struct stat *file)
 				free_content_and_node(tmp);
 				continue ;
 			}
-			if (stat((*list)->filename, file) < 0)
-				if (lstat((*list)->filename, file) < 0)
+			if (lstat((*list)->filename, file) < 0)
+				if (stat((*list)->filename, file) < 0)
 					ft_perror((*list)->filename);
-			if (S_ISDIR(file->st_mode))
+			if (S_ISDIR(file->st_mode) && !S_ISLNK(file->st_mode))
 				recurdir((*list)->filename);
 			*list = (*list)->next;
 		}

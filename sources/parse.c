@@ -45,6 +45,8 @@ void			check_file(t_file **tablist, char **av, char *name)
 
 void			getdirs(t_file **tablist, int ac, char **av)
 {
+	t_opt opts;
+	initopt(&opts);
 	av++;
 	while (ac-- > 1 && (*av)[0] == '-' && (*av)[1] != '\0')
 	{
@@ -62,7 +64,7 @@ void			getdirs(t_file **tablist, int ac, char **av)
 		check_file(tablist, av, *av);
 		av++;
 	}
-	apply_merge(&tablist[ERRORS]);
+	ft_lstmergesort(&tablist[ERRORS], &opts);
 	apply_merge(&tablist[FILES]);
 	apply_merge(&tablist[DIRS]);
 	if (tablist[ERRORS] == NULL && tablist[FILES] == NULL

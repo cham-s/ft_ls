@@ -15,24 +15,30 @@
 
 int			cmpsize(t_file *a, t_file *b)
 {
-	if (!g_options.r)
-		return (a->size >= b->size);
-	else
-		return (a->size <= b->size);
+	return (a->size >= b->size);
+}
+
+int			cmpsize_rev(t_file *a, t_file *b)
+{
+	return (a->size <= b->size);
 }
 
 int			cmpname(t_file *a, t_file *b)
 {
-	if (!g_options.r)
-		return (ft_strcmp(a->filename, b->filename) <= 0);
-	else
-		return (ft_strcmp(a->filename, b->filename) >= 0);
+	return (ft_strcmp(a->filename, b->filename) <= 0);
+}
+
+int			cmpname_rev(t_file *a, t_file *b)
+{
+	return (ft_strcmp(a->filename, b->filename) >= 0);
 }
 
 int			cmptime(t_file *a, t_file *b)
 {
-	if (!g_options.r)
-		return (a->date >= b->date);
-	else
-		return (a->date <= b->date);
+	return (a->date >= b->date);
+}
+
+int			cmptime_rev(t_file *a, t_file *b)
+{
+	return (a->date <= b->date);
 }

@@ -75,7 +75,7 @@ static int	init_sort(t_file **head, t_file ***source, t_file **a, t_file **b)
 		return (1);
 }
 
-void		ft_lstmergesort(t_file **source)
+void		ft_lstmergesort(t_file **source, t_opt *options)
 {
 	t_file *head;
 	t_file *a;
@@ -84,22 +84,22 @@ void		ft_lstmergesort(t_file **source)
 	if (!init_sort(&head, &source, &a, &b))
 		return ;
 	ft_lstpartition(head, &a, &b);
-	ft_lstmergesort(&a);
-	ft_lstmergesort(&b);
-	if (g_options.r)
+	ft_lstmergesort(&a, options);
+	ft_lstmergesort(&b, options);
+	if (options->r)
 	{
-		if (g_options.t && !g_options.S)
-			*source = ft_mergelists(a, b, cmptime);
-		else if (g_options.S)
-			*source = ft_mergelists(a, b, cmpsize);
+		if (options->t && !options->S)
+			*source = ft_mergelists(a, b, cmptime_rev);
+		else if (options->S)
+			*source = ft_mergelists(a, b, cmpsize_rev);
 		else
-			*source = ft_mergelists(a, b, cmpname);
+			*source = ft_mergelists(a, b, cmpname_rev);
 	}
 	else
 	{
-		if (g_options.t && !g_options.S)
+		if (options->t && !options->S)
 			*source = ft_mergelists(a, b, cmptime);
-		else if (g_options.S)
+		else if (options->S)
 			*source = ft_mergelists(a, b, cmpsize);
 		else
 			*source = ft_mergelists(a, b, cmpname);

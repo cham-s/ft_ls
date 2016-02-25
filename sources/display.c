@@ -22,13 +22,28 @@
 #include <stdio.h>
 #include <time.h>
 
+
 void		apply_merge(t_file **list)
 {
+	t_opt options;
+
+	initopt(&options);
 	if (*list == NULL)
 		return ;
 	if (!g_options.f)
 	{
-		ft_lstmergesort(list);
+		if (g_options.r)
+		{
+			options.r = 1;
+			ft_lstmergesort(list, &options);
+			ft_lstmergesort(list, &g_options);
+		}
+		else
+		{
+			options.r = 0;
+			ft_lstmergesort(list, &options);
+			ft_lstmergesort(list, &g_options);
+		}
 	}
 }
 
