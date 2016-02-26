@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 22:13:19 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 13:31:31 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 19:57:25 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void		usage(char c)
 {
 	ft_putstr_fd("ft_ls: illegal option -- ", 2);
 	ft_putchar_fd(c, 2);
-	ft_putendl_fd("\nusage: ft_ls [-1ARSadflprt] [file ...]", 2);
+	ft_putendl_fd("\nusage: ft_ls [-1ARSTadflprt] [file ...]", 2);
 	exit(EXIT_FAILURE);
 }
 

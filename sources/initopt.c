@@ -4,6 +4,7 @@ void	initopt(t_opt *options)
 		options->A = 0; 
 		options->R = 0; 
 		options->S = 0; 
+		options->T = 0; 
 		options->a = 0; 
 		options->d = 0; 
 		options->f = 0; 
@@ -21,6 +22,8 @@ void	addflag(t_opt *options, char c)
 		options->R = 1;
 	else if (c == 'S')
 		options->S = 1;
+	else if (c == 'T')
+		options->T = 1;
 	else if (c == 'a')
 		options->a = 1;
 	else if (c == 'd')

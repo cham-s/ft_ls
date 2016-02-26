@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 21:24:23 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 10:58:09 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 21:02:29 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,35 +71,23 @@ void			getmaxs(t_file *entry, t_max *maxs)
 		get_infos_maxs(entry, maxs);
 }
 
-void			print_year(char *s)
-{
-	ft_putchar(' ');
-	while (*s != '\n')
-	{
-		ft_putchar(*s);
-		s++;
-	}
-}
-
 void			print_ctime(struct timespec *atime)
 {
 	char *strtime;
-	char *end;
-	char *hours;
+	char *month;
+	char *hour;
 	char *year;
 
 	strtime = ctime(&(atime)->tv_sec);
-	year = ft_strrchr(strtime, ' ') + 1;
-	strtime = ft_strchr(strtime, ' ') + 1;
-	end = ft_strrchr(strtime, ':');
-	*end = '\0';
-	end = ft_strrchr(strtime, ' ');
-	*end = '\0';
-	hours = end + 1;
-	ft_putstr(strtime);
-	ft_putstr(" ");
-	if (is_dateinrange(atime->tv_sec))
-		ft_putstr(hours);
+	month = ft_strsub(strtime, 4, 6); 
+	if (g_options.T)
+		hour = ft_strsub(strtime, 11, 8); 
 	else
-		print_year(year);
+		hour = ft_strsub(strtime, 11, 5); 
+	year = ft_strsub(strtime, 19, 5);
+	ft_putstr(month);
+	ft_putstr(" ");
+	ft_putstr(hour);
+	if (!is_dateinrange(atime->tv_sec) || g_options.T)
+		ft_putstr(year);
 }

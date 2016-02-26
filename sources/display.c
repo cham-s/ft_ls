@@ -6,7 +6,7 @@
 /*   By: cattouma <cattouma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 14:31:36 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 17:22:15 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 19:51:02 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			check_for_a(t_file *current)
 			current->filename[0] == '.' &&
 			!g_options.A)
 			return (1);
-		else if (g_options.A)
+		else if (g_options.A && !g_options.a)
 		{
 			if (ft_strcmp(current->filename, ".") == 0 ||
 				ft_strcmp(current->filename, "..") == 0)
