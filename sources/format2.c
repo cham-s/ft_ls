@@ -18,63 +18,57 @@
 #include <grp.h>
 #include <time.h>
 
-void			get_group_maxs(struct stat *file, t_max *maxs)
+static void			get_group_maxs(t_file *entry, t_max *maxs)
 {
 	struct group	*grp;
 
-	if ((grp = getgrgid(file->st_gid)) == NULL)
+	if ((grp = getgrgid(entry->fstat->st_gid)) == NULL)
 	{
-		if (nbrspace(file->st_gid) > maxs->gid)
-			maxs->gid = nbrspace(file->st_gid);
+		if (nbrspace(entry->fstat->st_gid) > maxs->gid)
+			maxs->gid = nbrspace(entry->fstat->st_gid);
 	}
 	else
 	{
 		if ((int)ft_strlen(grp->gr_name) > maxs->group)
 			maxs->group = (int)ft_strlen(grp->gr_name);
 	}
-	if (nbrspace(major(file->st_rdev)) > maxs->major)
-		maxs->major = nbrspace(major(file->st_rdev));
-	if (nbrspace(minor(file->st_rdev)) > maxs->minor)
-		maxs->minor = nbrspace(minor(file->st_rdev));
+	if (nbrspace(major(entry->fstat->st_rdev)) > maxs->major)
+		maxs->major = nbrspace(major(entry->fstat->st_rdev));
+	if (nbrspace(minor(entry->fstat->st_rdev)) > maxs->minor)
+		maxs->minor = nbrspace(minor(entry->fstat->st_rdev));
 }
 
-void			get_infos_maxs(struct stat *file, t_max *maxs,
-									char *filename, char *name)
+static void			get_infos_maxs(t_file *entry, t_max *maxs)
 {
 	struct passwd	*pwd;
 
-	if (lstat(filename, file) < 0)
-		if (stat(filename, file) < 0)
-			ft_perror(name);
-	if (nbrspace(file->st_nlink) > maxs->lnk)
-		maxs->lnk = nbrspace(file->st_nlink);
-	if (nbrspace(file->st_size) > maxs->size)
-		maxs->size = nbrspace(file->st_size);
-	if ((pwd = getpwuid(file->st_uid)) == NULL)
+	if (entry->ferrno)
+		ft_perror(entry->filename, entry->ferrno);
+	if (nbrspace(entry->fstat->st_nlink) > maxs->lnk)
+		maxs->lnk = nbrspace(entry->fstat->st_nlink);
+	if (nbrspace(entry->fstat->st_size) > maxs->size)
+		maxs->size = nbrspace(entry->fstat->st_size);
+	if ((pwd = getpwuid(entry->fstat->st_uid)) == NULL)
 	{
-		if (nbrspace(file->st_uid) > maxs->uid)
-			maxs->uid = nbrspace(file->st_uid);
+		if (nbrspace(entry->fstat->st_uid) > maxs->uid)
+			maxs->uid = nbrspace(entry->fstat->st_uid);
 	}
 	else
 	{
 		if ((int)ft_strlen(pwd->pw_name) > maxs->user)
 			maxs->user = (int)ft_strlen(pwd->pw_name);
 	}
-	get_group_maxs(file, maxs);
+	get_group_maxs(entry, maxs);
 }
 
-void			getmaxs(char *filename, t_max *maxs)
+void			getmaxs(t_file *entry, t_max *maxs)
 {
-	struct stat		file;
-	char			*name;
-
-	name = (ft_strrchr(filename, '/') ? TRIM(filename) : filename);
-	if (!(!g_options.a && name[0] == '.')
+	if (!(!g_options.a && entry->filename[0] == '.')
 			|| g_options.d || g_options.f)
-		get_infos_maxs(&file, maxs, filename, name);
+		get_infos_maxs(entry, maxs);
 	else if (!g_options.a && g_options.A &&
-			name[1] != '.' && name[1] != '\0')
-		get_infos_maxs(&file, maxs, filename, name);
+			entry->filename[1] != '.' && entry->filename[1] != '\0')
+		get_infos_maxs(entry, maxs);
 }
 
 void			print_year(char *s)

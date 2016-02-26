@@ -20,7 +20,7 @@ void	browse_list_for_maxs(t_file **list, t_max *maxs)
 	current = *list;
 	while (current != NULL)
 	{
-		getmaxs(current->filename, maxs);
+		getmaxs(current, maxs);
 		current = current->next;
 	}
 }

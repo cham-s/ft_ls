@@ -87,7 +87,7 @@ void				print_device(dev_t device, t_max *maxs);
 t_bool				is_device(mode_t mode);
 void				printtotal(t_file **list);
 void				browse_list_for_maxs(t_file **list, t_max *maxs);
-void				getmaxs(char *filename, t_max *maxs);
+void				getmaxs(t_file *entry, t_max *maxs);
 t_file				*ft_lstfilenew(char *filename);
 void				ft_lstfileappend(t_file **file, t_file *new);
 void				getoptions(int ac, char **av,
@@ -101,7 +101,7 @@ void				listdir(t_file *entry);
 void				listallfiles(t_file **list,
 								t_file *entry, t_max *maxs);
 void				printfile(t_file *entry);
-void				ft_perror(char *name);
+void				ft_perror(char *name, int errno);
 char				*catpath(char *folder, char *file);
 void				print_l_format(t_file *entry, t_max *max,
 												t_bool is_file);

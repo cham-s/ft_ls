@@ -52,13 +52,10 @@ t_file	*ft_lstfilenew(char *pathname)
 void	addstat(char *pathname, t_file *new)
 {
 	new->pathname = ft_strdup(pathname);
-	if (!new->ferrno)
-	{
-		if (ft_strrchr(pathname, '/'))
-			new->filename = ft_strdup(TRIM(pathname)); 
-		else
-			new->filename = ft_strdup(pathname);
-	}
+	if (ft_strrchr(pathname, '/'))
+		new->filename = ft_strdup(TRIM(pathname)); 
+	else
+		new->filename = ft_strdup(pathname);
 	new->next = NULL;
 }
 

@@ -21,6 +21,7 @@
 #include <grp.h>
 #include <stdio.h>
 #include <time.h>
+#include <errno.h>
 
 
 void		apply_merge(t_file **list)
@@ -52,17 +53,16 @@ void		getfiles(t_file *entry, t_file **list, t_max *maxs)
 	struct dirent	*dptr;
 	DIR				*dfd;
 	char			*path;
+	t_file			*buff;
 
 	if ((dfd = opendir(entry->pathname)) == NULL)
-	{
-		ft_perror(entry->filename);
 		return ;
-	}
 	while ((dptr = readdir(dfd)) != NULL)
 	{
 		path = catpath(entry->pathname, dptr->d_name);
-		getmaxs(path, maxs);
-		ft_lstfileappend(list, ft_lstfilenew(path));
+		buff = ft_lstfilenew(path);
+		getmaxs(buff, maxs);
+		ft_lstfileappend(list, buff);
 		free(path);
 	}
 	closedir(dfd);
@@ -87,8 +87,7 @@ int			check_for_a(t_file *current)
 	return (0);
 }
 
-static void	compute_total(t_file **list, int *result,
-		struct stat *file)
+static void	compute_total(t_file **list, int *result)
 {
 	t_file		*current;
 
@@ -100,16 +99,9 @@ static void	compute_total(t_file **list, int *result,
 			current = current->next;
 			continue ;
 		}
-		if (lstat(current->filename, file) < 0)
+		if (current->ferrno)
 			return ;
-		if (S_ISLNK(file->st_mode))
-			*result += file->st_blocks;
-		else
-		{
-			if (stat(current->filename, file) < 0)
-				return ;
-			*result += file->st_blocks;
-		}
+		*result += current->fstat->st_blocks;
 		current = current->next;
 	}
 }
@@ -117,10 +109,9 @@ static void	compute_total(t_file **list, int *result,
 void		printtotal(t_file **list)
 {
 	int			result;
-	struct stat	file;
 
 	result = 0;
-	compute_total(list, &result, &file);
+	compute_total(list, &result);
 	ft_putstr("total ");
 	ft_putnbr(result);
 	ft_putendl("");

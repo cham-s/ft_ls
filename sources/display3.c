@@ -51,8 +51,10 @@ void		listallfiles(t_file **list, t_file *entry, t_max *maxs)
 	static int	i = 0;
 
 	current = *list;
-	if (i++ != 0)
+	if (i++ != 0 && S_ISDIR(entry->fstat->st_mode))
 		printdirnl(entry->pathname, false);
+	if (entry->ferrno)
+		ft_perror(entry->filename ,entry->ferrno);
 	if (current && current->next)
 	{
 		if (g_options.l && current->next->next)

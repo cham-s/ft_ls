@@ -39,13 +39,13 @@ char	*catpath(char *folder, char *file)
 	return (name);
 }
 
-void	ft_perror(char *name)
+void	ft_perror(char *name, int errno)
 {
-	char *merror;
-
-	merror = ft_strjoin("ft_ls: ", name);
-	perror(merror);
-	free(merror);
+	ft_putstr_fd("ft_ls: ", 2);
+	ft_putstr_fd(name, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
+	ft_putendl_fd("", 2);
 }
 
 int		nbrspace(int max)

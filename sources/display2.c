@@ -78,8 +78,8 @@ static void	apply_recurdir(t_file **list, t_file *entry)
 	while (*list != NULL)
 	{
 		tmp = *list;
-		if (ft_strcmp(TRIM((*list)->filename), ".") == 0
-		|| ft_strcmp(TRIM((*list)->filename), "..") == 0)
+		if (ft_strcmp((*list)->filename, ".") == 0
+		|| ft_strcmp((*list)->filename, "..") == 0)
 			*list = (*list)->next;
 		else
 		{
@@ -90,11 +90,8 @@ static void	apply_recurdir(t_file **list, t_file *entry)
 				continue ;
 			}
 			if (entry->ferrno)
-			{
-				strerror(entry->ferrno);
-			}
-					//ft_perror((*list)->filename);
-			if (S_ISDIR(entry->fstat->st_mode) && !S_ISLNK(entry->fstat->st_mode))
+				ft_perror(entry->filename, entry->ferrno);
+			if (S_ISDIR(entry->fstat->st_mode))
 				recurdir(*list);
 			*list = (*list)->next;
 		}

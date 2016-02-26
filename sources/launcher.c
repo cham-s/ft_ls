@@ -12,6 +12,8 @@
 
 #include "ft_ls.h"
 #include "libft.h"
+#include <errno.h>
+#include <stdio.h>
 
 void	ft_list(t_file *entry)
 {
@@ -34,10 +36,7 @@ void	print_errors(t_file **list)
 	{
 		tmp = list[ERRORS];
 		if (list[ERRORS]->ferrno)
-		{
-			strerror(list[ERRORS]->ferrno);
-				//ft_perror(list[ERRORS]->filename);
-		}
+			ft_perror(list[ERRORS]->filename, list[ERRORS]->ferrno);
 		list[ERRORS] = list[ERRORS]->next;
 		free_content_and_node(tmp);
 	}
