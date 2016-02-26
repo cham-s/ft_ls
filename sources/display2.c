@@ -29,6 +29,8 @@ void	listallfilesfree(t_file **list, t_file *entry, t_max *maxs)
 
 	if (i++ != 0)
 		printdirnl(entry->pathname, false);
+	if (entry->errordir && S_ISDIR(entry->fstat->st_mode))
+		ft_perror(entry->filename ,entry->errordir);
 	if (g_options.l && (*list)->next->next != NULL)
 		printtotal(list);
 	while (*list != NULL)

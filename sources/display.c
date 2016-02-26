@@ -23,7 +23,6 @@
 #include <time.h>
 #include <errno.h>
 
-
 void		apply_merge(t_file **list)
 {
 	t_opt options;

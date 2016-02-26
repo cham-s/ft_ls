@@ -14,6 +14,7 @@
 #include "libft.h"
 #include <stdio.h>
 #include <errno.h>
+#include <dirent.h>
 
 void	ft_lstfileappend(t_file **list, t_file *new)
 {
@@ -51,7 +52,14 @@ t_file	*ft_lstfilenew(char *pathname)
 
 void	addstat(char *pathname, t_file *new)
 {
+	DIR				*dfd;
+
+	new->errordir = 0;
 	new->pathname = ft_strdup(pathname);
+	if ((dfd = opendir(new->pathname)) == NULL)
+		new->errordir = errno;
+	if (dfd)
+		closedir(dfd);
 	if (ft_strrchr(pathname, '/'))
 		new->filename = ft_strdup(TRIM(pathname)); 
 	else
