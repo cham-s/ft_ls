@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 22:07:14 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/20 18:30:44 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 17:30:35 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int			cmpsize_rev(t_file *a, t_file *b)
 
 int			cmpname(t_file *a, t_file *b)
 {
-	return (ft_strcmp(a->filename, b->filename) <= 0);
+	return (ft_strcmp(a->pathname, b->pathname) <= 0);
 }
 
 int			cmpname_rev(t_file *a, t_file *b)
 {
-	return (ft_strcmp(a->filename, b->filename) >= 0);
+	return (ft_strcmp(a->pathname, b->pathname) >= 0);
 }
 
 int			cmptime(t_file *a, t_file *b)

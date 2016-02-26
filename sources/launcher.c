@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 22:02:26 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/19 22:27:45 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 19:30:05 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_errors(t_file **list)
 	{
 		tmp = list[ERRORS];
 		if (list[ERRORS]->ferrno)
-			ft_perror(list[ERRORS]->filename, list[ERRORS]->ferrno);
+			ft_perror(list[ERRORS]->pathname, list[ERRORS]->ferrno);
 		list[ERRORS] = list[ERRORS]->next;
 		free_content_and_node(tmp);
 	}
@@ -55,9 +55,9 @@ void	print_files(t_file **list, t_max *maxs)
 	{
 		tmp = list[FILES];
 		if (g_options.l)
-			print_l_format((list[FILES]), maxs, true);
+			print_l_format((list[FILES]), maxs);
 		else
-			ft_putendl((list[FILES])->filename);
+			ft_putendl((list[FILES])->pathname);
 		list[FILES] = list[FILES]->next;
 		free_content_and_node(tmp);
 	}

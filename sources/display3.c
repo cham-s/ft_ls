@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 08:30:48 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 08:32:43 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 18:38:27 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	apply_format(t_file **current, t_max *maxs)
 			continue ;
 		}
 		if (g_options.l)
-			print_l_format(*current, maxs, false);
+			print_l_format(*current, maxs);
 		else
 			printfile(*current);
 		*current = (*current)->next;
@@ -51,7 +51,7 @@ void		listallfiles(t_file **list, t_file *entry, t_max *maxs)
 	static int	i = 0;
 
 	current = *list;
-	if (i++ != 0 && S_ISDIR(entry->fstat->st_mode))
+	if (i++ != 0 && (S_ISDIR(entry->fstat->st_mode) /*|| S_ISLNK(entry->fstat->st_mode)*/))
 		printdirnl(entry->pathname, false);
 	if (entry->errordir && S_ISDIR(entry->fstat->st_mode))
 		ft_perror(entry->filename ,entry->errordir);

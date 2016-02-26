@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 21:58:55 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 13:34:03 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 17:42:47 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <sys/xattr.h>
 #include <sys/acl.h>
 
-void	printstat(t_file *entry, t_max *maxs, t_bool is_file)
+void	printstat(t_file *entry, t_max *maxs)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
@@ -50,14 +50,14 @@ void	printstat(t_file *entry, t_max *maxs, t_bool is_file)
 		print_size(entry->fstat->st_size, maxs);
 		ft_putstr(" ");
 	}
-	printstat2(entry, is_file);
+	printstat2(entry);
 }
 
-void	print_l_format(t_file *entry, t_max *maxs, t_bool is_file)
+void	print_l_format(t_file *entry, t_max *maxs)
 {
 	if (entry->ferrno)
 		return ;
-	printstat(entry , maxs, is_file);
+	printstat(entry , maxs);
 }
 
 void	has_xattr_or_acl(char *path)

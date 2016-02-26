@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 17:28:45 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 13:30:34 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 17:42:43 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ void				free_content_and_node(t_file *node);
 int					check_for_a(t_file *current);
 int					is_dateinrange(time_t atime);
 void				print_size(off_t size, t_max *maxs);
-void				printstat2(t_file *entry,
-					t_bool is_file);
+void				printstat2(t_file *entry);
 void				print_device(dev_t device, t_max *maxs);
 t_bool				is_device(mode_t mode);
 void				printtotal(t_file **list);
@@ -104,8 +103,7 @@ void				listallfiles(t_file **list,
 void				printfile(t_file *entry);
 void				ft_perror(char *name, int errno);
 char				*catpath(char *folder, char *file);
-void				print_l_format(t_file *entry, t_max *max,
-												t_bool is_file);
+void				print_l_format(t_file *entry, t_max *max);
 void				ft_lstmergesort(t_file **source, t_opt *options);
 void				print_path(char *fname);
 void				perm_format(t_file *entry);

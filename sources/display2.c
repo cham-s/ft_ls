@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 20:51:11 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 14:45:01 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 19:08:06 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,13 @@ void	listallfilesfree(t_file **list, t_file *entry, t_max *maxs)
 			continue ;
 		}
 		if (g_options.l)
-			print_l_format(*list, maxs, false);
+			print_l_format(*list, maxs);
 		else
 			printfile(*list);
 		*list = (*list)->next;
 		//free_content_and_node(tmp);
 	}
 }
-
 void	listdir(t_file *entry)
 {
 	t_file	*list;
@@ -68,7 +67,7 @@ void	listfile(t_file *entry)
 
 	initmax(&maxs);
 	if (g_options.l)
-		print_l_format(entry, &maxs, true);
+		print_l_format(entry, &maxs);
 	else
 		ft_putendl(entry->filename);
 }

@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 21:23:46 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 14:45:04 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 19:03:53 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ t_bool	is_device(mode_t mode)
 	return (false);
 }
 
-void	printstat2(t_file *entry, t_bool is_file)
+void	printstat2(t_file *entry)
 {
 	print_ctime(&entry->fstat->st_mtimespec);
 	ft_putstr(" ");
-	if (is_file)
-		ft_putstr(entry->filename);
+	if (g_options.d)
+		ft_putstr(entry->pathname);
+	//if (entry->pathname[0] == '/' && !S_ISDIR(entry->fstat->st_mode))
+		//ft_putstr(entry->pathname);
 	else
 		ft_putstr(entry->filename);
 	if (S_ISLNK(entry->fstat->st_mode))

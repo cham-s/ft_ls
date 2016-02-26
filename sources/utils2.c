@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 08:58:35 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 14:45:03 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/26 19:41:36 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,20 @@ void	check_fts_open(char *s)
 void	printfile(t_file *entry)
 {
 	if (!g_options.l)
-		ft_putendl(entry->filename);
+	{
+		if (g_options.p)
+		{
+			if (S_ISDIR(entry->fstat->st_mode))
+			{
+				ft_putstr(entry->filename);
+				ft_putendl("/");
+			}
+			else
+				ft_putendl(entry->filename);
+		}
+		else
+			ft_putendl(entry->filename);
+	}
 }
 
 void	print_space_nbr(int max, long long size)
