@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 21:58:55 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/26 17:42:47 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 15:06:21 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	print_l_format(t_file *entry, t_max *maxs)
 {
 	if (entry->ferrno)
 		return ;
-	printstat(entry , maxs);
+	printstat(entry, maxs);
 }
 
 void	has_xattr_or_acl(char *path)

@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 22:07:14 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/26 17:30:35 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 14:45:32 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,4 @@ int			cmpname_rev(t_file *a, t_file *b)
 int			cmptime(t_file *a, t_file *b)
 {
 	return (a->fstat->st_mtimespec.tv_sec >= b->fstat->st_mtimespec.tv_sec);
-}
-
-int			cmptime_rev(t_file *a, t_file *b)
-{
-	return (a->fstat->st_mtimespec.tv_sec <= b->fstat->st_mtimespec.tv_sec);
-	return(1);
 }

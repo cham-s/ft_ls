@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 08:30:48 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/26 18:38:27 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 15:01:49 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void		listallfiles(t_file **list, t_file *entry, t_max *maxs)
 	static int	i = 0;
 
 	current = *list;
-	if (i++ != 0 && (S_ISDIR(entry->fstat->st_mode) /*|| S_ISLNK(entry->fstat->st_mode)*/))
+	if (i++ != 0 && (S_ISDIR(entry->fstat->st_mode)))
 		printdirnl(entry->pathname, false);
 	if (entry->errordir && S_ISDIR(entry->fstat->st_mode))
-		ft_perror(entry->filename ,entry->errordir);
+		ft_perror(entry->filename, entry->errordir);
 	if (current && current->next)
 	{
 		if (g_options.l && current->next->next)

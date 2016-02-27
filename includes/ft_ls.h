@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 17:28:45 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/26 17:42:43 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 17:48:43 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define FILES		1
 # define DIRS		2
 # define OPT_SIZE (sizeof(OPTS))
-
 
 typedef struct		s_file
 {
@@ -51,9 +50,9 @@ typedef struct		s_max
 
 typedef struct		s_opt
 {
-	int				A;
-	int				R;
-	int				S;
+	int				g_a;
+	int				g_r;
+	int				g_s;
 	int				a;
 	int				d;
 	int				f;
@@ -92,7 +91,7 @@ void				getmaxs(t_file *entry, t_max *maxs);
 t_file				*ft_lstfilenew(char *filename);
 void				ft_lstfileappend(t_file **file, t_file *new);
 void				getoptions(int ac, char **av,
-									char *options,			char *optlist);
+									char *options, char *optlist);
 void				getdirs(t_file **list, int ac, char **av);
 void				recurdir(t_file *entry);
 void				getfiles(t_file *entry, t_file **list, t_max *maxs);

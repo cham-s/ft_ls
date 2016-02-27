@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 11:54:36 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/22 18:17:56 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 15:02:39 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	addstat(char *pathname, t_file *new)
 	if (dfd)
 		closedir(dfd);
 	if (ft_strrchr(pathname, '/'))
-		new->filename = ft_strdup(TRIM(pathname)); 
+		new->filename = ft_strdup(TRIM(pathname));
 	else
 		new->filename = ft_strdup(pathname);
 	new->next = NULL;

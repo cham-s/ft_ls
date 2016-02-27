@@ -6,14 +6,15 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 08:41:17 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 13:34:50 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 17:53:37 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "libft.h"
 
-t_file		*ft_mergelists(t_file *a, t_file *b, int (*cmp)(t_file *a, t_file *b))
+t_file		*ft_mergelists(t_file *a, t_file *b,
+			int (*cmp)(t_file *a, t_file *b))
 {
 	t_file	*mergedlist;
 
@@ -35,7 +36,7 @@ t_file		*ft_mergelists(t_file *a, t_file *b, int (*cmp)(t_file *a, t_file *b))
 	return (mergedlist);
 }
 
-void	ft_lstpartition(t_file *head, t_file **front, t_file **back)
+void		ft_lstpartition(t_file *head, t_file **front, t_file **back)
 {
 	t_file	*fast;
 	t_file	*slow;
@@ -86,22 +87,16 @@ void		ft_lstmergesort(t_file **source, t_opt *options)
 	ft_lstpartition(head, &a, &b);
 	ft_lstmergesort(&a, options);
 	ft_lstmergesort(&b, options);
-	if (options->r)
-	{
-		if (options->t && !options->S)
-			*source = ft_mergelists(a, b, cmptime_rev);
-		else if (options->S)
-			*source = ft_mergelists(a, b, cmpsize_rev);
-		else
-			*source = ft_mergelists(a, b, cmpname_rev);
-	}
+	if (options->t && !options->g_s && options->r)
+		*source = ft_mergelists(a, b, cmptime_rev);
+	else if (options->g_s && options->r)
+		*source = ft_mergelists(a, b, cmpsize_rev);
+	else if (options->t && !options->g_s && !options->r)
+		*source = ft_mergelists(a, b, cmptime);
+	else if (options->g_s && !options->r)
+		*source = ft_mergelists(a, b, cmpsize);
+	else if (g_options.r)
+		*source = ft_mergelists(a, b, cmpname_rev);
 	else
-	{
-		if (options->t && !options->S)
-			*source = ft_mergelists(a, b, cmptime);
-		else if (options->S)
-			*source = ft_mergelists(a, b, cmpsize);
-		else
-			*source = ft_mergelists(a, b, cmpname);
-	}
+		*source = ft_mergelists(a, b, cmpname);
 }

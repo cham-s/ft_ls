@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 20:51:11 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/26 19:08:06 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 15:00:18 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <time.h>
 
-void	listallfilesfree(t_file **list, t_file *entry, t_max *maxs)
+void		listallfilesfree(t_file **list, t_file *entry, t_max *maxs)
 {
 	t_file		*tmp;
 	static int	i = 0;
@@ -30,7 +30,7 @@ void	listallfilesfree(t_file **list, t_file *entry, t_max *maxs)
 	if (i++ != 0)
 		printdirnl(entry->pathname, false);
 	if (entry->errordir && S_ISDIR(entry->fstat->st_mode))
-		ft_perror(entry->filename ,entry->errordir);
+		ft_perror(entry->filename, entry->errordir);
 	if (g_options.l && (*list)->next->next != NULL)
 		printtotal(list);
 	while (*list != NULL)
@@ -39,7 +39,7 @@ void	listallfilesfree(t_file **list, t_file *entry, t_max *maxs)
 		if (check_for_a(*list))
 		{
 			*list = (*list)->next;
-			//free_content_and_node(tmp);
+			free_content_and_node(tmp);
 			continue ;
 		}
 		if (g_options.l)
@@ -47,10 +47,11 @@ void	listallfilesfree(t_file **list, t_file *entry, t_max *maxs)
 		else
 			printfile(*list);
 		*list = (*list)->next;
-		//free_content_and_node(tmp);
+		free_content_and_node(tmp);
 	}
 }
-void	listdir(t_file *entry)
+
+void		listdir(t_file *entry)
 {
 	t_file	*list;
 	t_max	maxs;
@@ -61,7 +62,7 @@ void	listdir(t_file *entry)
 	listallfilesfree(&list, entry, &maxs);
 }
 
-void	listfile(t_file *entry)
+void		listfile(t_file *entry)
 {
 	t_max	maxs;
 
@@ -100,7 +101,7 @@ static void	apply_recurdir(t_file **list, t_file *entry)
 	}
 }
 
-void	recurdir(t_file *entry)
+void		recurdir(t_file *entry)
 {
 	t_max		maxs;
 	t_file		*list;

@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 21:24:23 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 10:58:09 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 17:52:22 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <grp.h>
 #include <time.h>
 
-static void			get_group_maxs(t_file *entry, t_max *maxs)
+static void	get_group_maxs(t_file *entry, t_max *maxs)
 {
 	struct group	*grp;
 
@@ -38,7 +38,7 @@ static void			get_group_maxs(t_file *entry, t_max *maxs)
 		maxs->minor = nbrspace(minor(entry->fstat->st_rdev));
 }
 
-static void			get_infos_maxs(t_file *entry, t_max *maxs)
+static void	get_infos_maxs(t_file *entry, t_max *maxs)
 {
 	struct passwd	*pwd;
 
@@ -61,17 +61,17 @@ static void			get_infos_maxs(t_file *entry, t_max *maxs)
 	get_group_maxs(entry, maxs);
 }
 
-void			getmaxs(t_file *entry, t_max *maxs)
+void		getmaxs(t_file *entry, t_max *maxs)
 {
 	if (!(!g_options.a && entry->filename[0] == '.')
 			|| g_options.d || g_options.f)
 		get_infos_maxs(entry, maxs);
-	else if (!g_options.a && g_options.A &&
+	else if (!g_options.a && g_options.g_a &&
 			entry->filename[1] != '.' && entry->filename[1] != '\0')
 		get_infos_maxs(entry, maxs);
 }
 
-void			print_year(char *s)
+void		print_year(char *s)
 {
 	ft_putchar(' ');
 	while (*s != '\n')
@@ -81,7 +81,7 @@ void			print_year(char *s)
 	}
 }
 
-void			print_ctime(struct timespec *atime)
+void		print_ctime(struct timespec *atime)
 {
 	char *strtime;
 	char *end;

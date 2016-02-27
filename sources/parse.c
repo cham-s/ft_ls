@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 22:13:19 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/24 13:31:31 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 17:55:58 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void			check_file(t_file **tablist, char **av, char *name)
 void			getdirs(t_file **tablist, int ac, char **av)
 {
 	t_opt opts;
+
 	initopt(&opts);
 	av++;
 	while (ac-- > 1 && (*av)[0] == '-' && (*av)[1] != '\0')
@@ -60,7 +61,6 @@ void			getdirs(t_file **tablist, int ac, char **av)
 	}
 	while (ac-- >= 1)
 	{
-		check_fts_open(*av);
 		check_file(tablist, av, *av);
 		av++;
 	}

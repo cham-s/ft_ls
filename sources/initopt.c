@@ -1,26 +1,39 @@
-#include "ft_ls.h" 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initopt.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/27 15:15:01 by cattouma          #+#    #+#             */
+/*   Updated: 2016/02/27 17:54:26 by cattouma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_ls.h"
+
 void	initopt(t_opt *options)
 {
-		options->A = 0; 
-		options->R = 0; 
-		options->S = 0; 
-		options->a = 0; 
-		options->d = 0; 
-		options->f = 0; 
-		options->l = 0; 
-		options->p = 0; 
-		options->r = 0; 
-		options->t = 0; 
+	options->g_a = 0;
+	options->g_r = 0;
+	options->g_s = 0;
+	options->a = 0;
+	options->d = 0;
+	options->f = 0;
+	options->l = 0;
+	options->p = 0;
+	options->r = 0;
+	options->t = 0;
 }
 
 void	addflag(t_opt *options, char c)
 {
 	if (c == 'A')
-		options->A = 1;
+		options->g_a = 1;
 	else if (c == 'R')
-		options->R = 1;
+		options->g_r = 1;
 	else if (c == 'S')
-		options->S = 1;
+		options->g_s = 1;
 	else if (c == 'a')
 		options->a = 1;
 	else if (c == 'd')

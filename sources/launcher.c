@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 22:02:26 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/26 19:30:05 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 17:51:57 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_list(t_file *entry)
 {
 	static int i = 0;
 
-	if (g_options.R)
+	if (g_options.g_r)
 		recurdir(entry);
 	else
 		listdir(entry);
