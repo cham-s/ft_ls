@@ -33,6 +33,7 @@ typedef struct		s_file
 	struct stat		*fstat;
 	int				ferrno;
 	int				errordir;
+	t_bool			from_file;
 	struct s_file	*next;
 }					t_file;
 

@@ -76,7 +76,7 @@ int			check_for_a(t_file *current)
 			current->filename[0] == '.' &&
 			!g_options.A)
 			return (1);
-		else if (g_options.A)
+		else if (g_options.A && !g_options.a)
 		{
 			if (ft_strcmp(current->filename, ".") == 0 ||
 				ft_strcmp(current->filename, "..") == 0)

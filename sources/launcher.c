@@ -53,6 +53,7 @@ void	print_files(t_file **list, t_max *maxs)
 	is_empty = (list[FILES] == NULL ? true : false);
 	while (list[FILES] != NULL)
 	{
+		list[FILES]->from_file = true;
 		tmp = list[FILES];
 		if (g_options.l)
 			print_l_format((list[FILES]), maxs);

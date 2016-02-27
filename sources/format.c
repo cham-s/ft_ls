@@ -60,10 +60,8 @@ void	printstat2(t_file *entry)
 {
 	print_ctime(&entry->fstat->st_mtimespec);
 	ft_putstr(" ");
-	if (g_options.d)
+	if (g_options.d || entry->from_file)
 		ft_putstr(entry->pathname);
-	//if (entry->pathname[0] == '/' && !S_ISDIR(entry->fstat->st_mode))
-		//ft_putstr(entry->pathname);
 	else
 		ft_putstr(entry->filename);
 	if (S_ISLNK(entry->fstat->st_mode))

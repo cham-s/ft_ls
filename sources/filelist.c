@@ -54,6 +54,7 @@ void	addstat(char *pathname, t_file *new)
 {
 	DIR				*dfd;
 
+	new->from_file = 0;
 	new->errordir = 0;
 	new->pathname = ft_strdup(pathname);
 	if ((dfd = opendir(new->pathname)) == NULL)
