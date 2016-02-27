@@ -6,7 +6,7 @@
 /*   By: cattouma <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 17:28:45 by cattouma          #+#    #+#             */
-/*   Updated: 2016/02/27 17:48:43 by cattouma         ###   ########.fr       */
+/*   Updated: 2016/02/27 18:02:30 by cattouma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define TRIM(longname) (ft_strrchr(longname, '/') + 1)
 # define OPTIN(options, c) ft_strchr(options, c)
 # define ADDFLAG	(t_opt, flag) (t_opt.flag = 1)
-# define OPTS		"1ARSadflprt"
+# define OPTS		"ARSadflprt"
 # define LIST_SIZE	3
 # define SIX_MON	15770000
 # define ERRORS		0
