@@ -1,6 +1,8 @@
 # ft_ls
-implementation of the shell command ls with the following options : -A -R -S -a -p -d -t -1 -f
+implementation of the shell command ls with the following options : -A -R -S -a -p -d -t -1 -f -r
+
 ```shell
+sh3.2$> ls -lRA
 total 16
 drwxr-xr-x  12 cattouma  staff   408 Mar 24 18:07 .git
 -rw-r--r--   1 cattouma  staff  1487 Mar 24 18:07 Makefile
