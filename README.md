@@ -1,8 +1,8 @@
 # ft_ls
 implementation of the binary ls
 
-```
-minishell $>./ft_ls -l
+```shell
+sh $>./ft_ls -l
 total 16
 -rw-r--r--   1 cattouma  staff   508 Mar 24 18:14 Makefile
 -rw-r--r--   1 cattouma  staff     9 Mar 23 22:40 auteur
